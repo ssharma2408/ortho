@@ -11,7 +11,7 @@
 <div class="page-title mg-top-50">
 	<div class="container">
 		<a class="float-left" href="/">Home</a>
-		<span class="float-right">My Clinic</span>
+		<span class="float-right">Staff</span>
 	</div>
 </div>
 <!-- page-title end -->

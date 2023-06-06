@@ -18,7 +18,7 @@
 				<li><a href="{{route('clinic.admin.dashboard')}}">Home</a></li>
 				<li><a href="{{route('my-clinic.show')}}">My Clinic</a></li>
 				<li><a href="home.html">Doctors</a></li>
-				<li><a href="home.html">Staffs</a></li>
+				<li><a href="{{route('staffs.index')}}">Staffs</a></li>
 				<li><a href="all-page.html">Pages</a></li>	
 				<li><a href="signup.html">Logout</a></li>
 			@endif

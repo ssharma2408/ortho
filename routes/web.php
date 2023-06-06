@@ -46,6 +46,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	Route::group(['prefix' => 'ca_dashboard', 'middleware' => ['clinicAdminAccess']], function() {
 		Route::get('/', 'ClinicController@dashboard')->name('clinic.admin.dashboard');
 		Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');
+		Route::resource('staffs', 'StaffController');
 	 
 	});
 	
