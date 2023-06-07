@@ -43,9 +43,9 @@ class StaffController extends Controller
 			'name'=>$request['name'],
 			'email'=>$request['email'],
 			'mobile_number'=>$request['mobile'],
-			'username'=>$request['username'],
+			'username'=>$request['username']."_".Session::get('user_details')->postfix,
 			'password'=>$request['password'],
-			'clinic_id'=>Session::get('user_details')->clinic_id,
+			'clinic_id'=>$_ENV['CLINIC_ID'],
 		]);
 		
 		$staff = json_decode($response->body());		
@@ -64,7 +64,9 @@ class StaffController extends Controller
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
         ])->get($theUrl);
 		
-		$staff = json_decode($response->body())->data;		
+		$staff = json_decode($response->body())->data;
+		
+		$staff->username = explode("_", $staff->username)[0];
 
         return view('staffs.edit', compact('staff'));
         
@@ -85,9 +87,9 @@ class StaffController extends Controller
 			'name'=>$request['name'],
 			'email'=>$request['email'],
 			'mobile_number'=>$request['mobile'],
-			'username'=>$request['username'],
+			'username'=>$request['username']."_".Session::get('user_details')->postfix,
 			'password'=>$request['password'],
-			'clinic_id'=>Session::get('user_details')->clinic_id,
+			'clinic_id'=>$_ENV['CLINIC_ID'],
 		]);
 		
 		$staff = json_decode($response->body());

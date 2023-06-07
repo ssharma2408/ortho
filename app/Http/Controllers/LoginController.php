@@ -36,8 +36,10 @@ class LoginController extends Controller
 		$response = Http::post(config('app.api_url').'login', [
 			'email'=>$credentials['email'],
 			'password'=>$credentials['password'],
+			'domain'=>$_ENV['DOMAIN'],
+			'clinic_id'=>$_ENV['CLINIC_ID'],
 		]);		
-		$result = json_decode($response->body());
+		$result = json_decode($response->body());		
 		
 		if($result->success && $result->data->token){
 			
@@ -51,7 +53,7 @@ class LoginController extends Controller
 		}else{
 			
 			return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
+                ->withErrors($result->data->error);
 		}    
     }
 	

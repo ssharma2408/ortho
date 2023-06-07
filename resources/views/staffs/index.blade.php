@@ -28,6 +28,7 @@
 						<div class="col-7 pr-0">
 							<div class="details">
 								<h6>{{$staff->name}}</h6>								
+								<p>Username : {{$staff->username}}</p>								
 							</div>
 						</div>
 					</a>

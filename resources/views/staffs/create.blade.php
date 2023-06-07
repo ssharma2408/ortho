@@ -47,7 +47,7 @@
 						@enderror
                     </label>
                     <label class="single-input-wrap">
-                        <input type="text" placeholder="User name" name="username" required autocomplete="username">
+                        <input type="text" placeholder="User name" name="username" required autocomplete="username">_{{ Session::get('user_details')->postfix }}
 						@error('username')
 							<span class="invalid-feedback" role="alert">
 								<strong>{{ $message }}</strong>
