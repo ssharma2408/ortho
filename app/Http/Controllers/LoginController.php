@@ -23,6 +23,16 @@ class LoginController extends Controller
     }
 	
 	/**
+     * Display login page for patient.
+     * 
+     * @return Renderable
+     */
+    public function showpatient()
+    {
+        return view('patient_login');
+    }
+	
+	/**
      * Handle account login request
      * 
      * @param LoginRequest $request

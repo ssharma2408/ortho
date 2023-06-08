@@ -56,12 +56,7 @@
 						@endif
                     </label>
                     <label class="single-input-wrap">
-                        <input type="password" name="password" id="password" value="{{ old('password', $staff->password) }}" required>
-						@if($errors->has('password'))
-							<div class="invalid-feedback">
-								{{ $errors->first('password') }}
-							</div>
-						@endif
+                        <input type="password" name="password" id="password" value="" >
                     </label>
                     <button type="submit" class="btn btn-purple">Save</button>
                 </form>

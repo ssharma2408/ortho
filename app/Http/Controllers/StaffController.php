@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Http;
 
+use Illuminate\Support\Facades\Crypt;
+
 use Session;
+use Hash;
 
 class StaffController extends Controller
 {
@@ -38,19 +41,23 @@ class StaffController extends Controller
     public function store(Request $request)
     {		
 		
-		$theUrl     = config('app.api_url').'v1/staffs';	   
-		$response   = Http ::withHeaders([
-            'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->post($theUrl, [
+		$theUrl     = config('app.api_url').'v1/staffs';
+		
+		$post_arr = [
 			'name'=>$request['name'],
 			'email'=>$request['email'],
 			'mobile_number'=>$request['mobile'],
 			'username'=>$request['username']."_".Session::get('user_details')->postfix,
-			'password'=>$request['password'],
+			'password'=>Hash::make($request['password']),
 			'clinic_id'=>$_ENV['CLINIC_ID'],
-		]);
+		];
 		
-		$staff = json_decode($response->body());		
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);
+		
+		$staff = json_decode($response->body());
+		
 
         return redirect()->route('staffs.index');
     }
@@ -68,7 +75,7 @@ class StaffController extends Controller
 		
 		$staff = json_decode($response->body())->data;
 		
-		$staff->username = explode("_", $staff->username)[0];
+		$staff->username = explode("_", $staff->username)[0];		
 
         return view('staffs.edit', compact('staff'));
         
@@ -81,18 +88,22 @@ class StaffController extends Controller
 
 		$staff_id = $url_arr[count($url_arr)-1];	
 		
+		$post_arr = [
+			'name'=>$request['name'],
+			'email'=>$request['email'],
+			'mobile_number'=>$request['mobile'],
+			'username'=>$request['username']."_".Session::get('user_details')->postfix,			
+			'clinic_id'=>$_ENV['CLINIC_ID'],
+		];
+		
+		if(trim($request['password']) != ""){
+			$post_arr['password'] = Hash::make(trim($request['password']));
+		}
 		
 		$theUrl     = config('app.api_url').'v1/staffs/'.$staff_id;
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->put($theUrl, [
-			'name'=>$request['name'],
-			'email'=>$request['email'],
-			'mobile_number'=>$request['mobile'],
-			'username'=>$request['username']."_".Session::get('user_details')->postfix,
-			'password'=>$request['password'],
-			'clinic_id'=>$_ENV['CLINIC_ID'],
-		]);
+        ])->put($theUrl, $post_arr);
 		
 		$staff = json_decode($response->body());
 

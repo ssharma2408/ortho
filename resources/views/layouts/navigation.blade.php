@@ -27,6 +27,11 @@
 				<li><a href="{{route('dashboard')}}">Home</a></li>			
 				<li><a href="signup.html">Logout</a></li>
 			@endif
+			
+			@if (Session::has('user_details') && Session::get('user_details')->role=="Staff")
+				<li><a href="{{route('dashboard')}}">Home</a></li>			
+				<li><a href="signup.html">Logout</a></li>
+			@endif
 		</ul>
 		<a class="btn btn-purple" href="#">View Profile</a>
 	</div>

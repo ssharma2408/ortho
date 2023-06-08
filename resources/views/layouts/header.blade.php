@@ -45,6 +45,7 @@
 							Hi {{Session::get('user_details')->name}} <a href="{{ route('login.logout') }}">Logout</a>
 						@else
 							<a href="{{ route('login.show') }}">Login</a>
+							<a href="{{ route('login.showpatient') }}">Patient Login</a>
 						@endif
 					</li>
 				</ul>

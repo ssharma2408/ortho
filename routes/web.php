@@ -36,6 +36,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
          * Login Routes
          */
         Route::get('/login', 'LoginController@show')->name('login.show');
+        Route::get('/patient_login', 'LoginController@showpatient')->name('login.showpatient');
         Route::post('/login', 'LoginController@login')->name('login.perform');
         Route::get('/logout', 'LoginController@logout')->name('login.logout');        
 
