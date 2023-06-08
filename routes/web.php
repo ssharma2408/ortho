@@ -55,4 +55,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		//Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');	 
 	});
 	
+	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {
+		Route::get('/', 'ClinicController@dashboard')->name('dashboard');
+		//Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');
+	});
+	
 });

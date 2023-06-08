@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Session;
 
-class DoctorAdminAccess
+class StaffAccess
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class DoctorAdminAccess
     public function handle(Request $request, Closure $next): Response
     {
         if (Session::has('user_details')){
-			if(Session::get('user_details')->role == "Doctor"){
+			if(Session::get('user_details')->role == "Staff"){
 				return $next($request);
 			}else{
 				abort(403, 'Access denied');

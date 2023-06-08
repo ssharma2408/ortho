@@ -18,7 +18,7 @@
 				@include('layouts.partials.messages')
                 <label class="single-input-wrap">
                     <span>Email address*</span>
-                    <input type="email" name="username" value="{{ old('username') }}" placeholder="" required="required" autofocus>
+                    <input type="text" name="username" value="{{ old('username') }}" placeholder="" required="required" autofocus>
                 </label>
 				@if ($errors->has('username'))
 					<span class="text-danger text-left">{{ $errors->first('username') }}</span>

@@ -31,10 +31,10 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $request->getCredentials();
-		  
+        $credentials = $request->getCredentials();		
+
 		$response = Http::post(config('app.api_url').'login', [
-			'email'=>$credentials['email'],
+			'email'=>isset($credentials['email']) ? $credentials['email'] : $credentials['username'],
 			'password'=>$credentials['password'],
 			'domain'=>$_ENV['DOMAIN'],
 			'clinic_id'=>$_ENV['CLINIC_ID'],

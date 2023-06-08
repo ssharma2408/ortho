@@ -15,7 +15,9 @@ class StaffController extends Controller
         $theUrl     = config('app.api_url').'v1/staffs';	   
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->get($theUrl);
+        ])->get($theUrl, [
+				'clinic_id'=>$_ENV['CLINIC_ID']				
+			]);
 		
 		$staffs = json_decode($response->body())->data;		
 
