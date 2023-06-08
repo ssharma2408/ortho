@@ -27,11 +27,50 @@ class LoginController extends Controller
      * 
      * @return Renderable
      */
-    public function showpatient()
+    public function patient_login()
     {
         return view('patient_login');
     }
 	
+	/**
+     * Display register page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_register()
+    {
+        return view('patient_register');
+    }	
+
+	/**
+     * Display register page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_register_save()
+    {
+        return view('patient_register');
+    }
+
+	/**
+     * Display OTP page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_gen_otp()
+    {
+        return view('otpVerification');
+    }	
+
+	/**
+     * Display OTP page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_verify()
+    {
+        return view('otpVerification');
+    }
 	/**
      * Handle account login request
      * 
