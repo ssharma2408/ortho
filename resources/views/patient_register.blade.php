@@ -30,7 +30,7 @@
 				 @if ($errors->has('mobile_no'))
 					<span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
 				@endif
-                <label class="single-input-wrap">
+                <!--label class="single-input-wrap">
                     <span>Password*</span>
                     <input id="password" type="password" name="password" required autocomplete="new-password">
                 </label>
@@ -43,7 +43,7 @@
                 </label>
 				 @if ($errors->has('password_confirmation'))
 					<span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
-				@endif
+				@endif -->
 
 				<button class="btn btn-purple" type="submit">Register</button>               			
             </form>

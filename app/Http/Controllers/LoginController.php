@@ -20,17 +20,7 @@ class LoginController extends Controller
     public function show()
     {
         return view('login');
-    }
-	
-	/**
-     * Display login page for patient.
-     * 
-     * @return Renderable
-     */
-    public function patient_login()
-    {
-        return view('patient_login');
-    }
+    }	
 	
 	/**
      * Display register page for patient.
@@ -47,9 +37,42 @@ class LoginController extends Controller
      * 
      * @return Renderable
      */
-    public function patient_register_save()
+    public function patient_register_save(Request $request)
     {
-        return view('patient_register');
+        
+		$post_arr = [
+			'name'=>$request['name'],
+			'mobile_number'=>$request['mobile_no'],
+			'domain'=>$_ENV['DOMAIN'],
+			'clinic_id'=>$_ENV['CLINIC_ID'],
+		];		
+
+		$response = Http::post(config('app.api_url').'patient_register', $post_arr);
+		$result = json_decode($response->body());
+		
+		if($result->success && $result->data->token){
+			
+			$patient = $result->data;
+			
+			return redirect()->to('patient_login')
+                ->with('success', $result->message);
+			
+		}else{
+			
+			return redirect()->to('/')
+                ->withErrors($result->data->error);
+		}
+		
+    }
+	
+	/**
+     * Display login page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_login()
+    {
+        return view('patient_login');
     }
 
 	/**
@@ -57,9 +80,34 @@ class LoginController extends Controller
      * 
      * @return Renderable
      */
-    public function patient_gen_otp()
+    public function patient_gen_otp(Request $request)
     {
-        return view('otpVerification');
+        
+		$post_arr = [			
+			'mobile_number'=>$request['mobile_no'],
+			'domain'=>$_ENV['DOMAIN'],
+			'clinic_id'=>$_ENV['CLINIC_ID'],
+		];		
+
+		$response = Http::withHeaders([
+            'Accept' => 'application/json' 
+        ])->post(config('app.api_url').'patientlogin', $post_arr);
+		
+		
+		$result = json_decode($response->body());		
+		
+		if($result->success && $result->data->patient_id){
+			
+			$patient_id = $result->data->patient_id;
+			
+			return redirect()->to('patient_verification')
+                ->with(['success'=> $result->message, 'patient_id'=>$patient_id]);			
+			
+		}else{
+			
+			return redirect()->to('/')
+                ->withErrors($result->data->error);
+		}		
     }	
 
 	/**
@@ -71,6 +119,43 @@ class LoginController extends Controller
     {
         return view('otpVerification');
     }
+
+	
+	/**
+     * Display OTP page for patient.
+     * 
+     * @return Renderable
+     */
+    public function patient_verify_process(Request $request)
+    {
+        $post_arr = [			
+			'patient_id'=>$request['patient_id'],
+			'otp'=>$request['otp'],
+			'domain'=>$_ENV['DOMAIN'],
+			'clinic_id'=>$_ENV['CLINIC_ID'],
+		];		
+
+		$response = Http::withHeaders([
+            'Accept' => 'application/json' 
+        ])->post(config('app.api_url').'patientloginwithotp', $post_arr);
+		
+		
+		$result = json_decode($response->body());
+		
+		if($result->success){
+			
+			$patient = $result->data;
+			Session::put('user_details', $patient);			
+
+			return $this->authenticated($request, $patient);
+			
+		}else{
+			
+			return redirect()->to('patient_login')
+                ->withErrors($result->data->error);
+		}
+    }
+	
 	/**
      * Handle account login request
      * 
