@@ -175,20 +175,25 @@ class LoginController extends Controller
 		]);		
 		$result = json_decode($response->body());		
 		
-		if($result->success && $result->data->token){
-			
-			$user = $result->data;
-			Session::put('user_details', $user);
-			
-			//Auth::login($user);
+		if(isset($result->success)){
+			if($result->success && $result->data->token){
+				
+				$user = $result->data;
+				Session::put('user_details', $user);
+				
+				//Auth::login($user);
 
-			return $this->authenticated($request, $user);
-			
+				return $this->authenticated($request, $user);
+				
+			}else{
+				
+				return redirect()->to('login')
+					->withErrors($result->data->error);
+			}
 		}else{
-			
 			return redirect()->to('login')
-                ->withErrors($result->data->error);
-		}    
+					->withErrors("There is a technical error. Please try after some time");
+		}
     }
 	
 	/**
