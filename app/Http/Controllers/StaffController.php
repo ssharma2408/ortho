@@ -47,7 +47,7 @@ class StaffController extends Controller
 			'name'=>$request['name'],
 			'email'=>$request['email'],
 			'mobile_number'=>$request['mobile'],
-			'username'=>$request['username']."_".Session::get('user_details')->postfix,
+			'username'=>Session::get('user_details')->prefix."_".$request['username'],
 			'password'=>Hash::make($request['password']),
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];
@@ -92,7 +92,7 @@ class StaffController extends Controller
 			'name'=>$request['name'],
 			'email'=>$request['email'],
 			'mobile_number'=>$request['mobile'],
-			'username'=>$request['username']."_".Session::get('user_details')->postfix,			
+			'username'=>Session::get('user_details')->prefix."_".$request['username'],			
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];
 		

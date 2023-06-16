@@ -48,7 +48,7 @@
 						@endif
                     </label>
                     <label class="single-input-wrap">
-                        <input type="text" name="username" id="username" value="{{ old('username', $staff->username) }}" required>_{{ Session::get('user_details')->postfix }}
+                        {{ Session::get('user_details')->prefix }}_<input type="text" name="username" id="username" value="{{ old('username', $staff->username) }}" required>
 						@if($errors->has('username'))
 							<div class="invalid-feedback">
 								{{ $errors->first('username') }}
