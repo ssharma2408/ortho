@@ -66,6 +66,13 @@
 		<button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
 	</form>
 </div>
+@if (Session::has('close_status'))
+	<div class="balance-area pd-top-40 mg-top-50">
+		<div class="container">
+			<div class="text-center p-4 bg-danger mb-4">Clinic is closed today</div>
+		</div>
+	</div>
+@endif
 <!-- //. search Popup -->
 <!-- header start -->
 <!--div class="header-area" style="background-image: url({{ asset('img/bg/1.png') }});">

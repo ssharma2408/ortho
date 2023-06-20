@@ -39,6 +39,7 @@
 </div>
 <!-- balance End -->
 
+@if(!empty($clinic->opening_hours))
 <!-- my-clinic start -->
 <div class="my-clinic-details pd-top-36">
 	<div class="container">
@@ -47,50 +48,28 @@
 				<span class="float-left">Timings</span>
 				<span class="float-right"><i class="fa fa-calendar"></i></span>
 			</li>
-			<li>
-				<span class="float-left">Monday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">Tuesday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">Wedenesday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">Thursday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">Friday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">Saturday</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-				</div>
-			</li>
+			@foreach($day_arr as $key=>$day)
+				<li>
+					<span class="float-left">{{ $day }}</span>
+					@if(isset($clinic->opening_hours[$key+1]))
+						<div class="float-right">	
+							@foreach($clinic->opening_hours[$key+1] as $slot=>$timing)					
+								<span class="d-block">{{$timing->start_hour}} - {{$timing->end_hour}}</span>
+							@endforeach
+						</div>
+					@else
+						<div class="float-right">								
+							<span class="d-block">Cloed</span>							
+						</div>
+					@endif
+				</li>
+			@endforeach
 		</ul>
 	</div>
 </div>
+@endif
+
+@if(!empty($closed_days))
 <div class="my-clinic-details pd-top-36">
 	<div class="container">
 		<ul class="my-clinic-details-inner">
@@ -98,27 +77,15 @@
 				<span class="float-left">Closed on</span>
 				<span class="float-right"><i class="fa fa-calendar-times-o"></i></span>
 			</li>
-			<li>
-				<span class="float-left">15-05-2023</span>
-				<div class="float-right">
-					<span class="d-block">10:00AM - 2:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">16-05-2023</span>
-				<div class="float-right">
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
-			<li>
-				<span class="float-left">17-05-2023</span>
-				<div class="float-right">
-					<span class="d-block">4:00PM - 7:00PM</span>
-				</div>
-			</li>
+			@foreach($closed_days as $day)
+				<li>
+					<span class="float-left">{{date('d-M-y', strtotime($day->closed_on))}}</span>					
+				</li>
+			@endforeach
 		</ul>
 	</div>
 </div>
+@endif
 <!-- my-clinic End -->
 
 <div class="btn-wrap mg-top-40 text-center">

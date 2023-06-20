@@ -26,9 +26,11 @@ Route::get('clinic/', [TestController::class, 'getClinic']); */
 
 Route::group(['namespace' => 'App\Http\Controllers'], function()
 {
-	Route::get('/', function () {
+	/* Route::get('/', function () {
 		return view('home');
-	});
+	}); */
+	
+	Route::get('/', 'HomeController@index')->name('clinic.home');
 	
 	Route::group(['middleware' => ['guest']], function() {
 
