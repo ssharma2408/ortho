@@ -19,7 +19,7 @@ class StaffController extends Controller
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
         ])->get($theUrl, [
-				'clinic_id'=>$_ENV['CLINIC_ID']				
+				'clinic_id'=>$_ENV['CLINIC_ID']
 			]);
 		
 		$staffs = json_decode($response->body())->data;		

@@ -17,14 +17,15 @@
 			@if (Session::has('user_details') && Session::get('user_details')->role=="Clinic Admin")
 				<li><a href="{{route('clinic.admin.dashboard')}}">Home</a></li>
 				<li><a href="{{route('my-clinic.show')}}">My Clinic</a></li>
-				<li><a href="home.html">Doctors</a></li>
+				<li><a href="{{route('doctors.index')}}">Doctors</a></li>
 				<li><a href="{{route('staffs.index')}}">Staffs</a></li>
 				<li><a href="all-page.html">Pages</a></li>	
 				<li><a href="signup.html">Logout</a></li>
 			@endif
 			
 			@if (Session::has('user_details') && Session::get('user_details')->role=="Doctor")
-				<li><a href="{{route('dashboard')}}">Home</a></li>			
+				<li><a href="{{route('doctor.dashboard')}}">Home</a></li>			
+				<li><a href="{{route('timings.index')}}">Timings</a></li>
 				<li><a href="signup.html">Logout</a></li>
 			@endif
 			

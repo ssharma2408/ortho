@@ -96,18 +96,23 @@ class LoginController extends Controller
 		
 		$result = json_decode($response->body());		
 		
-		if($result->success && $result->data->patient_id){
-			
-			$patient_id = $result->data->patient_id;
-			
-			return redirect()->to('patient_verification')
-                ->with(['success'=> $result->message, 'patient_id'=>$patient_id]);			
-			
+		if(isset($result->success)){
+			if($result->success && $result->data->patient_id){
+				
+				$patient_id = $result->data->patient_id;
+				
+				return redirect()->to('patient_verification')
+					->with(['success'=> $result->message, 'patient_id'=>$patient_id]);			
+				
+			}else{
+				
+				return redirect()->to('/')
+					->withErrors($result->data->error);
+			}
 		}else{
-			
-			return redirect()->to('/')
-                ->withErrors($result->data->error);
-		}		
+			return redirect()->to('patient_login')
+					->withErrors("There is a technical error. Please try after some time");
+		}
     }	
 
 	/**

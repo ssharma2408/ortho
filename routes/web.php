@@ -53,12 +53,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/', 'ClinicController@dashboard')->name('clinic.admin.dashboard');
 		Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');
 		Route::resource('staffs', 'StaffController');
+		Route::get('doctors', 'DoctorController@index')->name('doctors.index');
+		Route::get('doctor', 'DoctorController@view')->name('doctor.view');
 	 
 	});
 	
 	Route::group(['prefix' => 'doctor_dashboard', 'middleware' => ['doctorAdminAccess']], function() {
-		Route::get('/', 'ClinicController@dashboard')->name('dashboard');
-		//Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');	 
+		Route::get('/', 'DoctorController@dashboard')->name('doctor.dashboard');
+		Route::resource('timings', 'TimingController');
+		Route::post('timings-save', 'TimingController@save')->name('timings.save');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {
