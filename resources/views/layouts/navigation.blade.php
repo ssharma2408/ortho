@@ -26,6 +26,7 @@
 			@if (Session::has('user_details') && Session::get('user_details')->role=="Doctor")
 				<li><a href="{{route('doctor.dashboard')}}">Home</a></li>			
 				<li><a href="{{route('timings.index')}}">Timings</a></li>
+				<li><a href="{{route('doctor.patients')}}">Patients</a></li>
 				<li><a href="signup.html">Logout</a></li>
 			@endif
 			

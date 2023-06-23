@@ -60,6 +60,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	
 	Route::group(['prefix' => 'doctor_dashboard', 'middleware' => ['doctorAdminAccess']], function() {
 		Route::get('/', 'DoctorController@dashboard')->name('doctor.dashboard');
+		Route::get('/patients', 'DoctorController@patients')->name('doctor.patients');
 		Route::resource('timings', 'TimingController');
 		Route::post('timings-save', 'TimingController@save')->name('timings.save');
 	});
@@ -70,7 +71,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	});
 	
 	Route::group(['prefix' => 'user_dashboard', 'middleware' => ['patientAccess']], function() {
-		Route::get('/', 'ClinicController@dashboard')->name('dashboard');
+		Route::get('/', 'PatientController@dashboard')->name('patient.dashboard');
+		Route::get('/book-appointment/{doctor_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
 		
 	});
 	

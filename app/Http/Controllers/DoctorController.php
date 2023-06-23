@@ -45,4 +45,16 @@ class DoctorController extends Controller
     {
 		return view('doctors.dashboard');
     }
+	
+	public function patients()
+    {
+		$theUrl     = config('app.api_url').'v1/tokens/'.$_ENV['CLINIC_ID'].'/'.Session::get('user_details')->user_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+		
+		$patients = json_decode($response->body())->data;
+		
+		return view('doctors.patients', compact('patients'));
+    }	
 }

@@ -55,6 +55,7 @@
             <div class="balance-area-bg balance-area-bg-home">
                 <div class="balance-title text-center">
                     <p>Welcome! <br> Guest User</p>
+					<a href="{{route('patient.login.show')}}" class="btn btn-success">Book an Appointment</a>
                 </div>
             </div>
         </div>

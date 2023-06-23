@@ -40,7 +40,7 @@ class ClinicController extends Controller
         ])->get($theUrl);
 				
 		$closed_days = json_decode($response->body())->data;		
-		
+
         return view('clinic.show', compact('clinic', 'day_arr', 'closed_days'));
     }
 }

@@ -36,7 +36,11 @@
 									Close at
 									<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
+									Max Token
+									<input type="number" id="" name="maxtoken_{{$key+1}}[]" min="0" />
+								</div>
+								<div class="col-md-2">
 									<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
 								</div>
 							</div>													
@@ -68,7 +72,11 @@
 											Close at
 											<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" value="{{$timing->end_hour}}" />
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-2">
+											Max Token
+											<input type="number" id="" name="maxtoken_{{$key+1}}[]" min="0" value="{{$timing->max_token}}" />
+										</div>
+										<div class="col-md-2">
 											@if($slot ==0)
 												<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
 											@else
@@ -87,7 +95,11 @@
 										Close at
 										<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
 									</div>
-									<div class="col-md-4">																		
+									<div class="col-md-2">
+										Max Token
+										<input type="number" id="" name="maxtoken_{{$key+1}}[]" min="0" />
+									</div>
+									<div class="col-md-2">																		
 										<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
 									</div>
 								</div>
