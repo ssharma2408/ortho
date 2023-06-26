@@ -77,7 +77,7 @@
                success:function(data) {
                  if(data.success){
 					$("#doc_"+doc_id).hide();
-					$html = "<div>"+data.msg+"</div><div>Current token:<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button type='button'>Refresh</button></div>"
+					$html = "<div>"+data.msg+"</div><div>Current token:"+data.token.current_token+"<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button type='button'>Refresh</button></div>"
 					$(".token_details").show().html($html);
 				 }else{
 					 $html = "<div>"+data.msg+"</div>"

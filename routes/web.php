@@ -63,6 +63,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/patients', 'DoctorController@patients')->name('doctor.patients');
 		Route::resource('timings', 'TimingController');
 		Route::post('timings-save', 'TimingController@save')->name('timings.save');
+		Route::get('/update-token/{patient_id}/{status}', 'DoctorController@update_token')->name('doctor.update_token');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {

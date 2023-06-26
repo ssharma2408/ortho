@@ -77,7 +77,7 @@ class PatientController extends Controller
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
         ])->post($theUrl, $post_arr);
 		
-		$token = json_decode($response->body())->data[0];
+		$token = json_decode($response->body())->data;
 
 		if(isset($token->token_number)){
 			$msg = "Appointment booked successfully.";

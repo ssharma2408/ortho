@@ -48,13 +48,14 @@
 					</div>
 					<div class="col-3 pr-0">						
 						<select id="status_{{$patient->id}}">
-							<option value="0" @if($patient->status==0){{'selected'}} @endif>Closed</option>
+							<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 							<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>
 							<option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option>
 						</select>
 					</div>
 					<div class="col-3 pr-0">						
 						<button type="button" id="btn_{{$patient->id}}" class="btn_update btn btn-success">Update</button>
+						<div class="patient_msg" id="msg_{{$patient->id}}"></div>
 					</div>
 				</div>
 			</div>
@@ -69,5 +70,26 @@
 <script>
 
 
+$(function(){
+	$(".patient_msg").hide();  
+});
+$(".btn_update").click(function(){
+	var patient_id = $(this).attr("id").split("_")[1];
+	var status = $("#status_"+patient_id+"").val();
+	
+	$.ajax({
+		   type:'GET',
+		   url:'/doctor_dashboard/update-token/'+patient_id+'/'+status,
+		   success:function(data) {
+			 if(data.success){				
+				$html = "<div>"+data.msg+"</div>"
+				$("#msg_"+patient_id+"").show().html($html);
+			 }else{
+				$html = "<div>There is a technical error, please try after sometime.</div>"
+				$("#msg_"+patient_id+"").show().html($html);
+			 }
+		   }
+		});
+});
 </script>
 @endsection

@@ -56,5 +56,24 @@ class DoctorController extends Controller
 		$patients = json_decode($response->body())->data;
 		
 		return view('doctors.patients', compact('patients'));
-    }	
+    }
+	
+	public function update_token(Request $request)
+	{
+		$theUrl     = config('app.api_url').'v1/update_token';		
+		
+		$post_arr = [			
+			'doctor_id'=>Session::get('user_details')->user_id,
+			'patient_id'=>$request->patient_id,
+			'status'=>$request->status,
+			'clinic_id'=>$_ENV['CLINIC_ID'],
+		];		
+
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);		
+		
+		$msg = "Status updated successfully.";
+		return response()->json(array('success'=>1, 'msg'=> $msg), 200);
+	}
 }
