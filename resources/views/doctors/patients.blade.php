@@ -50,7 +50,7 @@
 						<select id="status_{{$patient->id}}">
 							<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 							<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>
-							<option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option>
+							<!--option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option-->
 						</select>
 					</div>
 					<div class="col-3 pr-0">						

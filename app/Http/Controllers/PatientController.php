@@ -8,39 +8,6 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-  /*   public function index(){
-		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'];
-		$response   = Http ::withHeaders([
-            'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->get($theUrl);
-
-		$doctors = json_decode($response->body())->data[0]->doctors;
-
-	   return view('doctors.index', compact('doctors'));
-	}
-	
-	public function view(Request $request){
-		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id;
-		$response   = Http ::withHeaders([
-            'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->get($theUrl);
-
-		$details = json_decode($response->body())->data;
-		
-		if(!empty($details->opening_hours)){
-			$timing_arr = [];
-			foreach($details->opening_hours as $timing){
-				$timing_arr[$timing->day][] = $timing;
-			}
-			$details->opening_hours = $timing_arr;
-		}
-		
-		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-
-		return view('doctors.view', compact('details', 'day_arr'));
-	   
-	} */
-	
 	public function dashboard()
     {
 		$theUrl     = config('app.api_url').'v1/doctors_timing/'.$_ENV['CLINIC_ID'];
@@ -86,7 +53,25 @@ class PatientController extends Controller
 			$msg = "There is a technical error, please try after sometime";
 			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
 		}
-			
-    }	
+    }
+	
+	public function refresh_status(Request $request)
+    {
+		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.Session::get('user_details')->id;
+		
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token
+        ])->get($theUrl);
+		
+		
+		$status = json_decode($response->body())->data;		
+
+		if(isset($status->token_number)){			
+			return response()->json(array('success'=>1, 'token'=>$status), 200);
+		}else{
+			$msg = "There is a technical error, please try after sometime";
+			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
+		}
+    }
 	
 }
