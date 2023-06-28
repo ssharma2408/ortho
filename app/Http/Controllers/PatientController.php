@@ -21,11 +21,11 @@ class PatientController extends Controller
 		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 		
 		foreach($doctors as $doctor){			
-			$doc['id'] = $doctor->id;
-			$doc['name'] = $doctor->name;
-			$doc['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id);			
-			$doctor_arr = array($doc);
+			$doctor_arr[$doctor->id]['id'] = $doctor->id;
+			$doctor_arr[$doctor->id]['name'] = $doctor->name;
+			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id);
 		}
+
 		foreach($doctor_arr as $index => $doc){
 			$theUrl     = config('app.api_url').'v1/check_status/'.$_ENV['CLINIC_ID'].'/'.$doc['id'].'/'.Session::get('user_details')->id;
 			$response   = Http ::withHeaders([

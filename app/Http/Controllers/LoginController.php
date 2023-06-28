@@ -50,17 +50,22 @@ class LoginController extends Controller
 		$response = Http::post(config('app.api_url').'patient_register', $post_arr);
 		$result = json_decode($response->body());
 		
-		if($result->success && $result->data->token){
-			
-			$patient = $result->data;
-			
-			return redirect()->to('patient_login')
-                ->with('success', $result->message);
-			
+		if(isset($result->success)){
+			if($result->success && $result->data->token){
+				
+				$patient = $result->data;
+				
+				return redirect()->to('patient_login')
+					->with('success', $result->message);
+				
+			}else{
+				
+				return redirect()->to('/')
+					->withErrors($result->data->error);
+			}
 		}else{
-			
-			return redirect()->to('/')
-                ->withErrors($result->data->error);
+			return redirect()->to('patient_login')
+					->withErrors("There is a technical error. Please try after some time");
 		}
 		
     }
