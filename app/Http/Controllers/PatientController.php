@@ -23,8 +23,15 @@ class PatientController extends Controller
 		foreach($doctors as $doctor){			
 			$doc['id'] = $doctor->id;
 			$doc['name'] = $doctor->name;
-			$doc['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour);			
+			$doc['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id);			
 			$doctor_arr = array($doc);
+		}
+		foreach($doctor_arr as $index => $doc){
+			$theUrl     = config('app.api_url').'v1/check_status/'.$_ENV['CLINIC_ID'].'/'.$doc['id'].'/'.Session::get('user_details')->id;
+			$response   = Http ::withHeaders([
+				'Authorization' => 'Bearer '.Session::get('user_details')->token
+			])->get($theUrl);
+			$doctor_arr[$index]['is_booked'] = json_decode($response->body());			
 		}
 
 		return view('patients.dashboard', compact('doctor_arr', 'day_arr'));
@@ -36,6 +43,7 @@ class PatientController extends Controller
 		
 		$post_arr = [			
 			'doctor_id'=>$request->doctor_id,
+			'slot_id'=>$request->slot_id,
 			'patient_id'=>Session::get('user_details')->id,
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];
@@ -57,19 +65,19 @@ class PatientController extends Controller
 	
 	public function refresh_status(Request $request)
     {
-		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.Session::get('user_details')->id;
-		
+		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.$request->slot_id.'/'.Session::get('user_details')->id;
+
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token
         ])->get($theUrl);
-		
-		
-		$status = json_decode($response->body())->data;		
 
-		if(isset($status->token_number)){			
-			return response()->json(array('success'=>1, 'token'=>$status), 200);
+
+		$status = json_decode($response->body());
+
+		if(isset($status->data)){			
+			return response()->json(array('success'=>1, 'token'=>$status->data), 200);
 		}else{
-			$msg = "There is a technical error, please try after sometime";
+			$msg = "No records found or there is a technical error, please try after sometime";
 			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
 		}
     }

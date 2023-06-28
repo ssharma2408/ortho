@@ -55,7 +55,13 @@ class DoctorController extends Controller
 		
 		$patients = json_decode($response->body())->data;
 		
-		return view('doctors.patients', compact('patients'));
+		$patient_arr = [];
+		
+		foreach($patients as $patient){
+			$patient_arr[$patient->start_hour."-".$patient->end_hour][] = $patient;
+		}
+
+		return view('doctors.patients', compact('patient_arr'));
     }
 	
 	public function update_token(Request $request)
@@ -65,6 +71,7 @@ class DoctorController extends Controller
 		$post_arr = [			
 			'doctor_id'=>Session::get('user_details')->user_id,
 			'patient_id'=>$request->patient_id,
+			'slot_id'=>$request->slot_id,
 			'status'=>$request->status,
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];		

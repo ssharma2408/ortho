@@ -63,7 +63,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/patients', 'DoctorController@patients')->name('doctor.patients');
 		Route::resource('timings', 'TimingController');
 		Route::post('timings-save', 'TimingController@save')->name('timings.save');
-		Route::get('/update-token/{patient_id}/{status}', 'DoctorController@update_token')->name('doctor.update_token');
+		Route::get('/update-token/{patient_id}/{slot_id}/{status}', 'DoctorController@update_token')->name('doctor.update_token');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {
@@ -73,8 +73,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	
 	Route::group(['prefix' => 'user_dashboard', 'middleware' => ['patientAccess']], function() {
 		Route::get('/', 'PatientController@dashboard')->name('patient.dashboard');
-		Route::get('/book-appointment/{doctor_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
-		Route::get('/refresh-status/{doctor_id}', 'PatientController@refresh_status')->name('patient.refresh_status');
+		Route::get('/book-appointment/{doctor_id}/{slot_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
+		Route::get('/refresh-status/{doctor_id}/{slot_id}', 'PatientController@refresh_status')->name('patient.refresh_status');
 		
 	});
 	
