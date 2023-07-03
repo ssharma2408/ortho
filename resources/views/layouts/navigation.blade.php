@@ -20,19 +20,22 @@
 				<li><a href="{{route('doctors.index')}}">Doctors</a></li>
 				<li><a href="{{route('staffs.index')}}">Staffs</a></li>
 				<li><a href="all-page.html">Pages</a></li>	
-				<li><a href="signup.html">Logout</a></li>
+				<li><a href="{{ route('login.logout') }}">Logout</a></li>
 			@endif
 			
 			@if (Session::has('user_details') && Session::get('user_details')->role=="Doctor")
 				<li><a href="{{route('doctor.dashboard')}}">Home</a></li>			
 				<li><a href="{{route('timings.index')}}">Timings</a></li>
+				<li><a href="{{route('doctor.current.appointments')}}">Current Appointments</a></li>
 				<li><a href="{{route('doctor.patients')}}">Patients</a></li>
-				<li><a href="signup.html">Logout</a></li>
+				<li><a href="{{ route('login.logout') }}">Logout</a></li>
 			@endif
 			
 			@if (Session::has('user_details') && Session::get('user_details')->role=="Staff")
-				<li><a href="{{route('dashboard')}}">Home</a></li>			
-				<li><a href="signup.html">Logout</a></li>
+				<li><a href="{{route('staff.dashboard')}}">Home</a></li>
+				<li><a href="{{route('clinic.show')}}">My Clinic</a></li>
+				<li><a href="{{route('clinic.doctors')}}">Doctors</a></li>
+				<li><a href="{{ route('login.logout') }}">Logout</a></li>
 			@endif
 		</ul>
 		<a class="btn btn-purple" href="#">View Profile</a>

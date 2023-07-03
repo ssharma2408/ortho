@@ -22,9 +22,6 @@
 			<h3 class="title">{{$clinic->name}}</h3>			
 		</div>
 		@include('layouts.partials.messages')
-		<div class="section-title">			
-			<h2 class="title">Package: {{$clinic->package->package}}</h2>			
-		</div>
 		<div class="balance-area-bg bg-transaction-details">
 			<div class="balance-title text-center">
 				<h3><b>{{$clinic->clinic_admin->name}}</b></h3>
@@ -39,7 +36,6 @@
 	</div>
 </div>
 <!-- balance End -->
-
 @if(!empty($clinic->opening_hours))
 <!-- my-clinic start -->
 <div class="my-clinic-details pd-top-36">
@@ -47,7 +43,7 @@
 		<ul class="my-clinic-details-inner">
 			<li class="my-clinic-details-title bg-green">
 				<span class="float-left">Timings</span>
-				<span class="float-right"><a href="{{ route('clinic.timings.edit') }}" class="btn btn-success">Update</a></span>
+				<span class="float-right"><a href="{{ route('staff.timings.edit') }}" class="btn btn-success">Update</a></span>
 			</li>
 			@foreach($day_arr as $key=>$day)
 				<li>
@@ -70,23 +66,24 @@
 </div>
 @endif
 
-@if(!empty($closed_days))
 <div class="my-clinic-details pd-top-36">
 	<div class="container">
 		<ul class="my-clinic-details-inner">
 			<li class="my-clinic-details-title bg-secondary">
 				<span class="float-left">Closed on</span>
-				<span class="float-right"><a href="{{ route('clinic.closed.edit', ['clinic_admin'=>$clinic->clinic_admin->id]) }}" class="btn btn-success">Update</a></span>
+				<span class="float-right"><a href="{{ route('closed.edit', ['clinic_admin'=>$clinic->clinic_admin->id]) }}" class="btn btn-success">Update</a></span>
 			</li>
-			@foreach($closed_days as $day)
-				<li>
-					<span class="float-left">{{date('d-M-y', strtotime($day->closed_on))}}</span>					
-				</li>
-			@endforeach
+			@if(!empty($closed_days))
+				@foreach($closed_days as $day)
+					<li>
+						<span class="float-left">{{date('d-M-y', strtotime($day->closed_on))}}</span>					
+					</li>
+				@endforeach
+			@endif
 		</ul>
 	</div>
 </div>
-@endif
+
 <!-- my-clinic End -->
 
 <div class="btn-wrap mg-top-40 text-center">

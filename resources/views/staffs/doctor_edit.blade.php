@@ -17,7 +17,7 @@
 <!-- my-clinic start -->
 <div class="my-clinic-details pd-top-36">
 	<div class="container">
-		<form method="post" action="{{route('timings.save', [$details->doctor->id])}}">
+		<form method="post" action="{{route('staff.timings.save', [$details->doctor->id])}}">
 			@csrf
 			@if(empty($details->opening_hours))
 				@foreach($day_arr as $key=>$day)
@@ -122,6 +122,8 @@
 			@endif
 			<button type="submit" class="btn btn-success">Save</button>
 			<input type="hidden" name="user_id" value="{{ $details->doctor->id }}">
+			<input type="hidden" name="clinic_id" value="{{ $_ENV['CLINIC_ID'] }}">
+			<input type="hidden" name="type" value="doctor">
 		</form>
 	</div>
 </div>
@@ -145,7 +147,7 @@
 	});
 	
 	function row_html(key){
-		return '<div class="row mt-2"><div class="col-md-3">Open at <input type="time" id="" name="open_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-3">Close at <input type="time" id="" name="close_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-2">Max Token<input type="number" id="" name="maxtoken_'+key+'[]" min="0" /></div><div class="col-md-2">Time per Token<input type="number" id="" name="timepertoken_{{$key+1}}[]" min="0" /></div><div class="col-md-2"><span class="remove_row" id="remove_row">-</span></div></div>';	
+		return '<div class="row mt-2"><div class="col-md-3">Open at <input type="time" id="" name="open_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-3">Close at <input type="time" id="" name="close_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-2">Max Token<input type="number" id="" name="maxtoken_'+key+'[]" min="0" /></div><div class="col-md-2">Time per Token<input type="number" id="" name="timepertoken_{{$key+1}}[]" min="0" /></div><div class="col-md-2"><span class="remove_row" id="remove_row">-</span></div></div>';
 	}
 	$(function() {
 		$(".check_day").each(function(){

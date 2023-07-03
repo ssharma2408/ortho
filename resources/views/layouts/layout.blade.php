@@ -23,6 +23,8 @@
  
 		@include('layouts.footer')
 		
+		@yield('modal')
+		
 		@yield('scripts')
 	</body>
 </html>

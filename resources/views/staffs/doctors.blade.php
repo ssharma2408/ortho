@@ -31,8 +31,8 @@
 					</div>					
 					<div class="col-5 pl-0">
 						<div class="d-flex align-items-center justify-content-end pr-3">
-							<a class="icon-outline text-red fw-5 mx-1" href="{{ route('doctor.view', ['doctor_id'=>$doctor->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-							<a class="icon-outline text-red fw-5 mx-1" href="{{ route('doctor.edit', ['doctor_id'=>$doctor->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+							<a class="icon-outline text-red fw-5 mx-1" href="{{ route('staff.doctor.view', ['doctor_id'=>$doctor->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+							<a class="icon-outline text-red fw-5 mx-1" href="{{ route('staff.doctor.edit', ['doctor_id'=>$doctor->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						</div>
 					</div>
 				</div>

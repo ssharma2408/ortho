@@ -13,7 +13,12 @@ use Hash;
 
 class StaffController extends Controller
 {
-    public function index()
+    public function dashboard()
+    {
+		return view('staffs.dashboard');
+    }
+	
+	public function index()
     {
         $theUrl     = config('app.api_url').'v1/staffs';	   
 		$response   = Http ::withHeaders([
@@ -143,4 +148,158 @@ class StaffController extends Controller
 
         return redirect()->route('staffs.index');
     }
+
+	public function clinic()
+	{
+
+		$theUrl     = config('app.api_url').'v1/clinics/'.$_ENV['CLINIC_ID'];	   
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+				
+		$clinic = json_decode($response->body())->data;
+		
+		if(!empty($clinic->opening_hours)){
+			$timing_arr = [];
+			foreach($clinic->opening_hours as $timing){
+				$timing_arr[$timing->day][] = $timing;
+			}
+			$clinic->opening_hours = $timing_arr;
+		}
+		
+		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+		
+		//get closed days
+		$theUrl     = config('app.api_url').'v1/closed-timings/'.$clinic->clinic_admin->id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+				
+		$closed_days = json_decode($response->body())->data;		
+
+        return view('staffs.clinic', compact('clinic', 'day_arr', 'closed_days'));
+	}
+
+	public function doctors()
+	{
+		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'];
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$doctors = json_decode($response->body())->data[0]->doctors;
+
+	   return view('staffs.doctors', compact('doctors'));
+	}
+
+	public function view(Request $request)
+	{
+		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;
+		
+		if(!empty($details->opening_hours)){
+			$timing_arr = [];
+			foreach($details->opening_hours as $timing){
+				$timing_arr[$timing->day][] = $timing;
+			}
+			$details->opening_hours = $timing_arr;
+		}
+		
+		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+		return view('staffs.doctor', compact('details', 'day_arr'));
+	}
+
+	public function timings()
+	{
+		$theUrl     = config('app.api_url').'v1/clinic-timings/'.$_ENV['CLINIC_ID'];
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;
+		
+		if(!empty($details->opening_hours)){
+			$timing_arr = [];
+			foreach($details->opening_hours as $timing){
+				$timing_arr[$timing->day][] = $timing;
+			}
+			$details->opening_hours = $timing_arr;
+		}
+
+		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+		return view('staffs.timings', compact('details', 'day_arr'));
+	}
+	
+	public function save(Request $request)
+    {		
+		$theUrl     = config('app.api_url').'v1/timings-save';
+		
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $request->all());
+
+		$response = json_decode($response->body());		
+		$route = 'clinic.show';
+		
+		if($request->type =='doctor'){
+			$route = 'clinic.doctors';
+		}
+        return redirect()->route($route)->with('success', "Timings updated successfully");
+    }
+
+	public function closed_day(Request $request)
+	{
+		$theUrl     = config('app.api_url').'v1/closed-timings/'.$request->clinic_admin;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;
+		
+		$clinic_admin = $request->clinic_admin;
+
+		return view('staffs.closedday', compact('details', 'clinic_admin'));
+	}
+
+	public function closed_day_save(Request $request)
+    {		
+		
+		$theUrl     = config('app.api_url').'v1/closed-timings-save';
+		
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $request->all());
+
+		$response = json_decode($response->body());
+
+        return redirect()->route('clinic.show')->with('success', "Timings updated successfully");
+    }
+	
+	public function doctor_timing_edit(Request $request)
+	{
+		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;
+		
+		if(!empty($details->opening_hours)){
+			$timing_arr = [];
+			foreach($details->opening_hours as $timing){
+				$timing_arr[$timing->day][] = $timing;
+			}
+			$details->opening_hours = $timing_arr;
+		}
+		
+		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+		return view('staffs.doctor_edit', compact('details', 'day_arr'));
+	}
 }

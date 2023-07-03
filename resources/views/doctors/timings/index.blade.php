@@ -20,7 +20,10 @@
 		@include('layouts.partials.messages')
 		<ul class="my-clinic-details-inner">
 			<li class="my-clinic-details-title bg-green">
-				<span class="float-left">Timings</span>
+				<span class="float-left">Day</span>
+				<span class="float-right">Timings</span>
+				<span class="float-right">Max Token</span>
+				<span class="float-right">Time Per Token</span>
 				<span class="float-right"><a href="{{ route('timings.edit', $details->doctor->id) }}" class="btn btn-success">Update</a></span>
 			</li>
 			@if(!empty($details->opening_hours))

@@ -54,20 +54,36 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/my-clinic', 'ClinicController@show')->name('my-clinic.show');
 		Route::resource('staffs', 'StaffController');
 		Route::get('doctors', 'DoctorController@index')->name('doctors.index');
-		Route::get('doctor', 'DoctorController@view')->name('doctor.view');
+		Route::get('doctor-view', 'DoctorController@view')->name('doctor.view');
+		Route::get('doctor', 'DoctorController@edit')->name('doctor.edit');
+		Route::post('/clinic-doctor-timings-save', 'DoctorController@save')->name('clinic.timings.save');
+		Route::get('/clinic-timings', 'ClinicController@timings')->name('clinic.timings.edit');
+		Route::post('/clinic-timings-save', 'ClinicController@save')->name('clinicadmin.timings.save');
+		Route::get('/clinicadmin-closed', 'ClinicController@closed_day')->name('clinic.closed.edit');
+		Route::post('/clinicadmin-closed-save', 'ClinicController@closed_day_save')->name('clinicadmin.closed.save');
 	 
 	});
 	
 	Route::group(['prefix' => 'doctor_dashboard', 'middleware' => ['doctorAdminAccess']], function() {
 		Route::get('/', 'DoctorController@dashboard')->name('doctor.dashboard');
+		Route::get('/current_appointments', 'DoctorController@current_appointments')->name('doctor.current.appointments');
 		Route::get('/patients', 'DoctorController@patients')->name('doctor.patients');
+		Route::get('/get_history/{id}', 'DoctorController@get_history')->name('doctor.get_history');
 		Route::resource('timings', 'TimingController');
 		Route::post('timings-save', 'TimingController@save')->name('timings.save');
-		Route::get('/update-token/{patient_id}/{slot_id}/{status}', 'DoctorController@update_token')->name('doctor.update_token');
+		Route::post('/update-token', 'DoctorController@update_token')->name('doctor.update_token');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {
-		Route::get('/', 'ClinicController@dashboard')->name('dashboard');
+		Route::get('/', 'StaffController@dashboard')->name('staff.dashboard');
+		Route::get('/my-clinic', 'StaffController@clinic')->name('clinic.show');
+		Route::get('/clinic-timings', 'StaffController@timings')->name('staff.timings.edit');
+		Route::get('/clinic-closed', 'StaffController@closed_day')->name('closed.edit');		
+		Route::post('/staff-timings-save', 'StaffController@save')->name('staff.timings.save');
+		Route::get('doctors', 'StaffController@doctors')->name('clinic.doctors');
+		Route::get('staff-doctor-view', 'StaffController@view')->name('staff.doctor.view');
+		Route::get('staff-doctor', 'StaffController@doctor_timing_edit')->name('staff.doctor.edit');
+		Route::post('/clinic-closed-save', 'StaffController@closed_day_save')->name('clinic.closed.save');
 		
 	});
 	
