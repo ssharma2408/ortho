@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use Session;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -66,26 +67,41 @@ class DoctorController extends Controller
 	
 	public function update_token(Request $request)
 	{
-		$theUrl     = config('app.api_url').'v1/update_token';
-
-		//Upload file to S3 Bucket and set path to Prescription
-
-		$post_arr = [			
-			'doctor_id'=>Session::get('user_details')->user_id,
-			'patient_id'=>$request->patient_id,
-			'slot_id'=>$request->slot_id,
-			'status'=>$request->status,
-			'clinic_id'=>$_ENV['CLINIC_ID'],
-			'comment'=>$request->comment,
-			'prescription'=>"C:\Users\tejas\OneDrive\Desktop\StrategIQ Flow Chart.jpg",
-		];
-
-		$response   = Http ::withHeaders([
-            'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->post($theUrl, $post_arr);		
 		
-		$msg = "Status updated successfully.";
-		return response()->json(array('success'=>1, 'msg'=> $msg), 200);
+		if ($request->hasFile('prescription')) {			
+
+			//Upload file to S3 Bucket and set path to Prescription
+			$extension  = request()->file('prescription')->getClientOriginalExtension();
+            $image_name = time() .'_' . $request->patient_id . '.' . $extension;
+            $path = $request->file('prescription')->storeAs(
+                'patient_'.$request->patient_id,
+                $image_name,
+                's3'
+            );
+			$aws_path = Storage::disk('s3')->url($path);
+			
+			$theUrl     = config('app.api_url').'v1/update_token';		
+
+			$post_arr = [			
+				'doctor_id'=>Session::get('user_details')->user_id,
+				'patient_id'=>$request->patient_id,
+				'slot_id'=>$request->slot_id,
+				'status'=>$request->status,
+				'clinic_id'=>$_ENV['CLINIC_ID'],
+				'comment'=>$request->comment,
+				'prescription'=>$aws_path,
+			];
+
+			$response   = Http ::withHeaders([
+				'Authorization' => 'Bearer '.Session::get('user_details')->token 
+			])->post($theUrl, $post_arr);		
+			
+			$msg = "Status updated successfully.";
+			return response()->json(array('success'=>1, 'msg'=> $msg), 200);
+		}else{
+			$msg = "Error";
+			return response()->json(array('success'=>0, 'msg'=> $msg), 200);
+		}		
 	}
 	
 	public function edit(Request $request)
