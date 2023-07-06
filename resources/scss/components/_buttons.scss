@@ -1,8 +1,5 @@
 /* Mixins */
 @mixin btn-theme($btn-color) {
-  --bs-btn-padding-x: 30px;
-  --bs-btn-padding-y: 10px;
-  --bs-btn-font-size: 16px;
   background: $btn-color;
   border-color: ($btn-color);
   color: #fff;
@@ -48,6 +45,18 @@ $color-code in $primary-colors {
     }
   }
 }
+.btn{
+  --bs-btn-padding-x: 30px;
+  --bs-btn-padding-y: 10px;
+  --bs-btn-font-size: 16px;
+  &-sm {
+    --bs-btn-padding-x: 30px;
+    --bs-btn-padding-y: 6px;
+    --bs-btn-font-size: 12px;
+    --bs-border-radius-sm:30px;
+  }
+}
+
 
 .btn.btn-square {
   @include border-radius(0);
@@ -60,6 +69,8 @@ $color-code in $primary-colors {
 .btn-round {
   @include border-radius(100%);
 }
+
+
 
 .btn .ri {
   vertical-align: middle;

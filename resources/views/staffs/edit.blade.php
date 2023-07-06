@@ -14,8 +14,7 @@
 	</div>
 </div>
     <!-- goal area Start -->
-    <div class="goal-area pd-top-36">
-        <div class="container">
+   
             <div class="section-title">
                 <h3 class="title">{{$staff->name}}</h3>
             </div>
@@ -24,7 +23,7 @@
 					@method('PUT')
 					@csrf
                     <label class="single-input-wrap">
-                        <input type="text" name="name" id="name" value="{{ old('name', $staff->name) }}" required>
+                        <input class="form-control" type="text" name="name" id="name" value="{{ old('name', $staff->name) }}" required>
 						@if($errors->has('name'))
 							<div class="invalid-feedback">
 								{{ $errors->first('name') }}
@@ -32,7 +31,7 @@
 						@endif
                     </label>
                     <label class="single-input-wrap">
-                        <input type="email" name="email" id="email" value="{{ old('email', $staff->email) }}" required>
+                        <input class="form-control" type="email" name="email" id="email" value="{{ old('email', $staff->email) }}" required>
 						@if($errors->has('email'))
 							<div class="invalid-feedback">
 								{{ $errors->first('email') }}
@@ -40,7 +39,7 @@
 						@endif
                     </label>
                     <label class="single-input-wrap">
-                        <input type="number" name="mobile" id="mobile" value="{{ old('mobile', $staff->mobile_number) }}" required>
+                        <input class="form-control" type="number" name="mobile" id="mobile" value="{{ old('mobile', $staff->mobile_number) }}" required>
 						@if($errors->has('mobile'))
 							<div class="invalid-feedback">
 								{{ $errors->first('mobile') }}
@@ -61,8 +60,7 @@
                     <button type="submit" class="btn btn-purple">Save</button>
                 </form>
             </div>
-        </div>
-    </div>
+     
     <!-- goal area End -->
 
 @endsection
