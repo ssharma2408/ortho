@@ -20,18 +20,28 @@
 	@include('layouts.header')
 	<div class="main-container container">
 		@if (Session::has('user_details'))
-		<div class="row">
-			<div class="col-md-3">
-				@include('layouts.navigation')
-			</div>
-			<div class="col-md-9">
-				<div class="card-box">
-					@yield('content')
+			@yield('heading')			
+			<ol class="breadcrumb">		
+				<?php $segments = ''; ?>
+				@foreach(Request::segments() as $segment)
+					<?php $segments .= '/'.$segment; ?>
+					<li>
+						<a href="{{ $segments }}">{{$segment}}</a>
+					</li>
+				@endforeach
+			</ol>		
+			<div class="row">
+				<div class="col-md-3">
+					@include('layouts.navigation')
+				</div>
+				<div class="col-md-9">
+					<div class="card-box">
+						@yield('content')
+					</div>
 				</div>
 			</div>
-		</div>
 		@else
-		@yield('content')
+			@yield('content')
 		@endif
 	</div>
 	@include('layouts.footer')

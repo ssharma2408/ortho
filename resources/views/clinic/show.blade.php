@@ -1,8 +1,8 @@
 @extends('layouts.layout')
 
-@section('page')
+@section('heading')
  
-	<div>My Clinic</div>
+	<h1>My Clinic</h1>
  
 @endsection
  
