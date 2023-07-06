@@ -10,43 +10,28 @@
 <!-- preloader area end -->
 
 <!-- header start -->
-<div class="header-area" style="background-image: url({{ asset('img/bg/1.png') }});">
+<div class="header-wrapper">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-4 col-3">
-				<div class="menu-bar">
-					<i class="fa fa-bars"></i>
-				</div>
-			</div>
-			<div class="col-sm-4 col-4 text-center">
+
+			<div class="col-sm-4 col-4">
 				<a href="home.html" class="logo">
-					<img src="{{ asset('img/logo_myclinic.png') }}" alt="logo">
+					<img src="{{asset('img/logo.svg') }}" alt="logo">
 				</a>
 			</div>
-			<div class="col-sm-4 col-5 text-right">
-				<ul class="header-right">
-					<li>
-						<a href="#">
-							<i class="fa fa-envelope"></i>
-							<span class="badge">9</span>
-						</a>
-					</li>
-					<li>
-						<a href="notification.html">
-							<i class="fa fa-bell animated infinite swing"></i>
-							<span class="badge">6</span>
-						</a>
-					</li>
-					<li>
-						<a class="header-user" href="user-setting.html"><img src="{{ asset('img/user.png') }}" alt="img"></a>
-					</li>
-					<li>
+			<div class="col-sm-4 col-8 text-right ms-md-auto">
+				<ul class="nav user-menu float-end">
+					<li class="nav user-menu float-end has-arrow user-profile-list">
 						@if (Session::has('user_details'))
-							Hi {{Session::get('user_details')->name}} <a href="{{ route('login.logout') }}">Logout</a>
+						Hi {{Session::get('user_details')->name}}
+						<a class="btn btn-secondary btn-rounded" href="{{ route('login.logout') }}">Logout</a>
 						@else
-							<a href="{{ route('login.show') }}">Login</a>
-							<a href="{{ route('patient.login.show') }}">Patient Login</a>
-							<a href="{{ route('patient.register.show') }}">Patient Registartion</a>
+						<button class="btn btn-secondary btn-rounded" data-toggle="dropdown">Login</button>
+						<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ route('login.show') }}">Login</a>
+						<a class="dropdown-item" href="{{ route('patient.login.show') }}">Patient Login</a>
+						<a class="dropdown-item" href="{{ route('patient.register.show') }}">Patient Registartion</a>
+						</div>
 						@endif
 					</li>
 				</ul>
@@ -55,23 +40,12 @@
 	</div>
 </div>
 <!-- header end -->
-
-
-<div class="body-overlay" id="body-overlay"></div>
-<div class="search-popup" id="search-popup">
-	<form action="/" class="search-form">
-		<div class="form-group">
-			<input type="text" class="form-control" placeholder="Search.....">
-		</div>
-		<button type="submit" class="submit-btn"><i class="fa fa-search"></i></button>
-	</form>
-</div>
 @if (Session::has('close_status'))
-	<div class="balance-area pd-top-40 mg-top-50">
-		<div class="container">
-			<div class="text-center p-4 bg-danger mb-4">Clinic is closed today</div>
-		</div>
+<div class="balance-area pd-top-40 mg-top-50">
+	<div class="container">
+		<div class="text-center p-4 bg-danger mb-4">Clinic is closed today</div>
 	</div>
+</div>
 @endif
 <!-- //. search Popup -->
 <!-- header start -->

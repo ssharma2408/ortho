@@ -1,19 +1,23 @@
 <!-- Footer Area -->
-<div class="footer-area mg-top-40">
-	<div class="footer-top text-center" style="background-image: url({{ asset('img/bg/7.png') }});">
+
+<div class="footer mt-auto">
+<div class="footer-shape"></div>
 		<div class="container">
-			<p>Copyright © My Clinic 2023. All Rights Reserved. Designed By +OneX</p>
+			<div class="row md-gutter d-flex justify-content-between align-items-center">
+				<div class="col-md-6">
+				© 2023 All Rights Reserved 
+				</div>
+				<div class="col-md-auto ml-auto">
+				<img src="{{ asset('img/footer-logo.png') }}" alt="logo">
+				</div>
+			</div>
+			
 		</div>
-	</div>    
 </div>
-
-<!-- back to top area start -->
-<div class="back-to-top">
-	<span class="back-top"><i class="fa fa-angle-up"></i></span>
-</div>
-<!-- back to top area end -->
-
-
 <!-- All Js File here -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
 <script src="{{ asset('js/vendor.js') }}"></script>
+
 <script src="{{ asset('js/main.js') }}"></script>
