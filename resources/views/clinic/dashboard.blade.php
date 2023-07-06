@@ -1,8 +1,8 @@
 @extends('layouts.layout')
 
-@section('page')
+@section('heading')
  
-	<div>Clinic Admin Dashboard</div>
+	<h1>Dashboard</h1>
  
 @endsection
  
