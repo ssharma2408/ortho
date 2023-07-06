@@ -15,7 +15,7 @@
 		<div class="row">
 
 			<div class="col-sm-4 col-4">
-				<a href="home.html" class="logo">
+				<a href="{{route('clinic.home')}}" class="logo">
 					<img src="{{asset('img/logo.svg') }}" alt="logo">
 				</a>
 			</div>
