@@ -1,4 +1,8 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+:root, [data-bs-theme=light]{
+  --bs-body-bg: #fff !important;
+  
+}
 
 
 

@@ -7,61 +7,34 @@
 @endsection
 
 @section('content')
-<!-- page-title stary -->
-<div class="page-title mg-top-50">
-	<div class="container">
-		<a class="float-left" href="/">Home</a>
-		<span class="float-right">My Profile</span>
+
+
+<div class="section-title d-flex pt-0">
+	<h3 class="title"> Patients History</h3> <i class="ri-history-line ms-auto fw-bold"></i> 
+</div>
+
+@foreach($patient_arr as $id => $details)
+<div class="card">
+	<div class="card-body">
+
+		<div class="details fw-bold secondary-text text-uppercase  mb-3">
+		{{$details['name']}}
+		</div>
+
+		
+				@foreach($details['visit_date'] as $date)
+				<div class="d-flex mt-2">
+				
+						<div class="visit_date">{{$date['visit_date']}}</div>
+				
+					 <button type="button" class="ms-auto btn btn-primary btn-sm show_btn" id="history_{{$date['history_id']}}">View</button></li>
+					
+				</div>
+				@endforeach
+		
 	</div>
 </div>
-<!-- page-title end -->
-<!-- balance start -->
-
-
-		<div class="section-title">
-			<h3 class="title">Patients</h3>
-		</div>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Mobile </th>
-					<th>Date </th>
-					<th>Action </th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>
-					d
-				</td>
-				<td>
-					d
-				</td>
-				<td>
-					d
-				</td>
-				<td>
-					d
-				</td>
-			</tr>
-			</tbody>
-		</table>
-		@foreach($patient_arr as $id => $details)
-		<div class="details">
-			<h6>{{$details['name']}}</h6>
-		</div>
-
-		@foreach($details['visit_date'] as $date)
-		<div class="visit_date col-md-3">{{$date['visit_date']}}
-			<button type="button" class="btn btn-primary btn-sm show_btn" id="history_{{$date['history_id']}}">View</button></li>
-		</div>
-		@endforeach
-
-
-
-
-		@endforeach
+@endforeach
 
 
 <!-- balance End -->
@@ -79,7 +52,7 @@
 				if (data.success) {
 					$("#p_name").text(data.history.patient.name);
 					$("#p_visitdate").text(data.history.visit_date);
-					$("#p_prescription").html('<img src ="' + data.history.prescription + '" />');
+					$("#p_prescription").html('<img class="img-fluid" src ="' + data.history.prescription + '" />');
 					$("#p_comment").text(data.history.comment);
 					$('#historyModal').modal('show');
 				}
