@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -20,21 +20,12 @@
 	@include('layouts.header')
 	<div class="main-container container">
 		@if (Session::has('user_details'))
-			@yield('heading')			
-			<ol class="breadcrumb">		
-				<?php $segments = ''; ?>
-				@foreach(Request::segments() as $segment)
-					<?php $segments .= '/'.$segment; ?>
-					<li>
-						<a href="{{ $segments }}">{{$segment}}</a>
-					</li>
-				@endforeach
-			</ol>		
+			@yield('heading')				
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-lg-3">
 					@include('layouts.navigation')
 				</div>
-				<div class="col-md-9">
+				<div class="col-lg-9">
 					<div class="card-box">
 						@yield('content')
 					</div>

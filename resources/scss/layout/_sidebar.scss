@@ -14,20 +14,14 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
-.logobar {
-    padding: 15px 0;
-    margin-bottom: 10px;
-    text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    .logo img {
-        width: 165px;
-    }
-}
+
 .sidebar-content {
-    height: calc(100% - 1.5rem);
+   
     overflow-y: auto;
     -webkit-transition: 0.5s;
     transition: 0.5s;
+    position: sticky;
+    top: 20px;
 }
 .vertical-menu {
     list-style: none;
