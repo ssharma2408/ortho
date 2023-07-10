@@ -8,17 +8,17 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>{{ trans('panel.site_title') }}</title>
 	<link href="{{ asset('images/favicon.ico') }}" rel="icon">
+	
 	@if($_ENV['ENVIRONMENT'] == "local")
 		@vite(['resources/scss/app.scss', 'resources/js/app.js'])
 	@else
 		@php
 			$manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+			echo '<script type="module" src="/build/'.$manifest['resources/js/app.js']['file'].'"></script>';
+			echo '<link rel="stylesheet" href="/build/'.$manifest['resources/scss/app.scss']['file'].'">';
 		@endphp
-		<script type="module" src="/build/{$manifest['resources/js/app.js']['file']}"></script>
-		<link rel="stylesheet" href="/build/{$manifest['resources/js/app.js']['css'][0]}">
 	@endif
 	
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet">
 	@yield('styles')
