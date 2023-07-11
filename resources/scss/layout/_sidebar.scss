@@ -1,43 +1,29 @@
-.app-sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    margin-top: 0px;
-    width: 250px;
-    max-height: 100%;
-    z-index: 1000;
-    background: #fff !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.05);
-    -webkit-transition: left 0.3s ease, width 0.3s ease;
-    transition: left 0.3s ease, width 0.3s ease;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 .sidebar-content {
-   
     overflow-y: auto;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     position: sticky;
     top: 20px;
 }
+
 .vertical-menu {
     list-style: none;
     margin: 0;
     padding: 0;
-    > li {
+
+    >li {
         position: relative;
         margin: 0;
-        > a {
+
+        >a {
             padding: 12px 20px;
             display: block;
             color: $dark;
             margin: 0px 15px;
             border-radius: 3px;
             text-decoration: none;
-            > i {
+
+            >i {
                 display: inline-block;
                 width: 30px;
                 font-size: 18px;
@@ -48,25 +34,30 @@
                 background-color: $secondary-rgba;
             }
         }
-        &:hover > a {
+
+        &:hover>a {
             background-color: $secondary-rgba;
             color: $primary;
             opacity: 1;
         }
-        &.active > a {
+
+        &.active>a {
             font-weight: 400;
             background-color: $secondary-rgba;
             color: $primary;
             opacity: 1;
-           
+
         }
+
         &.active {
             background-color: transparent;
         }
+
         .label,
         .badge {
             margin-top: 6px;
         }
+
         .new-icon {
             position: absolute;
             top: 10px;
@@ -78,16 +69,19 @@
             background-color: $success;
         }
     }
+
     li.vertical-header {
         padding: 15px 25px 5px 25px;
         text-transform: uppercase;
         font-size: 12px;
         border-bottom: none;
     }
+
     li:first-child.vertical-header {
         padding: 5px 25px 5px 25px;
     }
-    li > a > .ri-arrow-right-s-line {
+
+    li>a>.ri-arrow-right-s-line {
         width: auto;
         height: auto;
         padding: 0;
@@ -97,14 +91,17 @@
         -webkit-transition: 0.3s ease-in;
         transition: 0.3s ease-in;
     }
+
     li.active {
-        > a > .ri-arrow-right-s-line {
+        >a>.ri-arrow-right-s-line {
             transform: rotate(90deg);
         }
-        > .vertical-submenu {
+
+        >.vertical-submenu {
             display: block;
         }
     }
+
     .vertical-submenu {
         display: none;
         list-style: none;
@@ -112,16 +109,19 @@
         padding: 5px 0 5px 5px;
         margin: 0 1px;
         background: transparent;
-        & > li > a {
+
+        &>li>a {
             padding: 6px 25px 6px 55px;
             display: block;
             font-size: 14px;
             color: #151d2e;
             text-decoration: none;
+
             &:hover {
                 color: $primary;
-                
+
             }
+
             &:before {
                 content: "\eb7c";
                 font-family: "remixicon" !important;
@@ -142,6 +142,7 @@
     z-index: 11;
     width: 250px;
     padding: 8px 13px;
+
     .header-icon {
         width: 30px;
         height: 30px;
@@ -150,3 +151,22 @@
     }
 }
 
+@include media-breakpoint-down(lg) {
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        margin-top: 0px;
+        width: 250px;
+        max-height: 100%;
+        z-index: 1000;
+        background: #fff !important;
+        border-right: 1px solid rgba(0, 0, 0, 0.05);
+        -webkit-transition: left 0.3s ease, width 0.3s ease;
+        transition: left 0.3s ease, width 0.3s ease;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    }
+}

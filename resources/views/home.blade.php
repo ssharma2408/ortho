@@ -50,14 +50,14 @@
 
 @else
 <div class="row">
-    <div class="col-md-6 mx-auto">
+    <div class="col-lg-5 col-md-6 mx-auto">
         <div class="card-box">
             <div class="text-center">
-                <div class="section-title ">
+                <div class="section-title pt-0">
                     <h3>Welcome! Guest User</h3>
-                    <p class="mb-0">Have a nice day! </p>
+                    <p class="text-descripstion secondary-text mb-0">Have a nice day! </p>
                 </div>
-                <a href="{{route('patient.login.show')}}" class="btn btn-success ">Book an Appointment</a>
+                <a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
             </div>
         </div>
     </div>
