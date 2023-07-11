@@ -63,19 +63,20 @@
 
 @endif
 
-@if(!empty($closed_days))
 <div class="my-clinic-details">
 	<div class="section-title d-flex justify-content-between align-items-center">
 		<h3 class="title-sm"> Closed on</h3>
 		<a href="{{ route('clinic.closed.edit', ['clinic_admin'=>$clinic->clinic_admin->id]) }}" class="btn btn-secondary btn-sm">Update</a>
 	</div>
-	@foreach($closed_days as $day)
-	<div class="d-flex justify-content-between align-items-start p-3 mb-2 bg-body-tertiary rounded-3 text-secondary">
-		<span class="float-left">{{date('d-M-y', strtotime($day->closed_on))}}</span>
-	</div>
-	@endforeach
+	@if(!empty($closed_days))
+		@foreach($closed_days as $day)
+		<div class="d-flex justify-content-between align-items-start p-3 mb-2 bg-body-tertiary rounded-3 text-secondary">
+			<span class="float-left">{{date('d-M-y', strtotime($day->closed_on))}}</span>
+		</div>
+		@endforeach
+	@endif
 </div>
-@endif
+
 <p class="small mt-4 text-center mb-0">If haveing any timing issue, Please <a href="contact.html">contact us</a></p>
 @endsection
 

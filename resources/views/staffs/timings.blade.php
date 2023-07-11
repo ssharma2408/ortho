@@ -2,28 +2,27 @@
 
 @section('page')
  
-	<div>Clinic</div>
+	<h1>Clinic</h1>
  
 @endsection
  
 @section('content')
+
 <!-- page-title stary -->
-<div class="page-title mg-top-50">
-	<div class="container">
-		<a class="float-left" href="/">Home</a>
-		<span class="float-right">Staff</span>
-	</div>
+<div class="section-title pt-0 mb-2">
+	<h1>Clinic Timings</h1>
 </div>
-<h1>Clinic Timings</h1>
+
 <!-- my-clinic start -->
-<div class="my-clinic-details pd-top-36">
-	<div class="container">
-		<form method="post" action="{{route('staff.timings.save')}}">
-			@csrf
-			@if(empty($details->opening_hours))
-				@foreach($day_arr as $key=>$day)
-					<div class="row mb-4 daycontainer">
-						<div class="col-md-3">
+
+<form method="post" action="{{route('staff.timings.save')}}">
+	@csrf
+	@if(empty($details->opening_hours))
+		@foreach($day_arr as $key=>$day)
+			<div class="card">
+				<div class="card-body">
+					<div class="row daycontainer">
+						<div class="col-md-3 fs-6 text-secondary align-self-center">
 							{{ $day }}
 							<input type="checkbox" id="day_{{$key+1}}" name="day_{{$key+1}}" class="check_day" />
 						</div>
@@ -31,79 +30,85 @@
 							<div class="row">
 								<div class="col-md-4">
 									Open at
-									<input type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" />
+									<input class="form-control" type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" />
 								</div>
 								<div class="col-md-4">
 									Close at
-									<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
-								</div>								
-								<div class="col-md-4">
-									<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
+									<input class="form-control" type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
 								</div>
-							</div>													
+								<div class="col-md-4">
+									<span class="add_row" id="add_row" data-key="{{$key+1}}">+</span>
+								</div>
+							</div>
 						</div>
 					</div>
-				@endforeach
-			@else
-				@foreach($day_arr as $key=>$day)
-					<div class="row mb-4 daycontainer">
-						<div class="col-md-3">
+				</div>
+			</div>
+		@endforeach
+	@else
+		@foreach($day_arr as $key=>$day)
+			<div class="card">
+				<div class="card-body">
+					<div class="row daycontainer">
+						<div class="col-md-3 fs-6 text-secondary align-self-center">
 							{{ $day }}
 							@php
-								$checked = "";
-								if(!isset($details->opening_hours[$key+1])){
-									$checked = "checked";
-								}
+							$checked = "";
+							if(!isset($details->opening_hours[$key+1])){
+							$checked = "checked";
+							}
 							@endphp
 							<input type="checkbox" id="day_{{$key+1}}" name="day_{{$key+1}}" class="check_day" {{$checked}} />
 						</div>
 						<div class="timing col-md-9">
 							@if(isset($details->opening_hours[$key+1]))
-								@foreach($details->opening_hours[$key+1] as $slot=>$timing)
-									<div class="row mt-2">
-										<div class="col-md-4">
-											Open at
-											<input type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" value="{{$timing->start_hour}}" />
-										</div>
-										<div class="col-md-4">
-											Close at
-											<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" value="{{$timing->end_hour}}" />
-										</div>										
-										<div class="col-md-4">
-											@if($slot ==0)
-												<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
-											@else
-												<span class="remove_row" id="remove_row" data-key ="{{$key+1}}">-</span>
-											@endif
-										</div>
-									</div>
-								@endforeach
-							@else
-								<div class="row mt-2">
-									<div class="col-md-4">
-										Open at
-										<input type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" />
-									</div>
-									<div class="col-md-4">
-										Close at
-										<input type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
-									</div>									
-									<div class="col-md-4">																		
-										<span class="add_row" id="add_row" data-key ="{{$key+1}}">+</span>
+							@foreach($details->opening_hours[$key+1] as $slot=>$timing)
+							<div class="row">
+								<div class="col-md-6 col-6 mt-3">
+									Open at
+									<input class="form-control" type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" value="{{$timing->start_hour}}" />
+								</div>
+								<div class="col-md-6 col-6 mt-3">
+									Close at
+									<div class="d-flex">
+										<input class="form-control me-2" type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" value="{{$timing->end_hour}}" />
+										@if($slot ==0)
+										<span class="add_row fs-3 text-secondary" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
+										@else
+										<span class="remove_row fs-3 text-secondary" id="remove_row" data-key="{{$key+1}}"><i class="ri-indeterminate-circle-line"></i></span>
+										@endif
 									</div>
 								</div>
-							@endif														
+
+							</div>
+							@endforeach
+							@else
+							<div class="row">
+								<div class="col-md-6 col-6 mt-3">
+									Open at
+									<input class="form-control" type="time" id="" name="open_{{$key+1}}[]" min="07:00" max="23:00" />
+								</div>
+								<div class="col-md-6 col-6 mt-3">
+									Close at
+									<div class="d-flex">
+										<input class="form-control me-2" type="time" id="" name="close_{{$key+1}}[]" min="07:00" max="23:00" />
+										<span class="add_row fs-3 text-secondary" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
+									</div>
+								</div>
+							</div>
+							@endif
 						</div>
 					</div>
-				@endforeach
-			@endif
-			<button type="submit" class="btn btn-success">Save</button>
-			<input type="hidden" name="user_id" value="{{ $details->clinic_user }}">
-			<input type="hidden" name="clinic_id" value="{{ $_ENV['CLINIC_ID'] }}">
-			<input type="hidden" name="type" value="clinic">
-		</form>
-	</div>
-</div>
+				</div>
+			</div>
+		@endforeach
+	@endif
+	<button type="submit" class="btn btn-primary btn-rounded">Save</button>
+	<input type="hidden" name="user_id" value="{{ $details->clinic_user }}">
+	<input type="hidden" name="clinic_id" value="{{ $_ENV['CLINIC_ID'] }}">
+	<input type="hidden" name="type" value="clinic">
+</form>
+
 <!-- goal area End -->
 @endsection
 @section('scripts')
@@ -117,14 +122,14 @@
 	});
 	
 	$(".add_row").click(function(){
-		$(this).parent().parent().parent().append(row_html($(this).data("key")));
+		$(this).parent().parent().parent().parent().append(row_html($(this).data("key")));
 	});
 	$(".timing").on('click','.remove_row',function(){
-	   $(this).parent().parent().remove();		
+	   $(this).parent().parent().parent().remove();
 	});
 	
-	function row_html(key){
-		return '<div class="row mt-2"><div class="col-md-4">Open at <input type="time" id="" name="open_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-4">Close at <input type="time" id="" name="close_'+key+'[]" min="07:00" max="23:00" /></div><div class="col-md-4"><span class="remove_row" id="remove_row">-</span></div></div>';	
+	function row_html(key) {
+		return '<div class="row"><div class="col-md-6 col-6 mt-3">Open at <input class="form-control" type="time" id="" name="open_' + key + '[]" min="07:00" max="23:00" /></div><div class="col-md-6 col-6 mt-3">Close at <div class="d-flex"><input  class="form-control me-2" type="time" id="" name="close_' + key + '[]" min="07:00" max="23:00" /><span class="remove_row fs-3 text-secondary" id="remove_row"><i class="ri-indeterminate-circle-line"></i></span></div></div></div>';
 	}
 	$(function() {
 		$(".check_day").each(function(){
