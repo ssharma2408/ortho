@@ -44,7 +44,7 @@
 							<input class="form-control" type="number" id="" name="timepertoken_{{$key+1}}[]" min="0" />
 						</div>
 						<div class="col-md-2 mt-3">
-							<span class="add_row" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
+							<span class="add_row fs-3 text-secondary" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
 						</div>
 					</div>
 				</div>
@@ -115,8 +115,8 @@
 							Time per Token
 
 							<div class="d-flex">
-								<input class="form-control" type="number" id="" name="timepertoken_{{$key+1}}[]" min="0" />
-								<span class="add_row" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
+								<input class="form-control me-2" type="number" id="" name="timepertoken_{{$key+1}}[]" min="0" />
+								<span class="add_row fs-3 text-secondary" id="add_row" data-key="{{$key+1}}"><i class="ri-add-circle-line"></i></span>
 							</div>
 						</div>
 					</div>
@@ -146,10 +146,10 @@
 	});
 
 	$(".add_row").click(function() {
-		$(this).parent().parent().parent().append(row_html($(this).data("key")));
+		$(this).parent().parent().parent().parent().append(row_html($(this).data("key")));
 	});
 	$(".timing").on('click', '.remove_row', function() {
-		$(this).parent().parent().remove();
+		$(this).parent().parent().parent().remove();
 	});
 
 	function row_html(key) {
