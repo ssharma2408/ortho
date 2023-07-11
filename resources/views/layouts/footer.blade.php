@@ -4,11 +4,11 @@
 <div class="footer-shape"></div>
 		<div class="container">
 			<div class="row md-gutter d-flex justify-content-between align-items-center">
-				<div class="col-md-6">
+				<div class="col-8">
 				© 2023 All Rights Reserved 
 				</div>
-				<div class="col-md-auto ml-auto">
-				<img src="{{ asset('img/footer-logo.png') }}" alt="logo">
+				<div class="col-4 ml-auto">
+				<img class="img-fluid" src="{{ asset('img/footer-logo.png') }}" alt="logo">
 				</div>
 			</div>
 			

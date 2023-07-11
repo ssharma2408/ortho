@@ -1,5 +1,5 @@
 <!-- navbar end -->
-
+<div class="app-sidebar1">
 <div class="card-box sidebar-content px-0">
 	<div class="ba-main-menu">
 		<ul class="vertical-menu">
@@ -29,5 +29,5 @@
 		</ul>
 	</div>
 </div>
-
+</div>
 <!-- navbar end -->

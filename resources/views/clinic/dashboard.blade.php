@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('heading')
+@section('page')
  
 	<h1>Dashboard</h1>
  
