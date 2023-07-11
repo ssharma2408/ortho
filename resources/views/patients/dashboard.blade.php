@@ -7,14 +7,7 @@
 @endsection
  
 @section('content')
-<!-- page-title stary -->
-<div class="page-title mg-top-50">
-	<div class="container">
-		<a class="float-left" href="/">Home</a>
-		<span class="float-right">My Profile</span>
-	</div>
-</div>
-<!-- page-title end -->
+
 <!-- balance start -->
 @php
 	$day = date( 'N' );
@@ -29,25 +22,25 @@
 			@if(isset($doctor['timings'][$day]))
 				<div class="single-goal single-goal-one">
 					<div class="row align-items-center">					
-						<div class="col-7 pr-0">
-							<div class="details">
-								<h6>{{$doctor['name']}}</h6>
+						<div class="col-lg-7 pr-0">
+							<div class="details text-secondary">
+								<h6>Dr. {{$doctor['name']}}</h6>
 							</div>
 						</div>						
-						<div class="col-5 pr-0">							
+						<div class="col-lg-5 pr-0">							
 							@foreach($doctor['timings'][$day] as $slot=>$timing)
-								<div class="row">
-									<div class="col-md-10">
+								<div class="row my-2 justify-content-between">
+									<div class="col-auto">
 										<span class="d-block">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
 										<div class="token_details" id="token_details_{{$timing['slot_id']}}"></div>
 									</div>
 									@if( ! $doctor['is_booked'])
-										<div class="col-md-2">
-											<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" class="book btn btn-success" >Book</button>
+										<div class="col-auto">
+											<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" class="btn btn-secondary btn-rounded btn-sm" >Book</button>
 										</div>
 									@else										
-										<div class="col-md-2">
-											<button class='btn btn-success refresh_status' id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" type='button'>Check Status</button>
+										<div class="col-auto">
+											<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" type='button'>Check Status</button>
 										</div>										
 									@endif
 								</div>								
@@ -66,8 +59,9 @@
 @parent
 <script>
 	var timestamp = '<?=time();?>';
-	function updateTime(){
-	  $('#time').html(Date(timestamp));
+	function updateTime(){	  
+	  var time_arr = Date(timestamp).split(" ");
+	  $('#time').html(time_arr[0]+" "+time_arr[1]+" "+time_arr[2]+"<br>"+time_arr[4]);
 	  timestamp++;
 	}
 	$(function(){
