@@ -12,6 +12,9 @@
 	<h3 class="sub-title">Our Staff </h3>
 	<span class="sub-title">Total-{{count($staffs)}}</span>
 </div>
+
+@include('layouts.partials.messages')
+
 <div class="row">
 	@foreach($staffs as $key => $staff)
 	<div class="col-lg-4">

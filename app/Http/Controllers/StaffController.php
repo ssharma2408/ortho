@@ -62,9 +62,12 @@ class StaffController extends Controller
         ])->post($theUrl, $post_arr);
 		
 		$staff = json_decode($response->body());
-		
 
-        return redirect()->route('staffs.index');
+		if(isset($staff->data->username)){
+			return redirect()->route('staffs.index')->with('success', "Staff added successfully");
+		}else{
+			return redirect()->route('staffs.index')->with('success', "Staff member is already exist in the system with entered email or user name. Please provide different email and user name.");
+		}        
     }
 
     public function edit()
