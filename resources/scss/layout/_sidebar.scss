@@ -16,34 +16,32 @@
         margin: 0;
 
         >a {
-            padding: 12px 20px;
-            display: block;
+            padding: 8px 20px;
+            display: flex;
             color: $dark;
             margin: 0px 15px;
-            border-radius: 3px;
             text-decoration: none;
+            align-items: center;
 
             >i {
                 display: inline-block;
                 width: 30px;
-                font-size: 18px;
+                font-size: 20px;
             }
 
             &.active {
                 color: $primary;
-                background-color: $secondary-rgba;
+
             }
         }
 
         &:hover>a {
-            background-color: $secondary-rgba;
             color: $primary;
             opacity: 1;
         }
 
         &.active>a {
-            font-weight: 400;
-            background-color: $secondary-rgba;
+            font-weight: 600;
             color: $primary;
             opacity: 1;
 
@@ -71,14 +69,14 @@
     }
 
     li.vertical-header {
-        padding: 15px 25px 5px 25px;
+        padding: 15px 25px 0 25px;
         text-transform: uppercase;
         font-size: 12px;
         border-bottom: none;
     }
 
     li:first-child.vertical-header {
-        padding: 5px 25px 5px 25px;
+        padding: 5px 25px 0 25px;
     }
 
     li>a>.ri-arrow-right-s-line {
@@ -152,21 +150,46 @@
 }
 
 @include media-breakpoint-down(lg) {
+    .sidebar-content {
+        box-shadow: none !important;
+    }
+
     .app-sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
-        left: 0;
+        left: -100%;
         margin-top: 0px;
-        width: 250px;
+        width: 300px;
         max-height: 100%;
         z-index: 1000;
         background: #fff !important;
         border-right: 1px solid rgba(0, 0, 0, 0.05);
         -webkit-transition: left 0.3s ease, width 0.3s ease;
-        transition: left 0.3s ease, width 0.3s ease;
+        transition: all 0.4s ease 0s;
         overflow-y: auto;
         overflow-x: hidden;
 
+        &.show {
+            left: 0;
+        }
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        z-index: 90;
+        height: 100%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 99;
+        background-color: rgba(15, 21, 32, 0.7);
+        overflow: hidden;
+        transition: all 0.4s ease 0s;
+    }
+
+    .menu-opened .sidebar-overlay {
+        display: block;
     }
 }

@@ -7,15 +7,14 @@
         ------------------------------------------------- */
         if ($('.menu-bar').length) {
             $(".menu-bar").on('click', function() {
-                $(".ba-navbar").toggleClass("ba-navbar-show", "linear");
+                $(".ba-navbar").toggleClass("show", "linear");
+                $('body').toggleClass('menu-opened');
             });
             $('body').on('click', function(event) {
                 if (!$(event.target).closest('.menu-bar').length && !$(event.target).closest('.ba-navbar').length) {
-                    $('.ba-navbar').removeClass('ba-navbar-show');
+                    $('.ba-navbar').removeClass('show');
+                    $('body').removeClass('menu-opened');
                 }
-            });
-            $(".menu-close").on('click', function() {
-                $(".ba-navbar").toggleClass("ba-navbar-show", "linear");
             });
         }
 
