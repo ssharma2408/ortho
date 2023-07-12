@@ -12,8 +12,8 @@ class HomeController extends Controller
 		$theUrl     = config('app.api_url').'clinic-close-status/'.$_ENV['CLINIC_ID'];		
 		$response   = Http ::get($theUrl);
 				
-		$close_status = json_decode($response->body())->data;
-		if(count($close_status)){
+		$close_status = json_decode($response->body())->data->is_clinic_closed;
+		if($close_status){
 			Session::put('close_status', true);			
 		}else{
 			session()->forget('close_status');			

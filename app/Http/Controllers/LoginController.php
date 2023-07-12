@@ -42,7 +42,7 @@ class LoginController extends Controller
         
 		$post_arr = [
 			'name'=>$request['name'],
-			'mobile_number'=>$request['mobile_no'],
+			'mobile_number'=>'+91'.$request['mobile_no'],
 			'gender'=>$request['gender'],
 			'dob'=>$request['dob'],
 			'domain'=>$_ENV['DOMAIN'],

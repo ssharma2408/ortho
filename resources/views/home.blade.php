@@ -57,7 +57,9 @@
                     <h3>Welcome! Guest User</h3>
                     <p class="text-descripstion secondary-text mb-0">Have a nice day! </p>
                 </div>
-                <a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
+				@if (!Session::has('close_status'))
+					<a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
+				@endif
             </div>
         </div>
     </div>

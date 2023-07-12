@@ -27,7 +27,10 @@
                 @endif
                 <div class="single-input-wrap form-group mb-3">
                     <label class="form-label">Mobile No*</label>
-                    <input id="mobile_no" class="form-control" type="text" name="mobile_no" value="{{ old('mobile_no') }}" required autocomplete="mobile_no" autofocus>
+					<div class="input-box" style="position: relative;">
+						<span class="prefix position-absolute top-50 start-0 translate-middle ms-4">+91</span>
+						<input id="mobile_no" class="form-control ps-5" type="text" name="mobile_no" value="{{ old('mobile_no') }}" required autocomplete="mobile_no" autofocus>
+					</div>
                 </div>
                 @if ($errors->has('mobile_no'))
                 <span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
