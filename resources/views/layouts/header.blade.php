@@ -37,12 +37,7 @@
 						</div> -->
 						<a class="btn btn-secondary btn-rounded " href="{{ route('login.logout') }}">	<i class="ri-logout-circle-line"></i> Logout</a>
 						@else
-						<button class="btn btn-secondary btn-rounded" data-toggle="dropdown"><i class="ri-login-circle-line me-2"></i>Login</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="{{ route('login.show') }}">Login</a>
-							<a class="dropdown-item" href="{{ route('patient.login.show') }}">Patient Login</a>
-							<a class="dropdown-item" href="{{ route('patient.register.show') }}">Patient Registartion</a>
-						</div>
+							<a href="{{ route('login.show') }}" class="btn btn-secondary btn-rounded"><i class="ri-login-circle-line me-2"></i>Login</a>						
 						@endif
 					</li>
 				</ul>

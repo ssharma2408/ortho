@@ -16,8 +16,8 @@
             </div>
             <div class="mb-4 text-center">
                 <div class="btn-group" role="group">
-                    <a href="{{ route('login.show') }}" type="button" class="btn btn-primary btn-rounded">Clinic Login</a>
-                    <a href="{{ route('patient.login.show') }}" type="button" class="btn btn-secondary btn-rounded">Patient Login</a>
+                    <a href="{{ route('patient.login.show') }}" type="button" class="btn btn-primary btn-rounded">Patient Login</a>
+                    <a href="{{ route('patient.register.show') }}" type="button" class="btn btn-secondary btn-rounded">Patient Register</a>
                 </div>
             </div>
             <form method="post" action="{{ route('patient.gen.otp') }}" class="contact-form-inner">

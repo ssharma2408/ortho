@@ -28,13 +28,7 @@
                 Lorem Ipsum is simply dummy <br>
                 text of the
             </div>
-            <div class="form-wrap text-start">
-                <div class="mb-4 text-center">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary btn-rounded">Clinic Login</button>
-                        <a href="{{ route('patient.login.show') }}" type="button" class="btn btn-primary btn-rounded">Patient Login</a>
-                    </div>
-                </div>
+            <div class="form-wrap text-start">                
                 <form method="post" action="{{ route('login.perform') }}" class="contact-form-inner">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     @include('layouts.partials.messages')

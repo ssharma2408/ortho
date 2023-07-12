@@ -43,6 +43,8 @@ class LoginController extends Controller
 		$post_arr = [
 			'name'=>$request['name'],
 			'mobile_number'=>$request['mobile_no'],
+			'gender'=>$request['gender'],
+			'dob'=>$request['dob'],
 			'domain'=>$_ENV['DOMAIN'],
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];		
@@ -54,9 +56,9 @@ class LoginController extends Controller
 			if($result->success && $result->data->token){
 				
 				$patient = $result->data;
-				
-				return redirect()->to('patient_login')
-					->with('success', $result->message);
+				Session::put('user_details', $patient);
+
+				return $this->authenticated($request, $patient);
 				
 			}else{
 				
@@ -155,7 +157,7 @@ class LoginController extends Controller
 		if($result->success){
 			
 			$patient = $result->data;
-			Session::put('user_details', $patient);			
+			Session::put('user_details', $patient);
 
 			return $this->authenticated($request, $patient);
 			
