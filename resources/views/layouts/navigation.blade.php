@@ -14,9 +14,9 @@
 			
 			@elseif(Session::has('user_details') && Session::get('user_details')->role=="Doctor")
 				<li><a href="{{route('doctor.dashboard')}}"><i class="ri-dashboard-line"></i><span> Home</span></a></li>			
-				<li><a href="{{route('timings.index')}}"><i class="ri-dashboard-line"></i><span> Timings</span></a></li>
-				<li><a href="{{route('doctor.current.appointments')}}"><i class="ri-dashboard-line"></i><span> Current Appointments</span></a></li>
-				<li><a href="{{route('doctor.patients')}}"><i class="ri-dashboard-line"></i><span> Patients</span></a></li>
+				<li><a href="{{route('timings.index')}}"><i class="ri-history-line"></i><span> Timings</span></a></li>
+				<li><a href="{{route('doctor.current.appointments')}}"><i class="ri-calendar-2-line"></i><span> Current Appointments</span></a></li>
+				<li><a href="{{route('doctor.patients')}}"><i class="ri-group-line"></i><span> Patients</span></a></li>
 				<li><a href="{{ route('login.logout') }}"><i class="ri-login-circle-line"></i><span> Logout</span></a></li>
 			
 			

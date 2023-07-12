@@ -7,7 +7,7 @@
 				<div class="col-8">
 				© 2023 All Rights Reserved 
 				</div>
-				<div class="col-4 ml-auto">
+				<div class="col-4 ml-auto text-end">
 				<img class="img-fluid" src="{{ asset('img/footer-logo.png') }}" alt="logo">
 				</div>
 			</div>
