@@ -24,7 +24,7 @@ class PatientAccess
 				abort(403, 'Access denied');
 			}
 		}else{
-			return redirect()->to('login');
+			return redirect()->to('patient_login');
 		}
     }
 }

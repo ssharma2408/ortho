@@ -32,20 +32,25 @@
                 @if ($errors->has('mobile_no'))
                 <span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
                 @endif
-                <!--label class="single-input-wrap">
-                    <span>Password*</span>
-                    <input id="password" type="password" name="password" required autocomplete="new-password">
-                </label>
-				 @if ($errors->has('password'))
-					<span class="text-danger text-left">{{ $errors->first('password') }}</span>
-				@endif
-                <label class="single-input-wrap">
-                    <span>Confirm Password*</span>
-                    <input id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password">
-                </label>
-				 @if ($errors->has('password_confirmation'))
-					<span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
-				@endif -->
+               <div class="single-input-wrap form-group mb-3">
+                    <label class="form-label">Gender*</label>
+                    <select name="gender" required>
+						<option value="">Please Select</option>
+						<option value="1">Male</option>
+						<option value="2">Female</option>
+						<option value="3">Other</option>
+					</select>
+                </div>
+                @if ($errors->has('gender'))
+                <span class="text-danger text-left">{{ $errors->first('gender') }}</span>
+                @endif
+				<div class="single-input-wrap form-group mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" name="dob" max="<?php echo date('Y-m-d'); ?>" />
+                </div>
+                @if ($errors->has('mobile_no'))
+                <span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
+                @endif
                 <div class="single-input-wrap form-group mb-3 text-center">
                     <button class="btn btn-secondary btn-rounded" type="submit">Register</button>
                 </div>
