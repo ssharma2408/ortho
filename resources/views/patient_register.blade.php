@@ -39,9 +39,9 @@
                     <label class="form-label">Gender*</label>
                     <select name="gender" required>
 						<option value="">Please Select</option>
-						<option value="1">Male</option>
-						<option value="2">Female</option>
-						<option value="3">Other</option>
+						<option @if(old('gender') == 1) selected @endif value="1">Male</option>
+						<option @if(old('gender') == 2) selected @endif value="2">Female</option>
+						<option @if(old('gender') == 3) selected @endif value="3">Other</option>
 					</select>
                 </div>
                 @if ($errors->has('gender'))
@@ -49,11 +49,20 @@
                 @endif
 				<div class="single-input-wrap form-group mb-3">
                     <label class="form-label">Date of Birth</label>
-                    <input type="date" name="dob" max="<?php echo date('Y-m-d'); ?>" />
+                    <input type="date" name="dob" max="<?php echo date('Y-m-d'); ?>" value="{{ old('dob') }}" />
                 </div>
-                @if ($errors->has('mobile_no'))
-                <span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
-                @endif
+                @if ($errors->has('dob'))
+                <span class="text-danger text-left">{{ $errors->first('dob') }}</span>
+                @endif				
+					
+				<div class="single-input-wrap form-group mb-3">		
+					 <label class="form-label">ReCaptcha:</label>
+					<div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+					@if ($errors->has('g-recaptcha-response'))
+						<span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+					@endif
+				</div>				
+				
                 <div class="single-input-wrap form-group mb-3 text-center">
                     <button class="btn btn-secondary btn-rounded" type="submit">Register</button>
                 </div>
@@ -63,6 +72,7 @@
 </div>
 @endsection
 
-@push('js')
-
-@endpush
+@section('scripts')
+@parent
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@endsection
