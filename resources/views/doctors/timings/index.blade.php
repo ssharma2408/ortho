@@ -40,7 +40,7 @@
 				@endforeach
 			</div>
 			@else
-			<div class="col-auto">
+			<div class="col">
 				<span class="badge text-bg-danger">Cloed</span>
 			</div>
 			@endif
