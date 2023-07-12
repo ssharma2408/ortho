@@ -27,8 +27,11 @@
 
 <body class="d-flex flex-column min-vh-100">
 	@include('layouts.header')
-	<div class="main-container container my-auto">
+	<div class="main-container container">
 		@if (Session::has('user_details'))
+		<div class="section-title d-flex justify-content-between align-items-center">
+			<h3 class="sub-title"> <span class="user-name">Hi, {{Session::get('user_details')->name}}</span> </h3><small class="user-role small badge text-bg-danger">{{Session::get('user_details')->role}}</small>
+		</div>
 		<div class="row">
 			<div class="col-lg-3">
 				@include('layouts.navigation')

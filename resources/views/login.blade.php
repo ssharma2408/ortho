@@ -11,7 +11,6 @@
 <div class="text-center">
     <div class="page-title">
         <h2> Welcome to {{$_ENV['DOMAIN']}}</h2>
-
     </div>
     <div class="text-descripstion secondary-text">
         <p>Lorem Ipsum is simply dummy text of the printing and <br>

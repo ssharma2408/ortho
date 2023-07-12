@@ -35,9 +35,9 @@
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="{{ route('login.logout') }}">Logout</a>
 						</div> -->
-						<a class="btn btn-secondary btn-rounded " href="{{ route('login.logout') }}">	<i class="ri-logout-circle-line"></i> Logout</a>
+						<a class="btn btn-secondary " href="{{ route('login.logout') }}">	<i class="ri-logout-circle-line"></i> Logout</a>
 						@else
-							<a href="{{ route('login.show') }}" class="btn btn-secondary btn-rounded"><i class="ri-login-circle-line me-2"></i>Login</a>						
+							<a href="{{ route('login.show') }}" class="btn btn-secondary "><i class="ri-login-circle-line me-2"></i>Login</a>						
 						@endif
 					</li>
 				</ul>
