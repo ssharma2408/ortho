@@ -43,6 +43,7 @@
 		@yield('content')
 		@endif
 	</div>
+	<div class="sidebar-overlay"></div>
 	@include('layouts.footer')
 	@yield('modal')
 	@yield('scripts')

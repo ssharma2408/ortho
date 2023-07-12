@@ -12,8 +12,6 @@
 	<h3 class="sub-title">Our Staff </h3>
 	<span class="sub-title">Total-{{count($staffs)}}</span>
 </div>
-
-
 <div class="row">
 	@foreach($staffs as $key => $staff)
 	<div class="col-lg-4">
@@ -38,7 +36,6 @@
 <div class="text-center">
 	<a class="btn btn-secondary btn-rounded" href="{{route('staffs.create') }}">Add New Staff</a>
 </div>
-
 
 <!-- goal area End -->
 @endsection

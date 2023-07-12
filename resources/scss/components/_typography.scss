@@ -8,7 +8,6 @@
 
 .page-title {
     font-family: 'Jost', sans-serif;
-    font-size: 42px;
     color: $secondary;
     margin-bottom: 5px;
     margin-top: 0;
@@ -23,10 +22,13 @@
         position: relative;
         font-size: 42px;
         font-weight: 600;
+        @include media-breakpoint-down(lg) {
+            font-size: 32px;
+        }
     }
 }
 
 .text-descripstion {
-    font-size: 16px;
+    font-size: 14x;
     margin-bottom: 20px;
 }
