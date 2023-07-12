@@ -13,9 +13,9 @@
 <!-- balance start -->
 
 @foreach($patient_arr as $slot=>$patients)
-<div class="section-title pt-0 mb-2 row">
+<div class="section-title pt-0 mb-2 row d-flex justify-content-between align-items-center">
 	<h1 class="title col-auto">Current Appointments</h1>
-	<div class="text-descripstion secondary-text mb-0 ms-auto fw-bold col">
+	<div class="text-descripstion secondary-text mb-0 col-auto">
 		Slot: {{$slot}}
 	</div>
 </div>
