@@ -31,18 +31,18 @@
 							@foreach($doctor['timings'][$day] as $slot=>$timing)
 								<div class="row my-2 justify-content-between">
 									<div class="col-auto">
-										<span class="d-block">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
-										<div class="token_details" id="token_details_{{$timing['slot_id']}}"></div>
+										<span class="d-block">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>										
 									</div>
 									@if( ! $doctor['is_booked'])
 										<div class="col-auto">
-											<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" class="btn btn-secondary btn-rounded btn-sm" >Book</button>
+											<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" class="btn btn-secondary btn-rounded btn-sm book" >Book</button>
 										</div>
 									@else										
 										<div class="col-auto">
 											<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" type='button'>Check Status</button>
 										</div>										
 									@endif
+									<div class="token_details" id="token_details_{{$timing['slot_id']}}"></div>
 								</div>								
 							@endforeach							
 						</div>
@@ -78,7 +78,7 @@
                success:function(data) {
                  if(data.success){
 					$(".book").hide();
-					$html = "<div>"+data.msg+"</div><div>Current token:"+data.token.current_token+"<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button class='refresh_status' id='doc_"+doc_id+"_"+slot_id+"' type='button'>Refresh</button></div>"
+					$html = "<div>"+data.msg+"</div><div>Current token:"+data.token.current_token+"<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_"+doc_id+"_"+slot_id+"' type='button'>Refresh</button></div>"
 					$("#token_details_"+slot_id).show().html($html);
 				 }else{
 					$html = "<div>"+data.msg+"</div>"
@@ -96,7 +96,7 @@
                url:'/user_dashboard/refresh-status/'+doc_id+'/'+slot_id,
                success:function(data) {
                  if(data.success){					
-					$html = "<div>Current token:"+data.token.current_token+"<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button class='refresh_status' id='doc_"+doc_id+"_"+slot_id+"' type='button'>Refresh</button></div>"
+					$html = "<div>Current token:"+data.token.current_token+"<b></b></div><div>Your token number is <b>"+data.token.token_number+"</b> and estimated time is <b>"+data.token.estimated_time+"</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_"+doc_id+"_"+slot_id+"' type='button'>Refresh</button></div>"
 					$("#token_details_"+slot_id).html($html);
 				 }else{
 					$html = "<div>"+data.msg+"</div>"
