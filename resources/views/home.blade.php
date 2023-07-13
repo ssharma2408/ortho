@@ -57,21 +57,21 @@
 
 @else
 <div class="section-block my-5">
-<div class="row">
-    <div class="col-lg-5 col-md-6 mx-auto">
-     
+    <div class="row">
+        <div class="col-lg-5 col-md-6 mx-auto">
+
             <div class="text-center">
                 <div class="section-title pt-0">
                     <h3 class="title-lg">Book your doctor appointment today!</h3>
                     <p class="text-descripstion secondary-text mb-0">you can trust for all your healthcare needs. </p>
                 </div>
-				@if (!Session::has('close_status'))
-					<a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
-				@endif
+                @if (!Session::has('close_status'))
+                <a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
+                @endif
             </div>
-     
+
+        </div>
     </div>
-</div>
 </div>
 @endif
 @endsection
