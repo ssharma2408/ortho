@@ -16,6 +16,8 @@
 </div>
 <!-- page-title end -->
 <!-- balance start -->
+
+
 <div class="balance-area pd-top-40">
 	<div class="container">
 		<div class="section-title">			

@@ -5,15 +5,15 @@
 @endsection
 @section('content')
 <div class="row">
-    <div class="col-md-5 mx-auto">
+    <div class="col-lg-5 mx-auto">
         <div class="card-box">
             <div class="section-title text-center pt-0">
-                <h3>Patient Login</h3>
+                <h3 class="text-uppercase">Patient Login</h3>
+                <div class="text-descripstion secondary-text text-center pt-0">
+                    Stay connected and improve your <br>treatment's efficiency, together
+                </div>
             </div>
-            <div class="text-descripstion secondary-text text-center">
-                Lorem Ipsum is simply dummy <br>
-                text of the
-            </div>
+
             <div class="mb-4 text-center">
                 <div class="btn-group" role="group">
                     <a href="{{ route('patient.login.show') }}" type="button" class="btn btn-primary btn-rounded">Patient Login</a>
@@ -25,10 +25,10 @@
                 @include('layouts.partials.messages')
                 <div class="single-input-wrap form-group mb-3">
                     <label class="form-label">Mobile No<span class="star-red">*</span></label>
-					<div class="input-box" style="position: relative;">
-						<span class="prefix position-absolute top-50 start-0 translate-middle ms-4">+91</span>
-						<input id="mobile_no" class="form-control ps-5" type="text" name="mobile_no" value="{{ old('mobile_no') }}" required="required" autocomplete="mobile_no" autofocus placeholder="Enter Your Registered Mobile Number">
-					</div>
+                    <div class="input-box" style="position: relative;">
+                        <span class="prefix position-absolute top-50 start-0 translate-middle ms-4">+91</span>
+                        <input id="mobile_no" class="form-control ps-5" type="text" name="mobile_no" value="{{ old('mobile_no') }}" required="required" autocomplete="mobile_no" autofocus placeholder="Enter Your Registered Mobile Number">
+                    </div>
                 </div>
                 @if ($errors->has('mobile_no'))
                 <span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>

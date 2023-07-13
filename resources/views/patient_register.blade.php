@@ -10,7 +10,7 @@
 
 
 <div class="row">
-    <div class="col-md-5 mx-auto">
+    <div class="col-lg-5 mx-auto">
         <div class="card-box">
             <div class="section-title text-center pt-0">
                 <h3 class="text-uppercase">Patient Register</h3>
