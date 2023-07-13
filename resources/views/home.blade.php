@@ -26,7 +26,9 @@
     </div>
 </div>
 <!-- balance End -->
-
+@if (!Session::has('close_status'))
+	<a href="{{route('patient.login.show')}}" class="btn btn-secondary btn-rounded ">Book an Appointment</a>
+@endif
 <!-- transaction start -->
 <div class="transaction-area pd-top-36">
     <div class="container">
