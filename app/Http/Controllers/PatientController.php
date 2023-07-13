@@ -80,6 +80,5 @@ class PatientController extends Controller
 			$msg = "No records found or there is a technical error, please try after sometime";
 			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
 		}
-    }
-	
+    }	
 }
