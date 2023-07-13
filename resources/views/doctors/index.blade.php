@@ -13,14 +13,11 @@
 	<h3 class="title-lg">Our Doctors</h3>
 </div>
 @include('layouts.partials.messages')
-<div class="row">
+<div class="row gx-3 row-cols-1  row-cols-lg-2">
 	@foreach($doctors as $key => $doctor)
-	<div class="col-md-4">
-		<div class="card-box">
+	<div class="col">
+		<div class="card">
 			<div class="card-body">
-				<div class="doctor-profile">
-
-				</div>
 				<h5 class="card-title text-secondary mb-2">Dr.{{$doctor->name}}</h5>
 				<p class="card-text mb-1">Email : {{$doctor->email}}</p>
 				<p class="card-text mb-2">Phone : {{$doctor->mobile_number}}</p>
