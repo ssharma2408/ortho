@@ -13,10 +13,10 @@
 </div>
 		
 @include('layouts.partials.messages')
-<div class="row">
+<div class="row gx-3 row-cols-1  row-cols-lg-2">
 	@foreach($doctors as $key => $doctor)
-		<div class="col-md-4">
-			<div class="card-box">
+		<div class="col">
+			<div class="card">
 				<div class="card-body">
 					<div class="doctor-profile">
 
