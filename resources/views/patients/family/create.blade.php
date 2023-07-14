@@ -84,6 +84,7 @@
 @parent
 <script>
 	$("#has_mobile").click(function (){
+		$("#mobile_number").val("").prop('required', false);
 		$("#mobile_div").toggle();
 	})
 </script>
