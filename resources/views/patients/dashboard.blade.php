@@ -20,12 +20,12 @@ $day = date( 'N' );
 @if(isset($doctor['timings'][$day]))
 <div class="single-goal single-goal-one {{isset($doctor['timings'][$day+1]) ? '' : 'border-top mt-2 pt-2 border-light-subtle'  }}">
 	<div class="row align-items-center">
-		<div class="col-lg-7 pr-0">
+		<div class="col-lg-6 pr-0">
 			<div class="details text-secondary">
 				<h6>Dr. {{$doctor['name']}}</h6>
 			</div>
 		</div>
-		<div class="col-lg-5 pr-0">
+		<div class="col-lg-6 pr-0">
 			@foreach($doctor['timings'][$day] as $slot=>$timing)
 			<div class="row my-2 justify-content-between">
 				<div class="col-auto">
