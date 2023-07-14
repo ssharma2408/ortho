@@ -89,6 +89,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	
 	Route::group(['prefix' => 'user_dashboard', 'middleware' => ['patientAccess']], function() {
 		Route::get('/', 'PatientController@dashboard')->name('patient.dashboard');
+		Route::get('family/edit_member', 'FamilyController@edit_member')->name('family.edit_member');
+		Route::resource('family', 'FamilyController');
 		Route::get('/book-appointment/{doctor_id}/{slot_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
 		Route::get('/refresh-status/{doctor_id}/{slot_id}', 'PatientController@refresh_status')->name('patient.refresh_status');
 		
