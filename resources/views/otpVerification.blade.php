@@ -24,6 +24,7 @@
                 <div class="single-input-wrap form-group mb-3">
                     <label class="form-label">OTP*</label>
                     <input id="otp" class="form-control" type="text" name="otp" value="{{ old('otp') }}" required autocomplete="otp" autofocus placeholder="Enter OTP">
+					<div class="mt-4">Use <input type="text" value="123456" id="myInput" /> for testing <button type="button" onclick="myFunction()">Copy text</button></div>
                 </div>
                 @if ($errors->has('otp'))
                 <span class="text-danger text-left">{{ $errors->first('otp') }}</span>
@@ -37,6 +38,22 @@
 </div>
 @endsection
 
-@push('js')
+@section('scripts')
+@parent
+<script>
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
 
-@endpush
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+</script>
+@endsection
