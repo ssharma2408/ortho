@@ -23,8 +23,7 @@
 			
 			@else
 				<li><a href="{{route('patient.dashboard')}}"><i class="ri-dashboard-line"></i><span> Home</span></a></li>
-				<li><a href="{{route('family.index')}}"><i class="ri-dashboard-line"></i><span> My Family</span></a></li>
-				<li><a href="{{ route('login.logout') }}"><i class="ri-login-circle-line"></i><span> Logout</span></a></li>
+				<li><a href="{{route('family.index')}}"><i class="ri-parent-line"></i><span> My Family</span></a></li>				
 
 			@endif
 				<li class="vertical-header">Extras</li>

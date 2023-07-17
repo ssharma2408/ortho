@@ -23,11 +23,11 @@
 		
 		<div class="row gx-3 row-cols-1  row-cols-lg-2">
 			@foreach($all_members as  $member)
-		
+			
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<h5 class="card-title text-secondary mb-2">{{$member->name}}</h5>				
+						<h5 class="card-title text-secondary mb-2">{{$member->name}} <i class="ri-{{($member->gender == 1) ? 'men' : (($member->gender == 2) ? 'women' : 'genderless')}}-line"></i></h5>				
 						<p class="card-text mb-2">Date of Birth : {{$member->dob}}</p>
 						@if($member->id == Session::get('user_details')->id)
 							<div>
@@ -53,7 +53,7 @@
 	@endforeach
 
 <div class="text-center">
-	<a class="btn btn-secondary btn-rounded" href="{{route('family.create') }}">Add New Member</a>
+	<a class="btn btn-secondary btn-rounded" href="{{route('family.create') }}"><i class="ri-user-add-line"></i> Add New Member</a>
 </div>
 
 <!-- goal area End -->
