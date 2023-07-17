@@ -13,13 +13,11 @@
 	<div class="staff-area">
 		<form action="{{ route('family.store') }}" method="post" class="staff-form-inner">
 			@csrf
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-check form-switch single-input-wrap form-group mb-3">					
+			<div class="form-check form-switch single-input-wrap form-group mb-3">					
 						<input class="form-check-input" name="has_mobile" type="checkbox" role="switch" id="has_mobile" checked>
 						<label class="form-check-label" for="has_mobile">Has Mobile</label>						
 					</div>
-				</div>
+			<div class="row">
 				<div class="col-md-6">
 					<div class="single-input-wrap form-group mb-3">
 					<label class="form-label">Name</label>

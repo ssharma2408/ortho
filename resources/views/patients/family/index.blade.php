@@ -14,11 +14,16 @@
 
 @include('layouts.partials.messages')
 
-<div class="row gx-3 row-cols-1  row-cols-lg-2">
+
 	@foreach($members as $key => $all_members)
 		@if(!empty($all_members))
-			{{$type[$key]}}
+		<div class="section-title pt-0">
+		<h3 class="title-sm text-secondary">{{$type[$key]}}</h3>
+		</div>
+		
+		<div class="row gx-3 row-cols-1  row-cols-lg-2">
 			@foreach($all_members as  $member)
+		
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -43,9 +48,10 @@
 				</div>
 			</div>
 			@endforeach
+			</div>
 		@endif
 	@endforeach
-</div>
+
 <div class="text-center">
 	<a class="btn btn-secondary btn-rounded" href="{{route('family.create') }}">Add New Member</a>
 </div>
