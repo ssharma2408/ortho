@@ -5,7 +5,11 @@
 <div>Patient Dashboard</div>
 
 @endsection
-
+<?php 
+	date_default_timezone_set("Asia/Kolkata");
+	$timezone = 'Asia/Kolkata';
+?>
+				
 @section('content')
 
 <!-- balance start -->
@@ -31,9 +35,9 @@ $day = date( 'N' );
 				<div class="col-auto">
 					<span class="d-block">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
 				</div>
-				@if( ! $doctor['is_booked'])
+				@if( ! in_array($timing['slot_id'], $doctor['is_booked']))
 				<div class="col-auto">
-					<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" class="btn btn-secondary btn-rounded btn-sm book">Book</button>
+					<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" data-endtime = "<?php echo strtotime(date('Y-m-d '.$timing['end_hour'].'')); ?>" class="btn btn-secondary btn-rounded btn-sm book">Book</button>
 				</div>
 				@else
 				<div class="col-auto">
@@ -56,16 +60,25 @@ $day = date( 'N' );
 @section('scripts')
 @parent
 <script>
-	var timestamp = '<?= time(); ?>';
+	var timestamp = '<?php echo time(); ?>';
 
 	function updateTime() {
 		var time_arr = Date(timestamp).split(" ");
 		$('#time').html(time_arr[0] + " " + time_arr[1] + " " + time_arr[2] + "" + time_arr[4]);
+
+		$(".book").each(function(){
+			var end_time = $(this).data("endtime");
+			
+			var currenttime = '<?php echo strtotime(date('Y-m-d H:i:s')); ?>';
+			
+			if(end_time < currenttime){
+				$(this).hide()
+			}
+		});		
 		timestamp++;
 	}
 	$(function() {
-		setInterval(updateTime, 1000);
-		//$(".token_details").hide();
+		setInterval(updateTime, 1000);		
 	});
 
 	$(".book").click(function() {
@@ -76,7 +89,7 @@ $day = date( 'N' );
 			url: '/user_dashboard/book-appointment/' + doc_id + '/' + slot_id,
 			success: function(data) {
 				if (data.success) {
-					$(".book").hide();
+					$("#doc_"+doc_id+"_"+slot_id).hide();
 					$html = "<div>" + data.msg + "</div><div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b> and estimated time is <b>" + data.token.estimated_time + "</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "' type='button'>Refresh</button></div>"
 					$("#token_details_" + slot_id).show().html($html);
 				} else {

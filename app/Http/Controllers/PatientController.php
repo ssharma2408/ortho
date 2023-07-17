@@ -31,7 +31,12 @@ class PatientController extends Controller
 			$response   = Http ::withHeaders([
 				'Authorization' => 'Bearer '.Session::get('user_details')->token
 			])->get($theUrl);
-			$doctor_arr[$index]['is_booked'] = json_decode($response->body());			
+			$res = json_decode($response->body());
+			if(!empty($res)){
+				foreach($res->data as $time){
+					$doctor_arr[$index]['is_booked'][] = $time->timing_id;
+				}				
+			}
 		}
 
 		return view('patients.dashboard', compact('doctor_arr', 'day_arr'));

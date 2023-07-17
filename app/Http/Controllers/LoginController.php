@@ -254,8 +254,10 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-       $request->session()->flush();
-	   return redirect()->to('login')
+       $path = Session::get('user_details')->role == "Patient" ? "/" : "login";
+	   
+	   $request->session()->flush();
+	   return redirect()->to($path)
 			->with('success', 'Logout successfully');
     }
 }
