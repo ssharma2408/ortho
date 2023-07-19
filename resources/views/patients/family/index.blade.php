@@ -32,14 +32,18 @@
 						@if($member->id == Session::get('user_details')->id)
 							<div>
 								<a href="" class="btn btn-primary btn-sm" role="button">Update Profile</a>
-							</div>
-						@else
-							<div>
-								<a href="{{ route('family.edit_member', ['id' => $member->id, 'type' => explode('_', $key)[1]]) }}" class="btn btn-primary btn-sm" role="button">Edit</a>
 								<form action="{{ route('family.destroy', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
 									<input type="hidden" name="_method" value="DELETE">
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<input type="hidden" name="type" value = "{{ explode('_', $key)[1] }}" />
+									<button type="submit" class="btn btn-secondary btn-sm">Exit Family</button>
+								</form>
+							</div>
+						@else
+							<div>
+								<a href="{{ route('family.edit', $member->id) }}" class="btn btn-primary btn-sm" role="button">Edit</a>
+								<form action="{{ route('family.destroy', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
 									<button type="submit" class="btn btn-secondary btn-sm">Delete</button>
 								</form>
 							</div>

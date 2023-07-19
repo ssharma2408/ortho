@@ -5,8 +5,6 @@
 <p class="text-descripstion text-secondary">Lorem Ipsum is simply dummy text of the printing and </p>
 @endsection
 @section('content')
-
-
 	<div class="section-title text-uppercase">
 		<h3 class="sub-title">Add Member</h3>
 	</div>
@@ -14,9 +12,9 @@
 		<form action="{{ route('family.store') }}" method="post" class="staff-form-inner">
 			@csrf
 			<div class="form-check form-switch single-input-wrap form-group mb-3">					
-						<input class="form-check-input" name="has_mobile" type="checkbox" role="switch" id="has_mobile" checked>
-						<label class="form-check-label" for="has_mobile">Has Mobile</label>						
-					</div>
+				<input class="form-check-input" name="has_mobile" type="checkbox" role="switch" id="has_mobile" checked>
+				<label class="form-check-label" for="has_mobile">Has Mobile</label>						
+			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="single-input-wrap form-group mb-3">

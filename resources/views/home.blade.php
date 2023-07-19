@@ -12,6 +12,7 @@
     <img class="img-fluid" src="{{ asset('img/Book-an-Appointment_banner.jpg') }}" alt="Book-an-Appointment_banner">
 </div>
 
+@include('layouts.partials.messages')
 
 @if (Session::has('user_details'))
 

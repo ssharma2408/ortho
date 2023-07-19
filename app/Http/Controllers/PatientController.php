@@ -33,6 +33,7 @@ class PatientController extends Controller
 			])->get($theUrl);
 			$res = json_decode($response->body());
 			if(!empty($res)){
+				$doctor_arr[$index]['is_booked'] = [];
 				foreach($res->data as $time){
 					$doctor_arr[$index]['is_booked'][] = $time->timing_id;
 				}				

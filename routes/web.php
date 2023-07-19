@@ -31,6 +31,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	}); */
 	
 	Route::get('/', 'HomeController@index')->name('clinic.home');
+	Route::get('/c/{code}', 'HomeController@shortenLink')->name('shorten.link');
 	
 	Route::group(['middleware' => ['guest']], function() {
 
@@ -88,8 +89,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 	});
 	
 	Route::group(['prefix' => 'user_dashboard', 'middleware' => ['patientAccess']], function() {
-		Route::get('/', 'PatientController@dashboard')->name('patient.dashboard');
-		Route::get('family/edit_member', 'FamilyController@edit_member')->name('family.edit_member');
+		Route::get('/', 'PatientController@dashboard')->name('patient.dashboard');		
+		Route::post('family/sendsms', 'FamilyController@sendsms')->name('family.sendsms');
 		Route::resource('family', 'FamilyController');
 		Route::get('/book-appointment/{doctor_id}/{slot_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
 		Route::get('/refresh-status/{doctor_id}/{slot_id}', 'PatientController@refresh_status')->name('patient.refresh_status');

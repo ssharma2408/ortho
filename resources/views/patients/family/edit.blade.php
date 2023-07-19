@@ -16,6 +16,12 @@
     <form method="POST" action="{{ route('family.update', [$member->id]) }}" class="staff-form-inner">
         @method('PUT')
         @csrf
+		@if($member->is_dependent)
+			<div class="form-check form-switch single-input-wrap form-group mb-3">					
+				<input class="form-check-input" name="has_mobile" type="checkbox" role="switch" id="has_mobile" value = "{{ old('has_mobile')}}">
+				<label class="form-check-label" for="has_mobile">Has Mobile</label>						
+			</div>
+		@endif
         <div class="row">
             <div class="col-md-6">
                 <div class="single-input-wrap form-group mb-3">
@@ -28,13 +34,28 @@
                     @endif
                 </div>
             </div>
-			@if($type==1)
+			@if(!$member->is_dependent)
 				<div class="col-md-6" id="mobile_div">
 					<div class="single-input-wrap form-group mb-3">
 					<label class="form-label">Mobile</label>
 						<div class="input-box" style="position: relative;">
 							<span class="prefix position-absolute top-50 start-0 translate-middle ms-4">+91</span>
 							<input id="mobile_number" class="form-control ps-5" type="text" name="mobile_number" value="{{ old('mobile_number', str_replace('+91', '', $member->mobile_number)) }}" required autocomplete="mobile_number" autofocus>
+						</div>
+						@error('mobile_number')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+						@enderror
+					</div>
+				</div>
+			@else
+				<div class="col-md-6" id="mobile_div_dep">
+					<div class="single-input-wrap form-group mb-3">
+					<label class="form-label">Mobile</label>
+						<div class="input-box" style="position: relative;">
+							<span class="prefix position-absolute top-50 start-0 translate-middle ms-4">+91</span>
+							<input id="mobile_number_dep" class="form-control ps-5" type="text" name="mobile_number" value="{{ old('mobile_number') }}" autocomplete="mobile_number" autofocus>
 						</div>
 						@error('mobile_number')
 						<span class="invalid-feedback" role="alert">
@@ -71,8 +92,7 @@
 					@enderror
 				</div>
 			</div>
-        </div>
-		<input type="hidden" name="id" value="{{ $member->id }}" />
+        </div>		
         <button type="submit" class="btn btn-secondary btn-rounded text-uppercase">Save</button>		
     </form>
 </div>
@@ -82,6 +102,16 @@
 @section('scripts')
 @parent
 <script>
-
+	$(function() {
+		$("#mobile_div_dep").hide();
+	});
+	$("#has_mobile").click(function (){
+		if($('#has_mobile').is(':checked')){			
+			$("#mobile_number_dep").val("").prop('required', true);
+		}else{			
+			$("#mobile_number_dep").val("").prop('required', false);
+		}		
+		$("#mobile_div_dep").toggle();
+	})
 </script>
 @endsection
