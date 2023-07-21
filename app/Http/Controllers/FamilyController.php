@@ -129,7 +129,13 @@ class FamilyController extends Controller
 
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token
-        ])->delete($theUrl);		
+        ])->delete($theUrl);
+
+		if(isset(json_decode($response->body())->data)){
+			$request->session()->flush();
+			return redirect()->to('/')
+			->with('success', 'Logout successfully');
+		}
 
 		return redirect()->route('family.index')->with('success', "Member removed successfully");
 		
