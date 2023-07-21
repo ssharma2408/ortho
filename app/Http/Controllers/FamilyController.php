@@ -160,9 +160,10 @@ class FamilyController extends Controller
         ])->post(config('app.api_url').'v1/sendsms', $post_arr);
 		
 		$status = json_decode($response->body())->data->status;
+		$message = json_decode($response->body())->data->message;
 
 		if($status){
-			return redirect()->route('family.index')->with('success', "SMS sent successfully");
+			return redirect()->route('family.index')->with('success', "SMS sent successfully ".$message);
 		}else{
 			return redirect()->route('family.index')->with('success', "There is a technical error");	
 		}
