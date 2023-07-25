@@ -32,11 +32,13 @@
 						@if($member->id == Session::get('user_details')->id)
 							<div>
 								<a href="" class="btn btn-primary btn-sm" role="button">Update Profile</a>
-								<form action="{{ route('family.destroy', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
-									<input type="hidden" name="_method" value="DELETE">
-									<input type="hidden" name="_token" value="{{ csrf_token() }}">
-									<button type="submit" class="btn btn-secondary btn-sm">Exit Family</button>
-								</form>
+								@if(count($members['type_0']) > 1)
+									<form action="{{ route('family.destroy', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
+										<input type="hidden" name="_method" value="DELETE">
+										<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										<button type="submit" class="btn btn-secondary btn-sm">Exit Family</button>
+									</form>
+								@endif
 							</div>
 						@else
 							<div>

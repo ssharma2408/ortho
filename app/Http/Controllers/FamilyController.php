@@ -47,6 +47,7 @@ class FamilyController extends Controller
 			'family_id'=>Session::get('user_details')->family_id,
 			'user_mobile_number'=> Session::get('user_details')->mobile_number,
 			'is_dependent'=> isset($request['has_mobile']) ? 0 : 1,
+			'added_by'=> Session::get('user_details')->id,
 		];
 
 		$response   = Http ::withHeaders([
@@ -131,7 +132,7 @@ class FamilyController extends Controller
             'Authorization' => 'Bearer '.Session::get('user_details')->token
         ])->delete($theUrl);
 
-		if(isset(json_decode($response->body())->data)){
+		if(isset(json_decode($response->body())->data) && $member_id == Session::get('user_details')->id){
 			$request->session()->flush();
 			return redirect()->to('/')
 			->with('success', 'Logout successfully');
