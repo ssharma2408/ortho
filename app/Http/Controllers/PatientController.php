@@ -24,21 +24,7 @@ class PatientController extends Controller
 			$doctor_arr[$doctor->id]['id'] = $doctor->id;
 			$doctor_arr[$doctor->id]['name'] = $doctor->name;
 			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id);
-		}
-
-		foreach($doctor_arr as $index => $doc){
-			$theUrl     = config('app.api_url').'v1/check_status/'.$_ENV['CLINIC_ID'].'/'.$doc['id'].'/'.Session::get('user_details')->id;
-			$response   = Http ::withHeaders([
-				'Authorization' => 'Bearer '.Session::get('user_details')->token
-			])->get($theUrl);
-			$res = json_decode($response->body());
-			if(!empty($res)){
-				$doctor_arr[$index]['is_booked'] = [];
-				foreach($res->data as $time){
-					$doctor_arr[$index]['is_booked'][] = $time->timing_id;
-				}				
-			}
-		}
+		}		
 
 		return view('patients.dashboard', compact('doctor_arr', 'day_arr'));
     }
@@ -50,7 +36,7 @@ class PatientController extends Controller
 		$post_arr = [			
 			'doctor_id'=>$request->doctor_id,
 			'slot_id'=>$request->slot_id,
-			'patient_id'=>Session::get('user_details')->id,
+			'patient_id'=>$request->patient_id,
 			'clinic_id'=>$_ENV['CLINIC_ID'],
 		];
 
@@ -71,7 +57,7 @@ class PatientController extends Controller
 	
 	public function refresh_status(Request $request)
     {
-		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.$request->slot_id.'/'.Session::get('user_details')->id;
+		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.$request->slot_id.'/'.$request->patient_id;
 
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token
@@ -86,5 +72,32 @@ class PatientController extends Controller
 			$msg = "No records found or there is a technical error, please try after sometime";
 			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
 		}
-    }	
+    }
+	
+	public function booking($doctor_id, $slot_id){
+		$theUrl     = config('app.api_url').'v1/patient_family/'.Session::get('user_details')->family_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token
+        ])->get($theUrl);
+
+		$members = json_decode($response->body())->data;		
+		
+		$is_booked = [];
+		
+		foreach($members as $index => $patient){
+			$theUrl     = config('app.api_url').'v1/check_status/'.$_ENV['CLINIC_ID'].'/'.$doctor_id.'/'.$slot_id.'/'.$patient->id;
+			$response   = Http ::withHeaders([
+				'Authorization' => 'Bearer '.Session::get('user_details')->token
+			])->get($theUrl);
+			$res = json_decode($response->body());			
+			
+			if(!empty($res)){				
+				foreach($res->data as $token){					
+					$is_booked[] = $token->patient_id;
+				}				
+			}			
+		}
+
+		return view('patients.booking', compact('members', 'doctor_id', 'slot_id', 'is_booked'));
+	}
 }

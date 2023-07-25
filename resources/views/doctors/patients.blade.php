@@ -19,19 +19,13 @@
 
 		<div class="details fw-bold secondary-text text-uppercase  mb-3">
 		{{$details['name']}}
-		</div>
-
-		
-				@foreach($details['visit_date'] as $date)
-				<div class="d-flex mt-2">
-				
-						<div class="visit_date">{{$date['visit_date']}}</div>
-				
-					 <button type="button" class="ms-auto btn btn-primary btn-sm show_btn" id="history_{{$date['history_id']}}">View</button></li>
-					
-				</div>
-				@endforeach
-		
+		</div>		
+		@foreach($details['visit_date'] as $date)
+			<div class="d-flex mt-2">
+				<div class="visit_date">{{$date['visit_date']}}</div>
+				<button type="button" class="ms-auto btn btn-primary btn-sm show_btn" id="history_{{$date['history_id']}}">View</button>				
+			</div>
+		@endforeach		
 	</div>
 </div>
 @endforeach

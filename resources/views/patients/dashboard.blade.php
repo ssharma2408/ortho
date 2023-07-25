@@ -35,16 +35,9 @@ $day = date( 'N' );
 				<div class="col-auto">
 					<span class="d-block">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
 				</div>
-				@if( ! in_array($timing['slot_id'], $doctor['is_booked']))
 				<div class="col-auto">
-					<button type="button" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" data-endtime = "<?php echo strtotime(date('Y-m-d '.$timing['end_hour'].'')); ?>" class="btn btn-secondary btn-rounded btn-sm book">Book</button>
+					<a href="user_dashboard/booking/{{$doctor['id']}}/{{$timing['slot_id']}}" id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" data-endtime = "<?php echo strtotime(date('Y-m-d '.$timing['end_hour'].'')); ?>" class="btn btn-secondary btn-rounded btn-sm book">Book</a>
 				</div>
-				@else
-				<div class="col-auto">
-					<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id="doc_{{$doctor['id']}}_{{$timing['slot_id']}}" type='button'>Check Status</button>
-				</div>
-				@endif
-				<div class="token_details row gy-2 row-cols-1" id="token_details_{{$timing['slot_id']}}"></div>
 			</div>
 			@endforeach
 		</div>
@@ -79,43 +72,6 @@ $day = date( 'N' );
 	}
 	$(function() {
 		setInterval(updateTime, 1000);		
-	});
-
-	$(".book").click(function() {
-		var doc_id = $(this).attr("id").split("_")[1];
-		var slot_id = $(this).attr("id").split("_")[2];
-		$.ajax({
-			type: 'GET',
-			url: '/user_dashboard/book-appointment/' + doc_id + '/' + slot_id,
-			success: function(data) {
-				if (data.success) {
-					$("#doc_"+doc_id+"_"+slot_id).hide();
-					$html = "<div>" + data.msg + "</div><div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b> and estimated time is <b>" + data.token.estimated_time + "</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "' type='button'>Refresh</button></div>"
-					$("#token_details_" + slot_id).show().html($html);
-				} else {
-					$html = "<div>" + data.msg + "</div>"
-					$("#token_details_" + slot_id).show().html($html);
-				}
-			}
-		});
-	});
-
-	$(document).on("click", ".refresh_status", function() {
-		var doc_id = $(this).attr("id").split("_")[1];
-		var slot_id = $(this).attr("id").split("_")[2];
-		$.ajax({
-			type: 'GET',
-			url: '/user_dashboard/refresh-status/' + doc_id + '/' + slot_id,
-			success: function(data) {
-				if (data.success) {
-					$html = "<div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b> and estimated time is <b>" + data.token.estimated_time + "</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "' type='button'>Refresh</button></div>"
-					$("#token_details_" + slot_id).html($html);
-				} else {
-					$html = "<div>" + data.msg + "</div>"
-					$("#token_details_" + slot_id).html($html);
-				}
-			}
-		});
 	});
 </script>
 @endsection
