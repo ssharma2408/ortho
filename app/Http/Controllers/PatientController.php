@@ -80,24 +80,29 @@ class PatientController extends Controller
             'Authorization' => 'Bearer '.Session::get('user_details')->token
         ])->get($theUrl);
 
-		$members = json_decode($response->body())->data;		
+		$members = json_decode($response->body())->data;
+		
+		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'].'/'.$doctor_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$doctor = json_decode($response->body())->data->doctor;		
 		
 		$is_booked = [];
 		
 		foreach($members as $index => $patient){
-			$theUrl     = config('app.api_url').'v1/check_status/'.$_ENV['CLINIC_ID'].'/'.$doctor_id.'/'.$slot_id.'/'.$patient->id;
+			$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$doctor_id.'/'.$slot_id.'/'.$patient->id;
 			$response   = Http ::withHeaders([
 				'Authorization' => 'Bearer '.Session::get('user_details')->token
 			])->get($theUrl);
 			$res = json_decode($response->body());			
 			
 			if(!empty($res)){				
-				foreach($res->data as $token){					
-					$is_booked[] = $token->patient_id;
-				}				
-			}			
+				$is_booked[$res->data->patient_id] = (array)$res->data;				
+			}		
 		}
 
-		return view('patients.booking', compact('members', 'doctor_id', 'slot_id', 'is_booked'));
+		return view('patients.booking', compact('members', 'doctor', 'slot_id', 'is_booked'));
 	}
 }

@@ -19,23 +19,33 @@
 	<p class="text-descripstion secondary-text mb-0 col-auto" id="time"></p>
 </div>
 
+<div>
+	<h4>Book appointment to Dr. {{$doctor->name}}</h4>
+</div>
+
 @foreach($members as $member)
 
 <div class="card">
-	<div class="card-body">
+	<div class="card-body d-flex">
 		<div class="details fw-bold secondary-text text-uppercase">
 		{{$member->name}}
 		</div>				
-		@if( ! in_array($member->id, $is_booked))
-			<div class="d-flex">
-				 <button type="button" id="doc_{{$doctor_id}}_{{$slot_id}}_{{$member->id}}" class="btn btn-secondary btn-rounded btn-sm book">Book</button>
+		@if( ! array_key_exists($member->id, $is_booked))
+			<div class="ms-auto">
+				 <button type="button" id="doc_{{$doctor->id}}_{{$slot_id}}_{{$member->id}}" class="btn btn-secondary btn-rounded btn-sm book">Book</button>
 			</div>
+			<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}"></div>
 		@else
-			<div class="d-flex">
-				<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id="doc_{{$doctor_id}}_{{$slot_id}}_{{$member->id}}" type='button'>Check Status</button>
+			<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}">
+				<div>
+					Current token: <b>{{$is_booked[$member->id]['current_token']}}</b></div>
+				<div>
+					Your token number is <b>{{$is_booked[$member->id]['token_number']}}</b> and estimated time is <b>{{$is_booked[$member->id]['estimated_time']}}</b> minute</div>
+				<div>
+					<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_{{$doctor->id}}_{{$slot_id}}_{{$member->id}}' type='button'>Refresh</button>
+				</div>
 			</div>
-		@endif
-		<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}"></div>
+		@endif		
 	</div>
 </div>
 
@@ -69,7 +79,7 @@
 			success: function(data) {
 				if (data.success) {
 					$("#doc_"+doc_id+"_"+slot_id+"_"+patient_id).hide();
-					$html = "<div>" + data.msg + "</div><div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b> and estimated time is <b>" + data.token.estimated_time + "</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "_" + patient_id +"' type='button'>Refresh</button></div>"
+					$html = "<div class='alert alert-success alert-dismissible fade show'>" + data.msg + "</div><div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b> and estimated time is <b>" + data.token.estimated_time + "</b> minute</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "_" + patient_id +"' type='button'>Refresh</button></div>"
 					$("#token_details_" + patient_id).show().html($html);
 				} else {
 					$html = "<div>" + data.msg + "</div>"
