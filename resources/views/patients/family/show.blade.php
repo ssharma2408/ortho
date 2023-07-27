@@ -1,5 +1,11 @@
 @extends('layouts.layout')
 
+@section('title')
+Staff Details
+@stop
+@section('description', '')
+@section('keywords', '')
+
 @section('page')
  
 	<div>Staff Details</div>

@@ -1,5 +1,11 @@
 @extends('layouts.layout')
 
+@section('title')
+Add Member
+@stop
+@section('description', '')
+@section('keywords', '')
+
 @section('page')
 <h1 class="page-title ">ADD MEMBER</h1>
 <p class="text-descripstion text-secondary">Lorem Ipsum is simply dummy text of the printing and </p>

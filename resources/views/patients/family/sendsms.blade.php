@@ -1,5 +1,11 @@
 @extends('layouts.layout')
 
+@section('title')
+Send SMS
+@stop
+@section('description', '')
+@section('keywords', '')
+
 @section('page')
 
 <div>Send SMS</div>
@@ -49,7 +55,7 @@
 				</div>
 			</div>         
         </div>		
-        <button type="submit" class="btn btn-secondary btn-rounded text-uppercase">Send</button>		
+        <button type="submit" class="btn btn-secondary btn-rounded text-uppercase">Send Joining Link</button>		
     </form>
 </div>
 

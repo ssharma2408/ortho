@@ -19,13 +19,15 @@ class FamilyController extends Controller
 		$member_arr = json_decode($response->body())->data;
 
 		$type = ["type_0"=>"Self, Spouse or Parents", "type_1"=>"Children"];
-		
-		$members = [];
-		foreach($member_arr as $member){
-			$members["type_".$member->is_dependent][] = $member;
-		}		
 
-		return view('patients.family.index', compact('members', 'type'));
+		$members = [];
+		foreach($member_arr->members as $member){
+			$members["type_".$member->is_dependent][] = $member;
+		}
+
+		$owner_id = $member_arr->owner_id;
+
+		return view('patients.family.index', compact('members', 'type', 'owner_id'));
 	}
 	
 	public function create()

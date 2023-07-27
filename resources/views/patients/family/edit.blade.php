@@ -1,5 +1,11 @@
 @extends('layouts.layout')
 
+@section('title')
+Update Member
+@stop
+@section('description', '')
+@section('keywords', '')
+
 @section('page')
 
 <div>Update Member</div>

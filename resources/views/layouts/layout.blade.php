@@ -6,7 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>{{ trans('panel.site_title') }}</title>
+	<title>@yield('title') - {{$_ENV['APP_NAME']}}</title>
+	<meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
 	<link href="{{ asset('images/favicon.ico') }}" rel="icon">
 
 	@if($_ENV['ENVIRONMENT'] == "local")
