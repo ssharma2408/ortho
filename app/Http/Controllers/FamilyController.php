@@ -135,9 +135,13 @@ class FamilyController extends Controller
         ])->delete($theUrl);
 
 		if(isset(json_decode($response->body())->data) && $member_id == Session::get('user_details')->id){
-			$request->session()->flush();
-			return redirect()->to('/')
-			->with('success', 'Logout successfully');
+			
+			$user_details = Session::get('user_details');
+			$user_details->family_id = json_decode($response->body())->data->family_id;		
+			Session::put('user_details', $user_details);			
+			
+			return redirect()->route('family.index')
+			->with('success', 'Exited the family successfully');
 		}
 
 		return redirect()->route('family.index')->with('success', "Member removed successfully");

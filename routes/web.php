@@ -84,7 +84,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('doctors', 'StaffController@doctors')->name('clinic.doctors');
 		Route::get('staff-doctor-view', 'StaffController@view')->name('staff.doctor.view');
 		Route::get('staff-doctor', 'StaffController@doctor_timing_edit')->name('staff.doctor.edit');
+		Route::get('tokens', 'StaffController@token_status')->name('staff.token.status');
+		Route::get('creat_token/{doctor_id}/{slot_id}', 'StaffController@create_token')->name('staff.create.show');
+		Route::get('refresh_token/{doctor_id}/{slot_id}', 'StaffController@refresh_token')->name('staff.refresh.token');
 		Route::post('/clinic-closed-save', 'StaffController@closed_day_save')->name('clinic.closed.save');
+		Route::post('/process_token', 'StaffController@process_token')->name('staff.create.token');
 		
 	});
 	

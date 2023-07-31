@@ -305,4 +305,71 @@ class StaffController extends Controller
 
 		return view('staffs.doctor_edit', compact('details', 'day_arr'));
 	}
+	
+	public function token_status(){
+		
+		$theUrl     = config('app.api_url').'v1/token_status/'.$_ENV['CLINIC_ID'];
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token
+        ])->get($theUrl);
+
+		$doctors = json_decode($response->body())->data;
+		
+		$doctor_arr = [];
+		$day_arr = array("Monday", "Tuseday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+		
+		foreach($doctors as $doctor){			
+			$doctor_arr[$doctor->id]['id'] = $doctor->id;
+			$doctor_arr[$doctor->id]['name'] = $doctor->name;
+			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id, 'current_token'=>$doctor->current_token);
+		}		
+
+		return view('staffs.token_status', compact('doctor_arr', 'day_arr'));
+	}
+	
+	public function create_token($doctor_id, $slot_id)
+	{
+		return view('staffs.create_token', compact('doctor_id','slot_id'));
+	}
+	
+	public function refresh_token($doctor_id, $slot_id)
+	{
+		$theUrl     = config('app.api_url').'v1/refresh_token/'.$slot_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token
+        ])->get($theUrl);
+
+		$token = json_decode($response->body());
+
+		if(isset($token->data)){
+			$token_number = empty($token->data) ? 0 : $token->data->token_number;
+			return response()->json(array('success'=>1, 'token'=>$token_number), 200);
+		}else{
+			$msg = "There is a technical error, please try after sometime";
+			return response()->json(array('success'=>0,'msg'=> $msg, 'token'=>""), 200);
+		}		
+	}
+	
+	public function process_token(Request $request){
+		$theUrl     = config('app.api_url').'v1/create_token';
+
+		$post_arr = $request->all();
+		
+		$post_arr['clinic_id'] = $_ENV['CLINIC_ID'];
+		$post_arr['mobile_number'] = '+91'.$post_arr['mobile_no'];
+		
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);
+
+		$response = json_decode($response->body());
+
+		if(isset($response->data)){
+
+			return redirect()->route('staff.token.status')->with('success', "Token created successfully. Token number is ".$response->data->token_number);
+		}else{
+			return redirect()->route('staff.token.status')->with('success', "There is an technical error.");
+		}
+		
+	}
 }

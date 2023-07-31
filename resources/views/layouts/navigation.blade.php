@@ -18,8 +18,9 @@
 			
 			@elseif(Session::has('user_details') && Session::get('user_details')->role=="Staff")
 				<li><a href="{{route('staff.dashboard')}}"><i class="ri-dashboard-line"></i><span> Home</span></a></li>
-				<li><a href="{{route('clinic.show')}}"><i class="ri-dashboard-line"></i><span> My Clinic</span></a></li>
+				<li><a href="{{route('clinic.show')}}"><i class="ri-service-line"></i><span> My Clinic</span></a></li>
 				<li><a href="{{route('clinic.doctors')}}"><i class="ri-nurse-fill"></i><span> Doctors</span></a></li>
+				<li><a href="{{route('staff.token.status')}}"><i class="ri-price-tag-3-line"></i><span>Tokens</span></a></li>
 			
 			@else
 				<li><a href="{{route('patient.dashboard')}}"><i class="ri-dashboard-line"></i><span> Home</span></a></li>
