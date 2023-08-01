@@ -90,8 +90,9 @@ class PatientController extends Controller
 		$doctor = json_decode($response->body())->data->doctor;		
 		
 		$is_booked = [];
-		
-		foreach($members as $index => $patient){
+
+		foreach($members->members as $index => $patient){
+
 			$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$doctor_id.'/'.$slot_id.'/'.$patient->id;
 			$response   = Http ::withHeaders([
 				'Authorization' => 'Bearer '.Session::get('user_details')->token
@@ -99,7 +100,7 @@ class PatientController extends Controller
 			$res = json_decode($response->body());			
 			
 			if(!empty($res)){				
-				$is_booked[$res->data->patient_id] = (array)$res->data;				
+				$is_booked[$res->data->patient_id] = (array)$res->data;
 			}		
 		}
 
