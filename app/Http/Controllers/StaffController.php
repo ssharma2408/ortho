@@ -357,7 +357,7 @@ class StaffController extends Controller
 		
 		$post_arr['clinic_id'] = $_ENV['CLINIC_ID'];
 		$post_arr['mobile_number'] = '+91'.$post_arr['mobile_no'];
-		
+
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
         ])->post($theUrl, $post_arr);
@@ -365,8 +365,11 @@ class StaffController extends Controller
 		$response = json_decode($response->body());
 
 		if(isset($response->data)){
-
-			return redirect()->route('staff.token.status')->with('success', "Token created successfully. Token number is ".$response->data->token_number);
+			if(isset($response->data->id)){
+				return redirect()->route('staff.token.status')->with('success', "Token created successfully. Token number is ".$response->data->token_number);
+			}else{
+				return redirect()->route('staff.token.status')->with('success', $response->data->msg);
+			}
 		}else{
 			return redirect()->route('staff.token.status')->with('success', "There is an technical error.");
 		}
