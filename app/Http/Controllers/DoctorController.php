@@ -68,8 +68,9 @@ class DoctorController extends Controller
 	public function update_token(Request $request)
 	{
 		
-		if(!$request->status){
+		if($request->status == 0 || $request->status == 2){
 			if($request->is_online){
+				//process close token
 				if ($request->hasFile('prescription')) {			
 
 					//Upload file to S3 Bucket and set path to Prescription
@@ -82,7 +83,7 @@ class DoctorController extends Controller
 					);
 					$aws_path = Storage::disk('s3')->url($path);
 					
-					$theUrl     = config('app.api_url').'v1/update_token';		
+					$theUrl     = config('app.api_url').'v1/update_token';
 
 					$post_arr = [			
 						'doctor_id'=>Session::get('user_details')->user_id,
@@ -92,6 +93,27 @@ class DoctorController extends Controller
 						'clinic_id'=>$_ENV['CLINIC_ID'],
 						'comment'=>$request->comment,
 						'prescription'=>$aws_path,
+						'is_online'=>$request->is_online,
+					];
+
+					$response   = Http ::withHeaders([
+						'Authorization' => 'Bearer '.Session::get('user_details')->token 
+					])->post($theUrl, $post_arr);		
+					
+					$msg = "Status updated successfully.";
+					return response()->json(array('success'=>1, 'msg'=> $msg), 200);
+				}else{
+					//process hold
+					$theUrl     = config('app.api_url').'v1/update_token';
+
+					$post_arr = [			
+						'doctor_id'=>Session::get('user_details')->user_id,
+						'patient_id'=>$request->patient_id,
+						'slot_id'=>$request->slot_id,
+						'status'=>$request->status,
+						'clinic_id'=>$_ENV['CLINIC_ID'],
+						'comment'=>"",
+						'prescription'=>"",
 						'is_online'=>$request->is_online,
 					];
 

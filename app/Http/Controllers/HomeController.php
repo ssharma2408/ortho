@@ -19,8 +19,27 @@ class HomeController extends Controller
 			Session::put('close_status', true);			
 		}else{
 			session()->forget('close_status');			
-		}		
-	   return view('home');
+		}
+		
+		$theUrl     = config('app.api_url').'token_status/'.$_ENV['CLINIC_ID'];
+		$response   = Http::get($theUrl);
+
+		$doctors = json_decode($response->body())->data;
+		
+		$doctor_arr = [];		
+		
+		foreach($doctors as $doctor){			
+			$doctor_arr[$doctor->id]['id'] = $doctor->id;
+			$doctor_arr[$doctor->id]['name'] = $doctor->name;
+			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id, 'current_token'=>$doctor->current_token);
+		}
+		
+		$theUrl     = config('app.api_url').'announcements/'.$_ENV['CLINIC_ID'];
+		$response   = Http::get($theUrl);
+		
+		$announcements = json_decode($response->body())->data;		
+		
+	   return view('home', compact('doctor_arr', 'announcements'));
 	}
 	
 	public function shortenLink($code){		 
@@ -35,5 +54,6 @@ class HomeController extends Controller
 		}else{
 			return redirect()->route('clinic.home')->with('success', "You have already joined the family");	
 		}	   
-	}
+	}	
+
 }

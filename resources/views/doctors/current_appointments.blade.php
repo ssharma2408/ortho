@@ -38,20 +38,20 @@
 									</div>
 									<div class="col-md-4 col-12 mt-2">
 										<label for="" class="form-label">Status</label>
-										<select name="status" id="status_{{$patient->id}}" class="form-select">
+										<select name="status" id="status_{{$patient->id}}" class="form-select status">
 											<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 											<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>
-											<!--option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option-->
+											<option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option>
 										</select>
 									</div>
 
 									<div class="col-md-4 col-12 mt-2">
 										<label class="form-label">Prescription</label>
-										<input class="form-control" name="prescription" type="file" id="prescription_{{$patient->id}}" required>
+										<input class="form-control" name="prescription" type="file" id="prescription_{{$patient->id}}">
 									</div>
 									<div class="col-md-6 col-12 mt-2">
 										<label for="" class="form-label">Comment</label>
-										<textarea class="form-control" name="comment" id="comment_{{$patient->id}}" required></textarea>
+										<textarea class="form-control" name="comment" id="comment_{{$patient->id}}"></textarea>
 									</div>
 									<div class="col-md-6 col-12 mt-2 align-self-end">
 										<button type="submit" class="btn_update btn btn-secondary btn-rounded">Update</button>
@@ -72,7 +72,7 @@
 										<select name="status" id="status_{{$patient->id}}" class="form-select">
 											<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 											<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>
-											<!--option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option-->
+											<option value="2" @if($patient->status==2){{'selected'}} @endif>Hold</option>
 										</select>
 									</div>									
 									
@@ -110,28 +110,42 @@
 	$(function() {
 		$(".patient_msg").hide();
 	});
+	
+	$(".status").change(function (){
+		var patient_id = $(this).attr('id').split("_")[1];
+		if($(this).val() == 0){
+			$("#prescription_"+patient_id).prop('required', true);
+			$("#comment_"+patient_id).prop('required', true);
+		}else{
+			$("#prescription_"+patient_id).prop('required', false);
+			$("#comment_"+patient_id).prop('required', false);
+		}
+	});
 
 	$("form.taken_frm").submit(function(e) {
 		e.preventDefault();
 		var formData = new FormData(this);
 		var token_id = $(this).find('input[name="token_id"]').val();
-		$.ajax({
-			url: '/doctor_dashboard/update-token',
-			type: 'POST',
-			data: formData,
-			success: function(data) {
-				if (data.success) {
-					$html = "<div>" + data.msg + "</div>"
-					$("#msg_" + token_id + "").show().html($html);
-				} else {
-					$html = "<div>There is a technical error or change token status.</div>"
-					$("#msg_" + token_id + "").show().html($html);
-				}
-			},
-			cache: false,
-			contentType: false,
-			processData: false
-		});
+		var status = $(this).find('select[name="status"]').val();
+		if(status == 0 || status == 2){
+			$.ajax({
+				url: '/doctor_dashboard/update-token',
+				type: 'POST',
+				data: formData,
+				success: function(data) {
+					if (data.success) {
+						$html = "<div>" + data.msg + "</div>"
+						$("#msg_" + token_id + "").show().html($html);
+					} else {
+						$html = "<div>There is a technical error or change token status.</div>"
+						$("#msg_" + token_id + "").show().html($html);
+					}
+				},
+				cache: false,
+				contentType: false,
+				processData: false
+			});
+		}
 	});
 </script>
 @endsection
