@@ -23,6 +23,7 @@
 				<h5 class="card-title text-secondary mb-2">{{$staff->name}}</h5>
 				<p class="card-text mb-2 text-nowrap">Email : {{$staff->email}}</p>
 				<p class="card-text mb-2">Phone : {{$staff->mobile_number}}</p>
+				<p class="card-text mb-2">User ID : {{$staff->username}}</p>
 				<div>
 					<a href="{{ route('staffs.edit', $staff->id) }}" class="btn btn-primary btn-sm" role="button">Edit</a>
 					<form action="{{ route('staffs.destroy', $staff->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">

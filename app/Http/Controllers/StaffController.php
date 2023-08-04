@@ -351,6 +351,7 @@ class StaffController extends Controller
 	}
 	
 	public function process_token(Request $request){
+		
 		$theUrl     = config('app.api_url').'v1/create_token';
 
 		$post_arr = $request->all();
@@ -366,13 +367,16 @@ class StaffController extends Controller
 
 		if(isset($response->data)){
 			if(isset($response->data->id)){
-				return redirect()->route('staff.token.status')->with('success', "Token created successfully. Token number is ".$response->data->token_number);
+				return response()->json(array('success'=>1, 'msg'=> "Token created successfully. Token number is ".$response->data->token_number), 200);
 			}else{
-				return redirect()->route('staff.token.status')->with('success', $response->data->msg);
+				if($response->data->msg == "processed"){
+					return response()->json(array('success'=>1, 'msg'=> "Token already created."), 200);
+				}else{
+					return response()->json(array('success'=>2, 'members'=> $response->data->members), 200);
+				}
 			}
-		}else{
-			return redirect()->route('staff.token.status')->with('success', "There is an technical error.");
+		}else{			
+			return response()->json(array('success'=>0, 'msg'=> "There is an technical error."), 200);
 		}
-		
 	}
 }

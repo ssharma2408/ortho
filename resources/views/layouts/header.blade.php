@@ -53,25 +53,3 @@
 
 </div>
 @endif
-<!-- //. search Popup -->
-<!-- header start -->
-<!--div class="header-area" style="background-image: url({{ asset('img/bg/1.png') }});">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4 col-3">
-				<a class="menu-back-page" href="home.html">
-					<i class="fa fa-angle-left"></i>
-				</a>
-			</div>
-			<div class="col-sm-4 col-6 text-center">
-				<div class="page-name">@yield('page')</div>
-			</div>
-			<div class="col-sm-4 col-3 text-right">
-				<div class="search header-search">
-					<i class="fa fa-search"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-</div-->
-<!-- header end -->

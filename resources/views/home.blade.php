@@ -91,9 +91,10 @@ $day = date( 'N' );
 
 <ul class="my-clinic-details-inner list-group">
 	<li class="my-clinic-details-title  bg-body-tertiary list-group-item d-flex justify-content-between align-items-start fw-bold">
-		<span class="col-4">Doctor</span>
-		<span class="col-4">Timing</span>
-		<span class="col-4 d-none d-lg-block">Current Token</span>
+		<span class="col-3">Doctor</span>
+		<span class="col-3">Timing</span>
+		<span class="col-3 d-none d-lg-block">Total Tokens</span>
+		<span class="col-3 d-none d-lg-block">Current Token</span>
 	</li>
 	
 	@foreach($doctor_arr as $doctor)
@@ -101,17 +102,20 @@ $day = date( 'N' );
 			<li class="list-group-item">
 				<div class="row justify-content-between align-items-center {{isset($doctor['timings'][$day+1]) ? '' : 'border-top mt-2 pt-2 border-light-subtle'  }}">				
 						
-					<span class="fw-bold col-lg-4">Dr. {{$doctor['name']}}</span>
+					<span class="fw-bold col-lg-3">Dr. {{$doctor['name']}}</span>
 						
-					<div class="col-lg-8">
+					<div class="col-lg-9">
 						@foreach($doctor['timings'][$day] as $slot=>$timing)
 						<div class="row my-2">
-							<div class="col-lg-6 col-12">
+							<div class="col-lg-4 col-12">
 								<span class="">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
 							</div>
-							<div class="col-lg-3 col-12">
+							<div class="col-lg-4 col-12">
 								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
-							</div>							
+							</div>
+							<div class="col-lg-4 col-12">
+								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
+							</div>
 						</div>
 						@endforeach
 					</div>					

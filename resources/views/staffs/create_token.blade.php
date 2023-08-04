@@ -16,7 +16,7 @@
 			<h3 class="text-uppercase">Create Token</h3>           
 		</div>
 	  
-		<form method="post" action="{{route('staff.create.token')}}" class="contact-form-inner">
+		<form method="post" class="contact-form-inner" id="token_frm">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />			
 			
 			<div class="single-input-wrap form-group mb-3">
@@ -29,14 +29,56 @@
 			@if ($errors->has('mobile_no'))
 			<span class="text-danger text-left">{{ $errors->first('mobile_no') }}</span>
 			@endif
-
+			<div class="single-input-wrap form-group mb-3" id="member_div"></div>
 			<div class="single-input-wrap form-group mb-3 text-center">
-				<button class="btn btn-secondary btn-rounded" type="submit">Create Token</button>
+				<button class="btn btn-secondary btn-rounded" id="frm_submit" type="submit">Create Token</button>
 			</div>
 			<input type="hidden" name="doctor_id" value="{{$doctor_id}}" />
 			<input type="hidden" name="slot_id" value="{{$slot_id}}" />
 		</form>
-        
+		<div class="token_msg text-danger small" id=""></div>
     </div>
 </div>
+@endsection
+@section('scripts')
+@parent
+<script>	
+	
+	$(function() {
+		$(".token_msg").hide();
+		$("#member_div").hide();
+	});
+	
+	$("#token_frm").submit(function(e) {
+		e.preventDefault();
+		var formData = new FormData(this);
+		
+		$(".token_msg").hide().html("");
+		
+		$.ajax({
+			url: '/staff_dashboard/process_token',
+			type: 'POST',
+			data: formData,
+			success: function(data) {
+				if (data.success == 1) {
+					$html = "<div>" + data.msg + "</div>"
+					$(".token_msg").show().html($html);
+				}else if(data.success == 2){					
+					$html = "<label class='form-label'>Patients*</label><select name='member' class='form-select'>";
+					for(var i=0; i < data.members.length; i++){
+						$html += "<option value='"+data.members[i].id+"'>"+data.members[i].name+"</option>";
+					}
+					$html +=  "</select>";					
+					$("#member_div").show().html($html);
+				} else {
+					$html = "<div>There is a technical error or change token status.</div>"
+					$(".token_msg").show().html($html);
+				}
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});		
+	});
+</script>
 @endsection

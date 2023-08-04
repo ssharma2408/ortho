@@ -24,9 +24,16 @@ class PatientController extends Controller
 			$doctor_arr[$doctor->id]['id'] = $doctor->id;
 			$doctor_arr[$doctor->id]['name'] = $doctor->name;
 			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id);
-		}		
+		}
+		
+		$theUrl     = config('app.api_url').'v1/pages/'.$_ENV['CLINIC_ID'];
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token
+        ])->get($theUrl);
 
-		return view('patients.dashboard', compact('doctor_arr', 'day_arr'));
+		$pages = json_decode($response->body())->data;
+
+		return view('patients.dashboard', compact('doctor_arr', 'day_arr', 'pages'));
     }
 	
 	public function book_appointment(Request $request)
@@ -98,7 +105,7 @@ class PatientController extends Controller
 				'Authorization' => 'Bearer '.Session::get('user_details')->token
 			])->get($theUrl);
 			$res = json_decode($response->body());			
-			
+
 			if(!empty($res)){				
 				$is_booked[$res->data->patient_id] = (array)$res->data;
 			}		

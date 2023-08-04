@@ -99,7 +99,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/booking/{doctor_id}/{slot_id}', 'PatientController@booking')->name('patient.booking');
 		Route::get('/book-appointment/{doctor_id}/{slot_id}/{patient_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
 		Route::get('/refresh-status/{doctor_id}/{slot_id}/{patient_id}', 'PatientController@refresh_status')->name('patient.refresh_status');
-		
+		Route::get('/page/{id}', 'PatientController@page')->name('patient.page');
 	});
 	
 });

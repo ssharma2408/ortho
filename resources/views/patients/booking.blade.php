@@ -42,15 +42,19 @@ Patient Booking
 			</div>
 			<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}"></div>
 		@else
-			<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}">
-				<div>
-					Current token: <b>{{$is_booked[$member->id]['current_token']}}</b></div>
-				<div>
-					Your token number is <b>{{$is_booked[$member->id]['token_number']}}</b> and estimated time is <b>{{$is_booked[$member->id]['estimated_time']}}</b> minute *</div>
-				<div>
-					<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_{{$doctor->id}}_{{$slot_id}}_{{$member->id}}' type='button'>Refresh</button>
-				</div>				
-			</div>
+			@if($is_booked[$member->id]['status'] != 0)
+				<div class="token_details row gy-2 row-cols-1" id="token_details_{{$member->id}}">
+					<div>
+						Current token: <b>{{$is_booked[$member->id]['current_token']}}</b></div>
+					<div>
+						Your token number is <b>{{$is_booked[$member->id]['token_number']}}</b> and estimated time is <b>{{$is_booked[$member->id]['estimated_time']}}</b> minute *</div>
+					<div>
+						<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_{{$doctor->id}}_{{$slot_id}}_{{$member->id}}' type='button'>Refresh</button>
+					</div>
+				</div>
+			@else
+				<div class="text-center">Token closed</div>
+			@endif	
 		@endif		
 	</div>
 	<div>* Estimated time depends on doctor sign in time and clinic opening time.</div>
