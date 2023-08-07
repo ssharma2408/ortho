@@ -96,7 +96,7 @@ $day = date( 'N' );
 		<span class="col-3 d-none d-lg-block">Total Tokens</span>
 		<span class="col-3 d-none d-lg-block">Current Token</span>
 	</li>
-	
+
 	@foreach($doctor_arr as $doctor)
 		@if(isset($doctor['timings'][$day]))
 			<li class="list-group-item">
@@ -111,7 +111,7 @@ $day = date( 'N' );
 								<span class="">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
 							</div>
 							<div class="col-lg-4 col-12">
-								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
+								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['total_token'])) {{$timing['total_token']}} @else 0 @endif</span>
 							</div>
 							<div class="col-lg-4 col-12">
 								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>

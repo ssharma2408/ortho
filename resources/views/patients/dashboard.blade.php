@@ -63,7 +63,7 @@ $day = date( 'N' );
 
 	function updateTime() {
 		var time_arr = Date(timestamp).split(" ");
-		$('#time').html(time_arr[0] + " " + time_arr[1] + " " + time_arr[2] + "" + time_arr[4]);
+		$('#time').html(time_arr[0] + " " + time_arr[1] + " " + time_arr[2] + " " + time_arr[4]);
 
 		$(".book").each(function(){
 			var end_time = $(this).data("endtime");
