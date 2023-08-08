@@ -6,6 +6,7 @@ use Session;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use Hash;
 
 class DoctorController extends Controller
 {
@@ -214,5 +215,66 @@ class DoctorController extends Controller
 		$history = json_decode($response->body())->data;
 		
 		return response()->json(array('success'=>1, 'history'=>$history), 200);
+	}
+	
+	public function search_patients($term)
+	{
+		$theUrl     = config('app.api_url').'v1/search_patients/'.$_ENV['CLINIC_ID'].'/'.Session::get('user_details')->user_id.'/'.$term;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);		
+		
+		$patients = json_decode($response->body());
+		
+		if(isset($patients->data)){
+			$patient_arr = [];
+			
+			if(!empty($patients->data)){
+				foreach($patients->data as $patient){
+					$patient_arr[$patient->id]['name'] = $patient->name;
+					$patient_arr[$patient->id]['visit_date'][] = array('visit_date' => $patient->visit_date, 'history_id' => $patient->history_id);
+				}
+			}
+
+			return response()->json(array('success'=>1, 'patient_arr'=>$patient_arr), 200);
+
+		}else{
+			return response()->json(array('success'=>0), 200);
+		}		
+	}
+
+	public function profile()
+    {
+		$theUrl     = config('app.api_url').'v1/profile/'.Session::get('user_details')->user_id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;		
+
+		return view('doctors.profile', compact('details'));
+    }
+	
+	public function profile_update(Request $request)
+	{
+		$post_arr = [
+			'name'=>$request['name'],
+			'email'=>$request['email'],
+			'mobile_number'=>$request['mobile_number'],						
+			'id'=>$request['user_id'],
+		];
+		
+		if(trim($request['password']) != ""){
+			$post_arr['password'] = Hash::make(trim($request['password']));
+		}
+
+		$theUrl     = config('app.api_url').'v1/update_profile';
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);
+		
+		$status = json_decode($response->body());
+
+		return redirect()->route('doctor.profile')->with('success', "Profile updated successfully");
 	}
 }

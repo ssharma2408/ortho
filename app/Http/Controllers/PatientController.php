@@ -113,4 +113,40 @@ class PatientController extends Controller
 
 		return view('patients.booking', compact('members', 'doctor', 'slot_id', 'is_booked'));
 	}
+
+	public function profile()
+    {
+		$theUrl     = config('app.api_url').'v1/patient_profile/'.Session::get('user_details')->id;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;		
+
+		return view('patients.profile', compact('details'));
+    }
+	
+	public function profile_update(Request $request)
+	{
+		$post_arr = [
+			'name'=>$request['name'],
+			'gender'=>$request['gender'],
+			'mobile_number'=>'+91'.$request['mobile_number'],
+			'dob'=>$request['dob'],
+			'id'=>$request['user_id'],
+		];
+		
+		if(trim($request['password']) != ""){
+			$post_arr['password'] = Hash::make(trim($request['password']));
+		}
+
+		$theUrl     = config('app.api_url').'v1/patient_update_profile';
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);
+		
+		$status = json_decode($response->body());
+
+		return redirect()->route('patient.profile')->with('success', "Profile updated successfully");
+	}
 }

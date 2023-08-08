@@ -379,4 +379,40 @@ class StaffController extends Controller
 			return response()->json(array('success'=>0, 'msg'=> "There is an technical error."), 200);
 		}
 	}
+
+	public function profile()
+    {
+		$theUrl     = config('app.api_url').'v1/staff_profile/'.Session::get('user_details')->user_id;
+
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);
+
+		$details = json_decode($response->body())->data;		
+
+		return view('staffs.profile', compact('details'));
+    }
+	
+	public function profile_update(Request $request)
+	{
+		$post_arr = [
+			'name'=>$request['name'],
+			'email'=>$request['email'],
+			'mobile_number'=>$request['mobile_number'],						
+			'id'=>$request['user_id'],
+		];
+		
+		if(trim($request['password']) != ""){
+			$post_arr['password'] = Hash::make(trim($request['password']));
+		}
+
+		$theUrl     = config('app.api_url').'v1/staff_update_profile';
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->post($theUrl, $post_arr);
+		
+		$status = json_decode($response->body());
+
+		return redirect()->route('staff.profile')->with('success', "Profile updated successfully");
+	}
 }

@@ -37,7 +37,7 @@ Patient
 						<p class="card-text mb-2">Date of Birth : {{$member->dob}}</p>
 						@if($member->id == Session::get('user_details')->id)
 							<div>
-								<a href="" class="btn btn-primary btn-sm" role="button">Update Profile</a>
+								<a href="{{route('patient.profile')}}" class="btn btn-primary btn-sm" role="button">Update Profile</a>
 								@if($member->id != $owner_id)
 									<form action="{{ route('family.destroy', $member->id) }}" method="POST" onsubmit="return confirm('Are you sure?');" style="display: inline-block;">
 										<input type="hidden" name="_method" value="DELETE">

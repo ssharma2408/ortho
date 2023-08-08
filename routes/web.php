@@ -62,6 +62,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::post('/clinic-timings-save', 'ClinicController@save')->name('clinicadmin.timings.save');
 		Route::get('/clinicadmin-closed', 'ClinicController@closed_day')->name('clinic.closed.edit');
 		Route::post('/clinicadmin-closed-save', 'ClinicController@closed_day_save')->name('clinicadmin.closed.save');
+		Route::get('/profile', 'ClinicController@profile')->name('clinic.admin.profile');
+		Route::post('/profile', 'ClinicController@profile_update')->name('clinicadmin.profile.update');
 	 
 	});
 	
@@ -70,9 +72,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/current_appointments', 'DoctorController@current_appointments')->name('doctor.current.appointments');
 		Route::get('/patients', 'DoctorController@patients')->name('doctor.patients');
 		Route::get('/get_history/{id}', 'DoctorController@get_history')->name('doctor.get_history');
+		Route::get('/search_patients/{search_term}', 'DoctorController@search_patients')->name('doctor.search_patients');
 		Route::resource('timings', 'TimingController');
 		Route::post('timings-save', 'TimingController@save')->name('timings.save');
 		Route::post('/update-token', 'DoctorController@update_token')->name('doctor.update_token');
+		Route::get('/profile', 'DoctorController@profile')->name('doctor.profile');
+		Route::post('/profile', 'DoctorController@profile_update')->name('doctor.profile.update');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {
@@ -89,6 +94,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('refresh_token/{doctor_id}/{slot_id}', 'StaffController@refresh_token')->name('staff.refresh.token');
 		Route::post('/clinic-closed-save', 'StaffController@closed_day_save')->name('clinic.closed.save');
 		Route::post('/process_token', 'StaffController@process_token')->name('staff.create.token');
+		Route::get('/profile', 'StaffController@profile')->name('staff.profile');
+		Route::post('/profile', 'StaffController@profile_update')->name('staff.profile.update');
 		
 	});
 	
@@ -100,6 +107,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::get('/book-appointment/{doctor_id}/{slot_id}/{patient_id}', 'PatientController@book_appointment')->name('patient.book_appointment');
 		Route::get('/refresh-status/{doctor_id}/{slot_id}/{patient_id}', 'PatientController@refresh_status')->name('patient.refresh_status');
 		Route::get('/page/{id}', 'PatientController@page')->name('patient.page');
+		Route::get('/profile', 'PatientController@profile')->name('patient.profile');
+		Route::post('/profile', 'PatientController@profile_update')->name('patient.profile.update');
 	});
 	
 });
