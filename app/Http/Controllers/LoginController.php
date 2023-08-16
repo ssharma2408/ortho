@@ -125,6 +125,10 @@ class LoginController extends Controller
 					->withErrors($result->message);
 			}
 		}else{
+			if(isset($result->errors)){
+				return redirect()->to('patient_login')
+					->withErrors("Entered mobile number is not registered");
+			}
 			return redirect()->to('patient_login')
 					->withErrors("There is a technical error. Please try after some time");
 		}
