@@ -34,7 +34,9 @@ Patient
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title text-secondary mb-2">{{$member->name}} <i class="ri-{{($member->gender == 1) ? 'men' : (($member->gender == 2) ? 'women' : 'genderless')}}-line"></i></h5>				
-						<p class="card-text mb-2">Date of Birth : {{$member->dob}}</p>
+						@if(!empty($member->dob))
+							<p class="card-text mb-2">Date of Birth : {{$member->dob}}</p>
+						@endif
 						@if($member->id == Session::get('user_details')->id)
 							<div>
 								<a href="{{route('patient.profile')}}" class="btn btn-primary btn-sm" role="button">Update Profile</a>

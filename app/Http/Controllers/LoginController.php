@@ -112,7 +112,7 @@ class LoginController extends Controller
 		$result = json_decode($response->body());		
 		
 		if(isset($result->success)){
-			if($result->success && $result->data->patient_id){
+			if($result->success && isset($result->data->patient_id)){
 				
 				$patient_id = $result->data->patient_id;
 				
@@ -122,7 +122,7 @@ class LoginController extends Controller
 			}else{
 				
 				return redirect()->to('/')
-					->withErrors($result->data->error);
+					->withErrors($result->message);
 			}
 		}else{
 			return redirect()->to('patient_login')

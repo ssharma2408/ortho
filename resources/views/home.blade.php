@@ -85,45 +85,48 @@
 @php
 $day = date( 'N' );
 @endphp
-<div class="section-title pt-0 mb-2 row d-flex justify-content-between align-items-center">
-	<h3 class="title col-auto">Doctors</h3>	
-</div>
 
-<ul class="my-clinic-details-inner list-group">
-	<li class="my-clinic-details-title  bg-body-tertiary list-group-item d-flex justify-content-between align-items-start fw-bold">
-		<span class="col-3">Doctor</span>
-		<span class="col-3">Timing</span>
-		<span class="col-3 d-none d-lg-block">Total Tokens</span>
-		<span class="col-3 d-none d-lg-block">Current Token</span>
-	</li>
+@if(!empty($doctor_arr))
+	<div class="section-title pt-0 mb-2 row d-flex justify-content-between align-items-center">
+		<h3 class="title col-auto">Doctors</h3>	
+	</div>
 
-	@foreach($doctor_arr as $doctor)
-		@if(isset($doctor['timings'][$day]))
-			<li class="list-group-item">
-				<div class="row justify-content-between align-items-center {{isset($doctor['timings'][$day+1]) ? '' : 'border-top mt-2 pt-2 border-light-subtle'  }}">				
-						
-					<span class="fw-bold col-lg-3">Dr. {{$doctor['name']}}</span>
-						
-					<div class="col-lg-9">
-						@foreach($doctor['timings'][$day] as $slot=>$timing)
-						<div class="row my-2">
-							<div class="col-lg-4 col-12">
-								<span class="">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
+	<ul class="my-clinic-details-inner list-group">
+		<li class="my-clinic-details-title  bg-body-tertiary list-group-item d-flex justify-content-between align-items-start fw-bold">
+			<span class="col-3">Doctor</span>
+			<span class="col-3">Timing</span>
+			<span class="col-3 d-none d-lg-block">Total Tokens</span>
+			<span class="col-3 d-none d-lg-block">Current Token</span>
+		</li>
+
+		@foreach($doctor_arr as $doctor)
+			@if(isset($doctor['timings'][$day]))
+				<li class="list-group-item">
+					<div class="row justify-content-between align-items-center {{isset($doctor['timings'][$day+1]) ? '' : 'border-top mt-2 pt-2 border-light-subtle'  }}">				
+							
+						<span class="fw-bold col-lg-3">Dr. {{$doctor['name']}}</span>
+							
+						<div class="col-lg-9">
+							@foreach($doctor['timings'][$day] as $slot=>$timing)
+							<div class="row my-2">
+								<div class="col-lg-4 col-12">
+									<span class="">{{$timing['start_hour']}} - {{$timing['end_hour']}}</span>
+								</div>
+								<div class="col-lg-4 col-12">
+									<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['total_token'])) {{$timing['total_token']}} @else 0 @endif</span>
+								</div>
+								<div class="col-lg-4 col-12">
+									<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
+								</div>
 							</div>
-							<div class="col-lg-4 col-12">
-								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['total_token'])) {{$timing['total_token']}} @else 0 @endif</span>
-							</div>
-							<div class="col-lg-4 col-12">
-								<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
-							</div>
-						</div>
-						@endforeach
-					</div>					
-				</div>
-			</li>
-		@endif
-	@endforeach
-</ul>
+							@endforeach
+						</div>					
+					</div>
+				</li>
+			@endif
+		@endforeach
+	</ul>
+@endif
 @endsection
 
 @push('js')
