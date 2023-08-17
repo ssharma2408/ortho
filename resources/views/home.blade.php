@@ -116,7 +116,7 @@ $day = date( 'N' );
 									<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['total_token'])) {{$timing['total_token']}} @else 0 @endif</span>
 								</div>
 								<div class="col-lg-4 col-12">
-									<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">@if(!empty($timing['current_token'])) {{$timing['current_token']}} @else 0 @endif</span>
+									<span class="" id="status_{{$doctor['id']}}_{{$timing['slot_id']}}">{{$timing['current_token']}}</span>
 								</div>
 							</div>
 							@endforeach

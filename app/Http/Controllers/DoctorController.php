@@ -60,7 +60,9 @@ class DoctorController extends Controller
 		$patient_arr = [];
 		
 		foreach($patients as $patient){
-			$patient_arr[$patient->start_hour."-".$patient->end_hour][] = $patient;
+			$patient_arr[$patient->start_hour."-".$patient->end_hour]['patients'][] = $patient;
+			$patient_arr[$patient->start_hour."-".$patient->end_hour]['is_started'] = $patient->is_started;
+			$patient_arr[$patient->start_hour."-".$patient->end_hour]['slot_id'] = $patient->timing_id;
 		}
 
 		return view('doctors.current_appointments', compact('patient_arr'));
@@ -276,5 +278,15 @@ class DoctorController extends Controller
 		$status = json_decode($response->body());
 
 		return redirect()->route('doctor.profile')->with('success', "Profile updated successfully");
+	}
+	
+	public function start_slot($slot_id, $status)
+	{
+		$theUrl     = config('app.api_url').'v1/work_status/'.$slot_id.'/'.$status;
+		$response   = Http ::withHeaders([
+            'Authorization' => 'Bearer '.Session::get('user_details')->token 
+        ])->get($theUrl);		
+		
+		return response()->json(array('success'=>1), 200);
 	}
 }

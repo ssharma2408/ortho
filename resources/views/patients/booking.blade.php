@@ -52,12 +52,12 @@ Patient Booking
 						<button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_{{$doctor->id}}_{{$slot_id}}_{{$member->id}}' type='button'>Refresh</button>
 					</div>
 				</div>
+				<div>* Estimated time depends on doctor sign in time and clinic opening time.</div>
 			@else
 				<div class="text-center">Token closed</div>
 			@endif	
 		@endif		
-	</div>
-	<div>* Estimated time depends on doctor sign in time and clinic opening time.</div>
+	</div>	
 </div>
 
 @endforeach

@@ -78,6 +78,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 		Route::post('/update-token', 'DoctorController@update_token')->name('doctor.update_token');
 		Route::get('/profile', 'DoctorController@profile')->name('doctor.profile');
 		Route::post('/profile', 'DoctorController@profile_update')->name('doctor.profile.update');
+		Route::get('/start-slot/{slot_id}/{status}', 'DoctorController@start_slot')->name('doctor.start.slot');
 	});
 	
 	Route::group(['prefix' => 'staff_dashboard', 'middleware' => ['staffAccess']], function() {

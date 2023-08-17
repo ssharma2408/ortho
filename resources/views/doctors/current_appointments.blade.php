@@ -7,6 +7,11 @@
 @endsection
 
 @section('content')
+
+<div id="loader_div" class="text-center">
+	<img src="{{asset('img/loader.svg') }}" />
+</div>
+
 <!-- page-title stary -->
 
 <!-- page-title end -->
@@ -15,12 +20,13 @@
 	@foreach($patient_arr as $slot=>$patients)
 		<div class="section-title pt-0 mb-2 row d-flex justify-content-between align-items-center">
 			<h1 class="title col-auto">Current Appointments</h1>
+			<button class="btn btn-primary work_status" id="work_status_{{$patients['slot_id']}}" @if($patients['is_started']) disabled @endif>{{($patients['is_started']) ? 'Started ...' : 'Start' }}</button>
 			<div class="text-descripstion secondary-text mb-0 col-auto">
 				Slot: {{$slot}}
 			</div>
 		</div>
-		@foreach($patients as $patient)
-			<form class="taken_frm" method="post" enctype="multipart/form-data">
+		@foreach($patients['patients'] as $patient)
+			<form class="taken_frm" method="post" enctype="multipart/form-data" id="frm_{{$patient->id}}">
 				@csrf
 				<div class="card">
 					<div class="card-body">
@@ -109,6 +115,7 @@
 <script>
 	$(function() {
 		$(".patient_msg").hide();
+		$("#loader_div").hide();
 	});
 	
 	$(".status").change(function (){
@@ -123,19 +130,29 @@
 	});
 
 	$("form.taken_frm").submit(function(e) {
+		var frm_id = $(this).attr('id');		
 		e.preventDefault();
 		var formData = new FormData(this);
 		var token_id = $(this).find('input[name="token_id"]').val();
 		var status = $(this).find('select[name="status"]').val();
 		if(status == 0 || status == 2){
+			$("#loader_div").show();
 			$.ajax({
 				url: '/doctor_dashboard/update-token',
 				type: 'POST',
 				data: formData,
 				success: function(data) {
+					$("#loader_div").hide();
 					if (data.success) {
 						$html = "<div>" + data.msg + "</div>"
 						$("#msg_" + token_id + "").show().html($html);
+						if(status == 0 ){
+							setTimeout(
+							  function() 
+							  {
+								$('#'+frm_id).hide('slow', function(){ $('#'+frm_id).remove(); });
+							  }, 2000);	
+						}							  
 					} else {
 						$html = "<div>There is a technical error or change token status.</div>"
 						$("#msg_" + token_id + "").show().html($html);
@@ -147,5 +164,25 @@
 			});
 		}
 	});
+	
+	$(".work_status").click(function (){
+		$(this).text("Started ...").attr('disabled', true);
+		var slot_id = $(this).attr('id').split("_")[2];
+		$.ajax({
+				url: '/doctor_dashboard/start-slot/'+slot_id+'/'+1,
+				type: 'GET',				
+				success: function(data) {
+					if (data.success) {
+						$(this).text("Started ...").attr('disabled', true);
+					} else {
+						$(this).text("Start").attr('disabled', false);
+					}
+				},
+				cache: false,
+				contentType: false,
+				processData: false
+			});
+	});
+	
 </script>
 @endsection

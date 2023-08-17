@@ -31,14 +31,14 @@ class HomeController extends Controller
 		foreach($doctors as $doctor){			
 			$doctor_arr[$doctor->id]['id'] = $doctor->id;
 			$doctor_arr[$doctor->id]['name'] = $doctor->name;
-			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id, 'total_token'=>$doctor->total_token, 'current_token'=>$doctor->current_token);
+			$doctor_arr[$doctor->id]['timings'][$doctor->day][] = array('start_hour'=>$doctor->start_hour, 'end_hour'=>$doctor->end_hour, 'slot_id'=>$doctor->slot_id, 'total_token'=>$doctor->total_token, 'current_token'=>(!$doctor->is_started) ? "Not Started" : $doctor->current_token);
 		}
 		
 		$theUrl     = config('app.api_url').'announcements/'.$_ENV['CLINIC_ID'];
 		$response   = Http::get($theUrl);
 		
 		$announcements = json_decode($response->body())->data;		
-		
+
 	   return view('home', compact('doctor_arr', 'announcements'));
 	}
 	
