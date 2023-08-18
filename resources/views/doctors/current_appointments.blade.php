@@ -59,6 +59,10 @@
 										<label for="" class="form-label">Comment</label>
 										<textarea class="form-control" name="comment" id="comment_{{$patient->id}}"></textarea>
 									</div>
+									<div class="col-md-6 col-12 mt-2 next_visit">
+										<label for="" class="form-label">Next Visit</label>
+										<input class="form-control" type="date" name="next_visit_date" min="<?php echo date('Y-m-d'); ?>" value="{{ old('next_visit_date') }}" />
+									</div>
 									<div class="col-md-6 col-12 mt-2 align-self-end">
 										<button type="submit" class="btn_update btn btn-secondary btn-rounded">Update</button>
 										<input type="hidden" name="patient_id" value="{{$patient->id}}" />
@@ -115,17 +119,19 @@
 <script>
 	$(function() {
 		$(".patient_msg").hide();
-		$("#loader_div").hide();
+		$(".next_visit").hide();
+		$("#loader_div").hide();		
 	});
 	
 	$(".status").change(function (){
 		var patient_id = $(this).attr('id').split("_")[1];
 		if($(this).val() == 0){
 			$("#prescription_"+patient_id).prop('required', true);
-			$("#comment_"+patient_id).prop('required', true);
+			$(this).parent().parent().find(".next_visit").show();
 		}else{
 			$("#prescription_"+patient_id).prop('required', false);
 			$("#comment_"+patient_id).prop('required', false);
+			$(this).parent().parent().find(".next_visit").hide();
 		}
 	});
 

@@ -23,6 +23,9 @@
 		</div>		
 	</form>
 </div>
+<div id="loader_div" class="text-center">
+	<img src="{{asset('img/loader.svg') }}" />
+</div>
 <div id="patient_div">
 	@foreach($patient_arr as $id => $details)
 	<div class="card">
@@ -48,65 +51,29 @@
 @section('scripts')
 @parent
 <script>
+	$(function() {
+		$("#loader_div").hide();
+	});
 	$(document).on("click", ".show_btn", function () {
-		
+
 		load_history($(this).attr('id').split("_")[1]);
-		
-		/* var next_id, prev_id;
-		
-		$('#prev').show();
-		$('#next').show();
-		
-		if($(this).parent().next(".d-flex").length > 0){
-			next_id = $(this).parent().next().find(".show_btn").attr("id").split("_")[1];
-		}else{
-			next_id = 0;
-		}
-		
-		if($(this).parent().prev(".d-flex").length > 0){
-			prev_id = $(this).parent().prev().find(".show_btn").attr("id").split("_")[1];
-		}else{
-			prev_id = 0;
-		}		
-		
-		$.ajax({
-			type: 'GET',
-			url: '/doctor_dashboard/get_history/' + $(this).attr('id').split("_")[1],
-			success: function(data) {
-				if (data.success) {
-					$("#p_name").text(data.history.patient.name);
-					$("#p_visitdate").text(data.history.visit_date);
-					$("#p_prescription").html('<img class="img-fluid" src ="' + data.history.prescription + '" />');
-					$("#p_comment").text(data.history.comment);
-					$('#historyModal').modal('show');
-					if(prev_id > 0){
-						$('#prev').attr("data-prev_id", prev_id);
-					}else{
-						$('#prev').hide();
-					}
-					if(next_id > 0){
-						$('#next').attr("data-next_id", next_id);
-					}else{
-						$('#next').hide();
-					}
-					
-					
-				}
-			}
-		}); */
 	});
 	
 	$(document).on("click", "#prev", function () {
-		
-		if(typeof $(this).data("prev_id") !== 'undefined'){
-			load_history($(this).data("prev_id"));
+		var control = document.getElementById("prev");
+		var prev_id = control.getAttribute('data-prev_id');
+
+		if(typeof prev_id !== 'undefined'){
+			load_history(prev_id);
 		}		
 	});
 	
 	$(document).on("click", "#next", function () {
-		
-		if(typeof $(this).data("next_id") !== 'undefined'){
-			load_history($(this).data("next_id"));
+		var control = document.getElementById("next");
+		var next_id = control.getAttribute('data-next_id');
+
+		if(typeof next_id !== 'undefined'){
+			load_history(next_id);
 		}
 	});
 	
@@ -114,6 +81,8 @@
 	function load_history(history_id)
 	{
 		var next_id, prev_id;
+		
+		$("#loader_div").show();
 		
 		$('#prev').show();
 		$('#next').show();
@@ -134,6 +103,7 @@
 			type: 'GET',
 			url: '/doctor_dashboard/get_history/' + history_id,
 			success: function(data) {
+				$("#loader_div").hide();
 				if (data.success) {
 					$("#p_name").text(data.history.patient.name);
 					$("#p_visitdate").text(data.history.visit_date);

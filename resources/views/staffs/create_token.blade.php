@@ -15,7 +15,9 @@
 		<div class="section-title text-center pt-0">
 			<h3 class="text-uppercase">Create Token</h3>           
 		</div>
-	  
+		<div id="loader_div" class="text-center">
+			<img src="{{asset('img/loader.svg') }}" />
+		</div>
 		<form method="post" class="contact-form-inner" id="token_frm">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />			
 			
@@ -47,11 +49,13 @@
 	$(function() {
 		$(".token_msg").hide();
 		$("#member_div").hide();
+		$("#loader_div").hide();
 	});
 	
 	$("#token_frm").submit(function(e) {
 		e.preventDefault();
 		var formData = new FormData(this);
+		$("#loader_div").show();
 		
 		$(".token_msg").hide().html("");
 		
@@ -60,9 +64,12 @@
 			type: 'POST',
 			data: formData,
 			success: function(data) {
+				$("#loader_div").hide();
 				if (data.success == 1) {
 					$html = "<div>" + data.msg + "</div>"
 					$(".token_msg").show().html($html);
+					$("#member_div").hide().html("");
+					$("#mobile_no").val("");
 				}else if(data.success == 2){					
 					$html = "<label class='form-label'>Patients*</label><select name='member' class='form-select'>";
 					for(var i=0; i < data.members.length; i++){

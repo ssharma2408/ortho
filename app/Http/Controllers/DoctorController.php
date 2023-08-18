@@ -97,6 +97,7 @@ class DoctorController extends Controller
 						'comment'=>$request->comment,
 						'prescription'=>$aws_path,
 						'is_online'=>$request->is_online,
+						'next_visit_date'=>$request->next_visit_date,
 					];
 
 					$response   = Http ::withHeaders([
@@ -118,6 +119,7 @@ class DoctorController extends Controller
 						'comment'=>"",
 						'prescription'=>"",
 						'is_online'=>$request->is_online,
+						'next_visit_date'=>"",
 					];
 
 					$response   = Http ::withHeaders([
@@ -137,6 +139,7 @@ class DoctorController extends Controller
 					'status'=>$request->status,
 					'clinic_id'=>$_ENV['CLINIC_ID'],
 					'is_online'=>$request->is_online,
+					'next_visit_date'=>"",
 				];
 
 				$response   = Http ::withHeaders([
