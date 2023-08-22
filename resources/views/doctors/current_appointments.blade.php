@@ -124,7 +124,13 @@
 		$(".patient_msg").hide();
 		$(".next_visit").hide();
 		$("#loader_div").hide();		
-		$("#timer").val(0);
+		$("#timer").val(0);		
+		
+		$(".work_status").each(function() {
+			if($( this ).text() == "Started ..."){
+				startTimer();
+			}
+		});
 	});
 	
 	$(".status").change(function (){
