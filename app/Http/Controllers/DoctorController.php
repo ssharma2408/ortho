@@ -54,7 +54,7 @@ class DoctorController extends Controller
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
         ])->get($theUrl);
-		
+
 		$patients = json_decode($response->body())->data;
 		
 		$patient_arr = [];
@@ -98,6 +98,7 @@ class DoctorController extends Controller
 						'prescription'=>$aws_path,
 						'is_online'=>$request->is_online,
 						'next_visit_date'=>$request->next_visit_date,
+						'time_taken'=>$request->time_taken,
 					];
 
 					$response   = Http ::withHeaders([
@@ -120,6 +121,7 @@ class DoctorController extends Controller
 						'prescription'=>"",
 						'is_online'=>$request->is_online,
 						'next_visit_date'=>"",
+						'time_taken'=>$request->time_taken,
 					];
 
 					$response   = Http ::withHeaders([
@@ -140,6 +142,7 @@ class DoctorController extends Controller
 					'clinic_id'=>$_ENV['CLINIC_ID'],
 					'is_online'=>$request->is_online,
 					'next_visit_date'=>"",
+					'time_taken'=>$request->time_taken,
 				];
 
 				$response   = Http ::withHeaders([

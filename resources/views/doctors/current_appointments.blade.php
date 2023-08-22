@@ -94,14 +94,14 @@
 										<div class="patient_msg text-danger small" id="msg_{{$patient->token_id}}"></div>
 									</div>
 								</div>
-							@endif
+							@endif							
 						</div>
 					</div>
-				</div>
-
+				</div>				
 			</form>
 		@endforeach
 	@endforeach
+	<input type="hidden" name="timer" id="timer" value="0" />
 @else
 	<div class="section-title pt-0 mb-2 row d-flex justify-content-between align-items-center">
 		<h1 class="title">Current Appointments</h1>
@@ -117,10 +117,14 @@
 @section('scripts')
 @parent
 <script>
+	
+	var counter;
+	
 	$(function() {
 		$(".patient_msg").hide();
 		$(".next_visit").hide();
 		$("#loader_div").hide();		
+		$("#timer").val(0);
 	});
 	
 	$(".status").change(function (){
@@ -139,14 +143,21 @@
 		var frm_id = $(this).attr('id');		
 		e.preventDefault();
 		var formData = new FormData(this);
+		
+		
 		var token_id = $(this).find('input[name="token_id"]').val();
-		var status = $(this).find('select[name="status"]').val();
+		var status = $(this).find('select[name="status"]').val();		
+		
 		if(status == 0 || status == 2){
+			
+			formData.append("time_taken", $("#timer").val());
+
 			$("#loader_div").show();
 			$.ajax({
 				url: '/doctor_dashboard/update-token',
 				type: 'POST',
 				data: formData,
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 				success: function(data) {
 					$("#loader_div").hide();
 					if (data.success) {
@@ -156,8 +167,9 @@
 							setTimeout(
 							  function() 
 							  {
-								$('#'+frm_id).hide('slow', function(){ $('#'+frm_id).remove(); });
-							  }, 2000);	
+								$('#'+frm_id).hide('slow', function(){ $('#'+frm_id).remove(); });								
+							  }, 2000);
+							  startTimer();
 						}							  
 					} else {
 						$html = "<div>There is a technical error or change token status.</div>"
@@ -171,6 +183,21 @@
 		}
 	});
 	
+	function startTimer(){
+		var steps = 0
+		cleartimer();
+		counter = setInterval(function() {
+			steps++;
+		
+			$("#timer").val(steps);
+	
+	  }, 1000);
+	}
+	
+	function cleartimer(){
+		clearInterval(counter);
+	}
+	
 	$(".work_status").click(function (){
 		$(this).text("Started ...").attr('disabled', true);
 		var slot_id = $(this).attr('id').split("_")[2];
@@ -180,6 +207,7 @@
 				success: function(data) {
 					if (data.success) {
 						$(this).text("Started ...").attr('disabled', true);
+						startTimer();
 					} else {
 						$(this).text("Start").attr('disabled', false);
 					}
