@@ -39,11 +39,11 @@
 							@if($patient->is_online)
 								<div class="row align-items-center">
 									<div class="col-md-4 col-12 mt-2">
-										<label for="" class="form-label">Patient Name</label>
+										<label class="form-label">Patient Name</label>
 										<input type="text" readonly class="form-control" value="{{$patient->name}}">
 									</div>
 									<div class="col-md-4 col-12 mt-2">
-										<label for="" class="form-label">Status</label>
+										<label class="form-label">Status</label>
 										<select name="status" id="status_{{$patient->id}}" class="form-select status">
 											<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 											<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>
@@ -56,11 +56,11 @@
 										<input class="form-control" name="prescription" type="file" id="prescription_{{$patient->id}}">
 									</div>
 									<div class="col-md-6 col-12 mt-2">
-										<label for="" class="form-label">Comment</label>
+										<label class="form-label">Comment</label>
 										<textarea class="form-control" name="comment" id="comment_{{$patient->id}}"></textarea>
 									</div>
 									<div class="col-md-6 col-12 mt-2 next_visit">
-										<label for="" class="form-label">Next Visit</label>
+										<label class="form-label">Next Visit</label>
 										<input class="form-control" type="date" name="next_visit_date" min="<?php echo date('Y-m-d'); ?>" value="{{ old('next_visit_date') }}" />
 									</div>
 									<div class="col-md-6 col-12 mt-2 align-self-end">
@@ -75,10 +75,10 @@
 							@else
 								<div class="row align-items-center">									
 									<div class="col-md-4 col-12 mt-2">
-										<label for="" class="form-label">Off Line</label>										
+										<label class="form-label">Off Line</label>										
 									</div>
 									<div class="col-md-4 col-12 mt-2">
-										<label for="" class="form-label">Status</label>
+										<label class="form-label">Status</label>
 										<select name="status" id="status_{{$patient->id}}" class="form-select">
 											<option value="0" @if($patient->status==0){{'selected'}} @endif>Close</option>
 											<option value="1" @if($patient->status==1){{'selected'}} @endif>Open</option>

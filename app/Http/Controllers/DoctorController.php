@@ -288,10 +288,13 @@ class DoctorController extends Controller
 	
 	public function start_slot($slot_id, $status)
 	{
-		$theUrl     = config('app.api_url').'v1/work_status/'.$slot_id.'/'.$status;
+		date_default_timezone_set("Asia/Kolkata");
+
+		$theUrl     = config('app.api_url').'v1/work_status/'.$slot_id.'/'.$status.'/'.strtotime("now");
+
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
-        ])->get($theUrl);		
+        ])->get($theUrl);
 		
 		return response()->json(array('success'=>1), 200);
 	}

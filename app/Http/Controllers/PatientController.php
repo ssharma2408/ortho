@@ -38,6 +38,8 @@ class PatientController extends Controller
 	
 	public function book_appointment(Request $request)
     {
+		date_default_timezone_set("Asia/Kolkata");
+		
 		$theUrl     = config('app.api_url').'v1/tokens';
 		
 		$post_arr = [			
@@ -55,6 +57,7 @@ class PatientController extends Controller
 
 		if(isset($token->token_number)){
 			$msg = "Appointment booked successfully.";
+			$token->estimated_time = date('h:i a', $token->estimated_time);
 			return response()->json(array('success'=>1, 'msg'=> $msg, 'token'=>$token), 200);
 		}else{
 			$msg = "There is a technical error, please try after sometime";
@@ -64,6 +67,8 @@ class PatientController extends Controller
 	
 	public function refresh_status(Request $request)
     {
+		date_default_timezone_set("Asia/Kolkata");
+		
 		$theUrl     = config('app.api_url').'v1/refresh_status/'.$_ENV['CLINIC_ID'].'/'.$request->doctor_id.'/'.$request->slot_id.'/'.$request->patient_id;
 
 		$response   = Http ::withHeaders([
@@ -73,7 +78,9 @@ class PatientController extends Controller
 
 		$status = json_decode($response->body());
 
-		if(isset($status->data)){			
+		if(isset($status->data)){
+
+			$status->data->estimated_time = date('h:i a', $status->data->estimated_time);
 			return response()->json(array('success'=>1, 'token'=>$status->data), 200);
 		}else{
 			$msg = "No records found or there is a technical error, please try after sometime";
@@ -82,13 +89,16 @@ class PatientController extends Controller
     }
 	
 	public function booking($doctor_id, $slot_id){
+		
+		date_default_timezone_set("Asia/Kolkata");
+		
 		$theUrl     = config('app.api_url').'v1/patient_family/'.Session::get('user_details')->family_id;
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token
         ])->get($theUrl);
 
 		$members = json_decode($response->body())->data;
-		
+
 		$theUrl     = config('app.api_url').'v1/doctors/'.$_ENV['CLINIC_ID'].'/'.$doctor_id;
 		$response   = Http ::withHeaders([
             'Authorization' => 'Bearer '.Session::get('user_details')->token 
@@ -106,7 +116,8 @@ class PatientController extends Controller
 			])->get($theUrl);
 			$res = json_decode($response->body());			
 
-			if(!empty($res)){				
+			if(!empty($res)){
+				$res->data->estimated_time = date('h:i a', $res->data->estimated_time);
 				$is_booked[$res->data->patient_id] = (array)$res->data;
 			}		
 		}

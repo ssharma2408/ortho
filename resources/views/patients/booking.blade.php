@@ -12,8 +12,8 @@ Patient Booking
 
 @endsection
 <?php 
-	date_default_timezone_set("Asia/Kolkata");
-	$timezone = 'Asia/Kolkata';
+	date_default_timezone_set($_ENV['TIMEZONE']);
+	$timezone = $_ENV['TIMEZONE'];
 ?>
 				
 @section('content')
@@ -49,7 +49,7 @@ Patient Booking
 					<div>
 						Your token number is <b>{{$is_booked[$member->id]['token_number']}}</b>
 						@if($is_booked[$member->id]['current_token'] != "Not Started")
-							and estimated time is <b>{{$is_booked[$member->id]['estimated_time']}}</b> min
+							and estimated time is <b>{{$is_booked[$member->id]['estimated_time']}}</b>
 						@endif
 					</div>
 					<div>
@@ -97,7 +97,7 @@ Patient Booking
 					$html = "<div class='alert alert-success alert-dismissible fade show'>" + data.msg + "</div><div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b>";
 
 					if(data.token.current_token != "Not Started"){
-						$html += "and estimated time is <b>" + data.token.estimated_time + "</b> minute";
+						$html += "and estimated time is <b>" + data.token.estimated_time + "</b>";
 					}
 					$html += "</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "_" + patient_id +"' type='button'>Refresh</button></div>";
 					
@@ -124,7 +124,7 @@ Patient Booking
 					$html = "<div>Current token:" + data.token.current_token + "<b></b></div><div>Your token number is <b>" + data.token.token_number + "</b>";
 
 					if(data.token.current_token != "Not Started"){
-						$html += "and estimated time is <b>" + data.token.estimated_time + "</b> minute";
+						$html += "and estimated time is <b>" + data.token.estimated_time + "</b>";
 					}
 
 					$html += "</div><div><button class='btn btn-secondary btn-rounded btn-sm refresh_status' id='doc_" + doc_id + "_" + slot_id + "_" + patient_id +"' type='button'>Refresh</button></div>";
